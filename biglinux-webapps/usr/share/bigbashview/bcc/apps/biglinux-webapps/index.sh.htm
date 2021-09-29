@@ -1,32 +1,32 @@
 #!/usr/bin/env bash
 
-#Suporte a tradução no bash
+# Suporte a tradução no bash
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps
 
-#Criando diretórios necessários
+# Criando diretórios necessários
 mkdir -p $HOME/.local/share/icons
 mkdir -p $HOME/.local/share/applications
 mkdir -p $HOME/.local/bin/
 mkdir -p $HOME/.local/share/desktop-directories
 mkdir -p $HOME/.config/menus/applications-merged
 
-#Verificando se os arquivos .directory existem
+# Verificando se os arquivos .directory existem
 if [ ! -e $HOME/.local/share/desktop-directories/google-apps.directory -o \
      ! -e $HOME/.local/share/desktop-directories/web-apps.directory ];then
     cp /usr/share/biglinux/webapps/share/*.directory $HOME/.local/share/desktop-directories
 fi
 
-#Verificando se os arquivos .menu existem
+# Verificando se os arquivos .menu existem
 if [ ! -e $HOME/.config/menus/applications-merged/google-applications.menu -o \
      ! -e $HOME/.config/menus/applications-merged/user-web-apps.menu ];then
     cp /usr/share/biglinux/webapps/share/*.menu $HOME/.config/menus/applications-merged
 fi
 
-#Capturando a hora do sistema
+# Capturando a hora do sistema
 hour="$(date +%H)"
 
-#Mensagem personalizada conforme a hora da abertura do app
+# Mensagem personalizada conforme a hora do sistema
 if [ "$hour" -ge "06" -a "$hour" -le "12" ];then
     msg=$"Bom dia ""$USER!"
 elif [ "$hour" -ge "12" -a "$hour" -le "19" ];then
@@ -35,89 +35,63 @@ else
     msg=$"Boa noite ""$USER!"
 fi
 
-#Início da página HTML
+# Início da página HTML
 echo "
-    <!-- Cabeçalho -->
-    <head>
+<!-- Cabeçalho -->
+<head>
 
-        <!-- Carregando o tema css do app -->
-        <link rel='stylesheet' type='text/css' href='css/bootstrap.min.css'>
+    <!-- Carregando o tema css do app -->
+    <link rel='stylesheet' type='text/css' href='css/bootstrap.min.css'>
+    <link rel='stylesheet' type='text/css' href='css/tooltip.css'>
 
-        <!-- Carregando jquery e o js necessário -->
-        <script src='js/jquery-3.6.0.min.js'></script>
-        <script src='js/bootstrap.bundle.min.js'></script>
+    <!-- Carregando jquery e o js necessário -->
+    <script src='js/jquery-3.6.0.min.js'></script>
+    <script src='js/bootstrap.bundle.min.js'></script>
 
-        <!--Alguns ajustes no tema -->
-        <style>
-          .btn{
-              width: 200px;
-          }
-          body{
-              background-image: url('img/1.jpg');
-              background-repeat: no-repeat;
+</head>
 
-          }
-          p{
-              text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-          }
-        </style>
+<!-- Corpo da página -->
+<body oncontextmenu='return false;' id='init'>
+    <div class='container-fluid'>"
 
-    </head>
+    echo '<p class="text-center h3">
+            '"$msg"'<br>
+            '$"Bem-Vindo(a) ao Gerenciador de WebApps BigLinux" '
+         </p><hr>'
 
-    <!-- Corpo da página -->
-    <body oncontextmenu='return false;'>
-        <div class='container-fluid'><br>"
+    echo '<div class="row justify-content-center">
+            <div class="col-3">
+                <a href="index-install.sh.htm"
+                   class="btn btn-lg btn-outline-info align-content-center"
+                   tooltip="'$"Instala um novo WebApp BigLinux"'">
+                       <img src="img/add.png"/><br>' $"Instalar WebApps"'
+                </a>
+            </div>
 
-        echo '<p class="text-center h3" style="font-weight:bold;">
-                '"$msg"'<br>
-                '$"Bem-Vindo(a) ao Gerenciador de WebApps BigLinux" '
-             </p><hr>'
+            <div class="col-3">
+                <a href="index-edit.sh.htm"
+                   class="btn btn-lg btn-outline-info align-content-center"
+                   tooltip="'$"Edita um WebApp BigLinux"'">
+                       <img src="img/edit.png"/><br>' $"Editar WebApps"'
+                </a>
+            </div>
+          </div><br/>
+          <div class="row justify-content-center">
+            <div class="col-3">
+                <a href="index-remove.sh.htm"
+                   class="btn btn-lg btn-outline-info align-content-center"
+                   tooltip="'$"Remove um WebApp BigLinux"'">
+                       <img src="img/delete.png"/><br>' $"Remover WebApps"'
+                </a>
+            </div>
 
-        echo '<div class="row justify-content-center">
-                <div class="col-3">
-                    <a href="index-install.sh.htm"
-                       class="css_btn_class black-text tooltipped"
-                       data-position="top" data-delay="100"
-                       data-tooltip="'$"Instala um novo WebApp BigLinux"'">
-                       <button class="btn btn-lg btn-outline-info align-content-center">
-                           <img src="img/add.png"/><br>' $"Instalar WebApps"'
-                       </button>
-                    </a>
-                </div>
-
-                <div class="col-3">
-                    <a href="index-edit.sh.htm"
-                       class="css_btn_class black-text tooltipped"
-                       data-position="top" data-delay="100"
-                       data-tooltip="'$"Edita um WebApp BigLinux"'">
-                       <button class="btn btn-lg btn-outline-info align-content-center">
-                           <img src="img/edit.png"/><br>' $"Editar WebApps"'
-                       </button>
-                    </a>
-                </div>
-              </div><hr>
-              <div class="row justify-content-center">
-                <div class="col-3">
-                    <a href="index-remove.sh.htm"
-                       class="css_btn_class black-text tooltipped"
-                       data-position="top" data-delay="100"
-                       data-tooltip="'$"Remove um WebApp BigLinux"'">
-                       <button class="btn btn-lg btn-outline-info align-content-center">
-                           <img src="img/delete.png"/><br>' $"Remover WebApps"'
-                       </button>
-                    </a>
-                </div>
-
-                <div class="col-3">
-                    <a href="index2.sh.htm"
-                       class="css_btn_class black-text tooltipped"
-                       data-position="top" data-delay="100"
-                       data-tooltip="'$"Ative ou desative os WebApps instalados por padrão no sistema"'">
-                       <button class="btn btn-lg btn-outline-info align-content-center">
-                          <img src="img/toggle.png"/><br>' $"Ativar/Desativar WebApps" '
-                       </button>
-                    </a>
-                </div>
+            <div class="col-3">
+                <a href="index2.sh.htm"
+                   class="btn btn-lg btn-outline-info align-content-center"
+                   tooltip="'$"Ative ou desative os WebApps instalados por padrão no sistema"'">
+                      <img src="img/toggle.png"/><br>' $"Ativar/Desativar WebApps" '
+                </a>
             </div>
         </div>
-    </body>'
+    </div>
+</body>'
