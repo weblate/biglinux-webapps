@@ -24,6 +24,9 @@ else:
 
 resp = requests.get(icon.url, stream=True)
 with open('/tmp/{}.{}'.format(name_file, icon.format), 'wb') as img:
-    img.write(resp.content)
+     img.write(resp.content)
 
 print('/tmp/{}.{}'.format(name_file, icon.format))
+
+#for i in icons:
+#    print(i.url)

@@ -3,11 +3,19 @@
 /* Largura dos botões */
 .btn{
   width: 200px;
+  height: 130px;
   font-size: 14pt;
+  font-weight: bold;
 }
 
 .btn-small{
     width: 100px;
+    height: 38px;
+}
+
+.btn-small-lg{
+    width: 200px;
+    height: 38px;
 }
 
 /*  */
@@ -16,14 +24,25 @@ body#init{
   background-repeat: no-repeat;
 }
 
+body#app{
+  background: url(../img/big.jpg); }
+
 .form-select-size{
-    height:35px;
-    font-size:11pt;
-    font-weight:bold;
+  height:38px;
+  font-size:11pt;
+  font-weight:bold;
 }
 
 .form-option{
-    font-weight: bold;
+  font-weight: bold;
+}
+
+.tooltip{
+  font-size: 11pt;
+}
+
+label{
+  font-weight: bold;
 }
 
 p.h3{
