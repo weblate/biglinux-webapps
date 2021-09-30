@@ -6,10 +6,24 @@
   font-size: 14pt;
 }
 
+.btn-small{
+    width: 100px;
+}
+
 /*  */
 body#init{
   background-image: url('../img/background.jpg');
   background-repeat: no-repeat;
+}
+
+.form-select-size{
+    height:35px;
+    font-size:11pt;
+    font-weight:bold;
+}
+
+.form-option{
+    font-weight: bold;
 }
 
 p.h3{
