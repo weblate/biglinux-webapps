@@ -1,6 +1,13 @@
 /* Alguns ajustes no tema */
 
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
+
 /* Largura dos botões */
+
+.bg-card{
+    background: rgba(50,50,50,0.5);
+}
+
 .btn{
   width: 200px;
   height: 130px;
@@ -9,13 +16,19 @@
 }
 
 .btn-small{
-    width: 100px;
-    height: 38px;
+  width: 100px;
+  height: 38px;
 }
 
 .btn-small-lg{
-    width: 200px;
-    height: 38px;
+  width: 200px;
+  height: 38px;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /*  */

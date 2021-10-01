@@ -13,78 +13,76 @@ echo '
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 
 </head>
-<body>
-    <div id=page2>
-        <div id="middle" class="bar">
+<body id="app">
 
-                <p>' $"Remover WebApps BigLinux:" '</p>'
+    <div class="container-fluid">
+        <p class="text-center h3">'$"Remover WebApps BigLinux"'</p><br>'
 
 DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop)"
-
-if [ "$DESKTOP" != "" ]; then
+[ $DESKTOP ] && {
 c=0
-            echo '
-                    <div class="row">'
+echo '<div class="row justify-content-start"><div class="col-3"></div>'
 
-                        for i in $DESKTOP; do
+for i in $DESKTOP; do
 
-                            if [ "$(grep "Exec=" $i | egrep '(firefox|waterfox-latest)')" != "" ];then
-                                DESKEXEC="$(grep "Exec=" $i | sed 's|Exec=||')"
-                                DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
-                            elif [ "$(grep "Exec=" $i | grep 'falkon')" != "" ];then
-                                DESKURL="$(grep "Exec=" $i | cut -d' ' -f4)"
-                            else
-                                DESKURL="$(grep "Exec=" $i | awk -F'--app=' '{print $NF}')"
-                            fi
+    if [ "$(grep Exec= $i | grep firefox)" ];then
+        DESKEXEC="$(grep Exec= $i | sed 's|Exec=||')"
+        DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
+    else
+        DESKURL="$(grep Exec= $i | awk -F'--app=' '{print $NF}')"
+    fi
 
-                            if [ "$c" = "3" ];then
-                                echo '<div class="row">'
-                                c=0
-                            fi
+    if [ "$c" = "2" ];then
+        echo '<div class="row justify-content-start"><div class="col-3"></div>'
+        c=0
+    fi
 
-                            DESKNAME="$(grep "Name=" $i | sed 's|Name=||')"
-                            DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
-                            if [ "$DESKICON" = "internet-web-browser" ];then
-                                DESKICON="default.png"
-                            fi
+    DESKNAME="$(grep "Name=" $i | sed 's|Name=||')"
+    DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
+    if [ "$DESKICON" = "internet-web-browser" ];then DESKICON="default.png";fi
 
-                            echo '<form action="webapp-remove.sh" method="get" id="formsend">
-                                <div class="col s4 tooltipped" data-position="top" data-delay="100"
-                          data-tooltip="'$DESKNAME'<br>'$DESKURL'">
-                                    <div style="border:1px solid white;
-                                                border-radius:10px;
-                                                padding:5px;
-                                                padding-bottom:10px;
-                                                font-size:12pt;
-                                                box-shadow: 0 4px 4px rgba(255,255,255,0.3)">
-                                        <input type="hidden" name="filedesk" value="'$i'"/>
-                                        <div class="center"><img src="'$DESKICON'" width="42" height="42"/></div>
-                                        <p class="truncate center">'$DESKNAME'</p>
-                                        <button type="submit" class="waves-effect waves-light btn red darken-4">'$"Remover"'</button>
-                                    </div>
-                                  </div>
-                                </form>'
-                            if [ "$c" = "2" ];then
-                                echo '</div>'
-                            fi
-                            c=$((c+1))
-                        done
-            echo '
-            <br><br><a href="index.sh.htm" class="button tooltipped" data-position="top" data-delay="100"
-                 data-tooltip="'$"Ir para página inicial"'">'$"Voltar"'</a>
+echo '
+    <form action="webapp-remove.sh" method="get" id="formsend" class="col-2">
+        <input type="hidden" name="filedesk" value="'$i'"/>
+        <div class="card bg-card border-danger mb-3">
+            <div class="card-header">
+                <img class="center" src="'$DESKICON'" width="42" height="42"/>
+            </div>
+            <div class="card-body">
+                <button data-bs-toggle="tooltip" data-bs-placement="top"
+                        class="btn btn-sm btn-info btn-small"
+                        title="'$DESKNAME'<br>'$DESKURL'" data-html="true">Info</button>
+                <button type="submit" class="btn btn-danger btn-sm btn-small mt-2">'$"Remover"'</button>
+            </div>
         </div>
+    </form>'
+    if [ "$c" = "1" ];then
+        echo '</div>'
+    fi
+    c=$((c+1))
+done
+echo '</div>
+      <div class="row justify-content-center">
+        <div class="col-2">
+            <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small"
+               data-bs-toggle="tooltip" data-bs-placement="top"
+               title="'$"Ir para página inicial"'">'$"Voltar"'
+            </a>
+        </div>
+      </div>
     </div>'
 
-else
-        echo $"Nenhum WebApp BigLinux instalado por você!" '<br><br>'
-        echo $"Se você deseja instalar um novo<br> WebApp BigLinux, clique no botão Instalar:" '<br><br><br>'
-        echo '<a href="index.sh.htm" class="button tooltipped" data-position="top" data-delay="100"
-                 data-tooltip="'$"Ir para página inicial"'" style="margin-right:50px;">'$"Voltar"'</a>
-              <a href="index-install.sh.htm" class="button tooltipped" data-position="top" data-delay="100"
-                 data-tooltip="'$"Ir para página de instalação do WebApp"'">'$"Instalar"'</a>
-            </h1>
-        </div>
-    </div>'
-fi
+} || {
+echo $"Nenhum WebApp BigLinux instalado por você!" '<br><br>'
+echo $"Se você deseja instalar um novo<br> WebApp BigLinux, clique no botão Instalar:" '<br><br><br>'
+echo '<a href="index.sh.htm" class="button tooltipped" data-position="top" data-delay="100"
+             data-tooltip="'$"Ir para página inicial"'" style="margin-right:50px;">'$"Voltar"'
+      </a>
+      <a href="index-install.sh.htm" class="button tooltipped" data-position="top" data-delay="100"
+             data-tooltip="'$"Ir para página de instalação do WebApp"'">'$"Instalar"'
+      </a>
+    </div>
+</div>'
+}
 
 echo '</body>'

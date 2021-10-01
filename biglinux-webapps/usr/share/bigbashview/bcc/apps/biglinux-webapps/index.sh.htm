@@ -29,7 +29,7 @@ hour="$(date +%H)"
 # Mensagem personalizada conforme a hora do sistema
 if [ "$hour" -ge "06" -a "$hour" -le "12" ];then
     msg=$"Bom dia ""$USER!"
-elif [ "$hour" -ge "12" -a "$hour" -le "19" ];then
+elif [ "$hour" -ge "12" -a "$hour" -le "18" ];then
     msg=$"Boa tarde ""$USER!"
 else
     msg=$"Boa noite ""$USER!"
@@ -62,32 +62,32 @@ echo "
     echo '<div class="row justify-content-center">
             <div class="col-3">
                 <a href="index-install.sh.htm"
-                   class="btn btn-lg btn-primary align-content-center shadow-lg"
+                   class="btn btn-lg btn-dark align-content-center shadow-lg"
                    tooltip="'$"Instala um novo WebApp BigLinux"'">
-                       <img src="img/add.png"/><br>' $"Instalar WebApps"'
+                       <img src="img/add.png"/><br>' $"Instalar<br>WebApps"'
                 </a>
             </div>
 
             <div class="col-3">
                 <a href="index-edit.sh.htm"
-                   class="btn btn-lg btn-primary align-content-center shadow-lg"
+                   class="btn btn-lg btn-dark align-content-center shadow-lg"
                    tooltip="'$"Edita um WebApp BigLinux"'">
-                       <img src="img/edit.png"/><br>' $"Editar WebApps"'
+                       <img src="img/edit.png"/><br>' $"Editar<br>WebApps"'
                 </a>
             </div>
           </div><br/>
           <div class="row justify-content-center">
             <div class="col-3">
                 <a href="index-remove.sh.htm"
-                   class="btn btn-lg btn-primary align-content-center shadow-lg"
+                   class="btn btn-lg btn-dark align-content-center shadow-lg"
                    tooltip="'$"Remove um WebApp BigLinux"'">
-                       <img src="img/delete.png"/><br>' $"Remover WebApps"'
+                       <img src="img/delete.png"/><br>' $"Remover<br>WebApps"'
                 </a>
             </div>
 
             <div class="col-3">
                 <a href="index2.sh.htm"
-                   class="btn btn-lg btn-primary align-content-center shadow-lg"
+                   class="btn btn-lg btn-dark align-content-center shadow-lg"
                    tooltip="'$"Ative ou desative os WebApps instalados por padrão no sistema"'">
                       <img src="img/toggle.png"/><br>' $"Ativar/Desativar WebApps" '
                 </a>

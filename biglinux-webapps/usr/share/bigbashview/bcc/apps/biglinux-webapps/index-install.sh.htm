@@ -17,23 +17,12 @@ echo '
     <!-- Carregando jquery e o js necessário -->
     <script type="application/javascript" src="js/jquery-3.6.0.min.js"></script>
     <script type="application/javascript" src="js/bootstrap.bundle.min.js"></script>
-'
-
-echo "
-    <script type='text/javascript'>
-        \$(function () {
-          \$('[data-bs-toggle=\"tooltip\"]').tooltip();
-        })
-    </script>
-"
-
-echo '
 </head>
 
 <!-- Corpo da página -->
 <body id="app">
     <div class="container-fluid">
-        <p class="text-center h3">' $"Instalar WebApps BigLinux:" '</p>
+        <p class="text-center h3">' $"Instalar WebApps BigLinux" '</p>
 
         <!-- Formulário de instalação do webapp -->
         <form action="webapp-install.sh" method="get">

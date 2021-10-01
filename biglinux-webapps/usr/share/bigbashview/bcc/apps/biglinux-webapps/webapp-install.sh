@@ -8,16 +8,16 @@ NAMEDESK="$(sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAaA
 
 if [ "$browser" = "firefox" ];then
 
-    if [ "$(egrep "(http|https)://" <<< "$urldesk")" = "" ];then
+    if [ ! "$(egrep "(http|https)://" <<< "$urldesk")" ];then
 
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" != "" ];then
+        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
             urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
         else
             urldesk="https://$urldesk"
         fi
 
     else
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" != "" ];then
+        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
             urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
         else
             urldesk="$urldesk"
@@ -27,16 +27,16 @@ if [ "$browser" = "firefox" ];then
     if [ -z "$icondesk" -o "$icondesk" = "/usr/share/bigbashview/bcc/apps/biglinux-webapps/default.png" ];then
         ICON_FILE="/usr/share/bigbashview/bcc/apps/biglinux-webapps/default.png"
     else
-    	if [ "$(dirname "$icondesk")" = "/tmp" ];then
-			mv "$icondesk" $HOME/.local/share/icons
-		else
-			cp "$icondesk" $HOME/.local/share/icons
-		fi
-		NAME_FILE=$(basename "$icondesk")
-    	FILE_PNG=$(sed 's|\..*|.png|' <<< $NAME_FILE)
-    	convert "$HOME/.local/share/icons/$NAME_FILE" -thumbnail 32x32 \
-    			-alpha on -background none -flatten "$HOME/.local/share/icons/$browser-$NAMEDESK-$FILE_PNG"
-    	rm "$HOME/.local/share/icons/$NAME_FILE"
+        if [ "$(dirname "$icondesk")" = "/tmp" ];then
+            mv "$icondesk" $HOME/.local/share/icons
+        else
+            cp "$icondesk" $HOME/.local/share/icons
+        fi
+        NAME_FILE=$(basename "$icondesk")
+        FILE_PNG=$(sed 's|\..*|.png|' <<< $NAME_FILE)
+        convert "$HOME/.local/share/icons/$NAME_FILE" -thumbnail 32x32 \
+                -alpha on -background none -flatten "$HOME/.local/share/icons/$browser-$NAMEDESK-$FILE_PNG"
+        rm "$HOME/.local/share/icons/$NAME_FILE"
 
         ICON_FILE="$HOME/.local/share/icons/$browser-$NAMEDESK-$FILE_PNG"
     fi
@@ -117,14 +117,13 @@ rm "/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
         ln "$HOME/.local/share/applications/$NAMEDESK-$browser-webapp-biglinux-custom.desktop" \
         "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
         chmod 777 "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
-        gio set "$(xdg-user-dir DESKTOP)/$namedesk.desktop" -t string metadata::trust "true"
     fi
 
 else
 
-    if [ "$(egrep "(http|https)://" <<< "$urldesk")" != "" ];then
+    if [ "$(egrep "(http|https)://" <<< "$urldesk")" ];then
 
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" != "" ];then
+        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
             urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
             CUT_HTTP=$(sed 's|https://||;s|http://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
         else
@@ -134,7 +133,7 @@ else
         [ "$newperfil" = "on" ] && user="--user-data-dir=$HOME/.bigwebapps/$NAMEDESK-$browser" || user=
     else
 
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" != "" ];then
+        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
             urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
             CUT_HTTP=$(sed 's|https://||;s|http://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
         else
@@ -148,16 +147,16 @@ else
     if [ -z "$icondesk" -o "$icondesk" = "/usr/share/bigbashview/bcc/apps/biglinux-webapps/default.png" ];then
         ICON_FILE="/usr/share/bigbashview/bcc/apps/biglinux-webapps/default.png"
     else
-    	if [ "$(dirname "$icondesk")" = "/tmp" ];then
-			mv "$icondesk" $HOME/.local/share/icons
-		else
-			cp "$icondesk" $HOME/.local/share/icons
-		fi
-		NAME_FILE=$(basename "$icondesk")
-    	FILE_PNG=$(sed 's|\..*|.png|' <<< $NAME_FILE)
-    	convert "$HOME/.local/share/icons/$NAME_FILE" -thumbnail 32x32 \
-    			-alpha on -background none -flatten "$HOME/.local/share/icons/$browser-$NAMEDESK-$FILE_PNG"
-    	rm "$HOME/.local/share/icons/$NAME_FILE"
+        if [ "$(dirname "$icondesk")" = "/tmp" ];then
+            mv "$icondesk" $HOME/.local/share/icons
+        else
+            cp "$icondesk" $HOME/.local/share/icons
+        fi
+        NAME_FILE=$(basename "$icondesk")
+        FILE_PNG=$(sed 's|\..*|.png|' <<< $NAME_FILE)
+        convert "$HOME/.local/share/icons/$NAME_FILE" -thumbnail 32x32 \
+                -alpha on -background none -flatten "$HOME/.local/share/icons/$browser-$NAMEDESK-$FILE_PNG"
+        rm "$HOME/.local/share/icons/$NAME_FILE"
 
         ICON_FILE="$HOME/.local/share/icons/$browser-$NAMEDESK-$FILE_PNG"
     fi
