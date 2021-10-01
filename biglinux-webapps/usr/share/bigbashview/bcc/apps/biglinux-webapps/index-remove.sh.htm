@@ -16,14 +16,25 @@ echo '
 <body id="app">
 
     <div class="container-fluid">
-        <p class="text-center h3">'$"Remover WebApps BigLinux"'</p><br>'
+        <p class="text-center h3">'$"Remover WebApps BigLinux"'</p>'
 
 DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop)"
-echo $DESKTOP
+
 if [ $DESKTOP ];then
 
-c=0
-echo '<div class="row justify-content-start"><div class="col-3"></div>'
+echo '<div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">'$"ÍCONE"'</th>
+                  <th scope="col">'$"NOME"'</th>
+                  <th scope="col">'$"URL"'</th>
+                  <th scope="col">'$"AÇÃO"'</th>
+                </tr>
+            </thead>
+            <tbody>'
 
 for i in $DESKTOP; do
 
@@ -34,45 +45,38 @@ for i in $DESKTOP; do
         DESKURL="$(grep Exec= $i | awk -F'--app=' '{print $NF}')"
     fi
 
-    if [ "$c" = "2" ];then
-        echo '<div class="row justify-content-start"><div class="col-3"></div>'
-        c=0
-    fi
-
     DESKNAME="$(grep "Name=" $i | sed 's|Name=||')"
     DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
-    if [ "$DESKICON" = "internet-web-browser" ];then DESKICON="default.png";fi
+    if [ "$DESKICON" = "webapp" ];then DESKICON="img/default.png";fi
 
-echo '
-    <form action="webapp-remove.sh" method="get" id="formsend" class="col-2">
-        <input type="hidden" name="filedesk" value="'$i'"/>
-        <div class="card bg-card border-danger mb-3">
-            <div class="card-header">
+echo '<tr class="table-active">
+        <form action="webapp-remove.sh" method="get">
+            <input type="hidden" name="filedesk" value="'$i'"/>
+            <td>
                 <img class="center" src="'$DESKICON'" width="42" height="42"/>
-            </div>
-            <div class="card-body">
-                <button data-bs-toggle="tooltip" data-bs-placement="top"
-                        class="btn btn-sm btn-info btn-small"
-                        title="'$DESKNAME'<br>'$DESKURL'" data-html="true">Info</button>
-                <button type="submit" class="btn btn-danger btn-sm btn-small mt-2">'$"Remover"'</button>
-            </div>
-        </div>
-    </form>'
-    if [ "$c" = "1" ];then
-        echo '</div>'
-    fi
-    c=$((c+1))
+            </td>
+            <td>'$DESKNAME'</td>
+            <td>'$DESKURL'</td>
+            <td>
+              <button type="submit" class="btn btn-danger btn-sm btn-small">'$"Remover"'</button>
+            </td>
+        </form>
+    </tr>'
+
 done
-echo '</div>
-      <div class="row justify-content-center">
-        <div class="col-2">
-            <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small"
-               data-bs-toggle="tooltip" data-bs-placement="top"
-               title="'$"Ir para página inicial"'">'$"Voltar"'
-            </a>
-        </div>
+echo '      </tbody>
+        </table>
       </div>
-    </div>'
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-2">
+        <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small"
+           data-bs-toggle="tooltip" data-bs-placement="top"
+           title="'$"Ir para página inicial"'">'$"Voltar"'
+        </a>
+    </div>
+  </div>
+</div>'
 
 else
 

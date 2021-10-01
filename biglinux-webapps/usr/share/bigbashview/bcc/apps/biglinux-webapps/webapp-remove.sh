@@ -8,7 +8,7 @@ kdialog --title "BigLinux WebApps" --icon "internet-web-browser" \
         --yesno $"Você tem certeza que deseja remover este WebApp?"
 
 if [ "$?" != "0" ]; then
-    exit
+    echo "<META http-equiv=\"refresh\" content=\"0;URL=index-remove.sh.htm\">"
 else
     NAMEDESK="$(basename -s .desktop "$filedesk" | sed 's|-webapp-biglinux-custom||')"
     ICONDESK="$(grep "Icon=" $filedesk | sed 's|Icon=||')"

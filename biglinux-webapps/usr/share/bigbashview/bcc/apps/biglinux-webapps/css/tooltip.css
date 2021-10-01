@@ -4,8 +4,8 @@
 
 /* Largura dos botões */
 
-.bg-card{
-    background: rgba(50,50,50,0.5);
+.bi.init{
+  font-size: 3rem;
 }
 
 .btn{
