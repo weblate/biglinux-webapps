@@ -112,7 +112,7 @@ echo '
                         <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" for="youtube"
                            title="'$"Essa opção permite que você visualize os vídeos do YouTube sem outras informações.<br>Por exemplo, sem propagandas e sem outros vídeos."'"
                            data-html="true">'$"YouTube em Modo TV"'</label>
-                        <input class="form-check-input" type="checkbox" name="shortcut" id="youtube" />
+                        <input class="form-check-input" type="checkbox" name="shortcut" id="tvmode" />
                     </div>
                 </div>
                 <div class="col-5">
@@ -187,7 +187,7 @@ echo '
                 \$('#gettitle').html('"$"Detectando...""');
                 \$.get('./get_title.sh.py', url, function(title){
                     \$('#namedesk').focus();
-                    \$('#namedesk').val(title);
+                    \$('#namedesk').val(title.replace(/\|/g, ''));
                     \$('#gettitle').html('"$"Detectar Título""');
                 });
             }
@@ -228,8 +228,7 @@ echo '
                     \$('#namedesk').val('');
                     \$('#icondesk').focus();
                 },2500);
-            }
-            else if (url == 'https://' || !url){
+            } else if (url == 'https://' || !url){
                 e.preventDefault();
                 \$('#urldesk').focus();
                 \$('#urldesk').val('"$"Digite ou cole a URL!""');

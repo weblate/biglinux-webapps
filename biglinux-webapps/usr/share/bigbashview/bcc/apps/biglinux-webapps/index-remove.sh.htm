@@ -19,7 +19,9 @@ echo '
         <p class="text-center h3">'$"Remover WebApps BigLinux"'</p><br>'
 
 DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop)"
-[ $DESKTOP ] && {
+echo $DESKTOP
+if [ $DESKTOP ];then
+
 c=0
 echo '<div class="row justify-content-start"><div class="col-3"></div>'
 
@@ -72,7 +74,7 @@ echo '</div>
       </div>
     </div>'
 
-} || {
+else
 
 echo '
     <div class="row justify-content-center">
@@ -99,6 +101,6 @@ echo '
         </div>
     </div>
 </div>'
-}
+fi
 
 echo '</body>'
