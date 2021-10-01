@@ -73,14 +73,30 @@ echo '</div>
     </div>'
 
 } || {
-echo $"Nenhum WebApp BigLinux instalado por você!" '<br><br>'
-echo $"Se você deseja instalar um novo<br> WebApp BigLinux, clique no botão Instalar:" '<br><br><br>'
-echo '<a href="index.sh.htm" class="button tooltipped" data-position="top" data-delay="100"
-             data-tooltip="'$"Ir para página inicial"'" style="margin-right:50px;">'$"Voltar"'
-      </a>
-      <a href="index-install.sh.htm" class="button tooltipped" data-position="top" data-delay="100"
-             data-tooltip="'$"Ir para página de instalação do WebApp"'">'$"Instalar"'
-      </a>
+
+echo '
+    <div class="row justify-content-center">
+        <div class="card border-dark bg-secondary mb-3" style="max-width: 40rem;">
+          <div class="card-header">'$"Atenção!"'</div>
+          <div class="card-body">
+            <h4 class="card-title">'$"Nenhum WebApp BigLinux instalado por você!"'</h4>
+            <p class="card-text">'$"Se você deseja instalar um novo WebApp BigLinux, clique no botão Instalar"'</p>
+          </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small"
+               data-bs-toggle="tooltip" data-bs-placement="top"
+               title="'$"Ir para página inicial"'">'$"Voltar"'
+            </a>
+        </div>
+        <div class="col-2">
+            <a href="index-install.sh.htm" class="btn btn-sm btn-primary btn-small"
+               data-bs-toggle="tooltip" data-bs-placement="top"
+               title="'$"Ir para página de instalação do WebApp"'">'$"Instalar"'
+            </a>
+        </div>
     </div>
 </div>'
 }
