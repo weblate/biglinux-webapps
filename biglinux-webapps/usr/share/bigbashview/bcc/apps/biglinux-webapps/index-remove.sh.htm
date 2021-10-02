@@ -16,7 +16,10 @@ echo '
 <body id="app">
 
     <div class="container-fluid">
-        <p class="text-center h3">'$"Remover WebApps BigLinux"'</p>'
+        <p class="text-center h3">
+          <i class="bi bi-trash-fill"></i>
+          '$"Remover WebApps BigLinux"'
+        </p>'
 
 DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop)"
 
@@ -55,10 +58,18 @@ echo '<tr class="table-active">
             <td>
                 <img class="center" src="'$DESKICON'" width="42" height="42"/>
             </td>
-            <td class="text-truncate align-middle" style="max-width: 10rem;">'$DESKNAME'</td>
-            <td class="text-truncate align-middle" style="max-width: 10rem;">'$DESKURL'</td>
-            <td>
-              <button type="submit" class="btn btn-danger btn-sm btn-small"><i class="bi bi-trash-fill"></i></button>
+            <td class="text-truncate align-middle" style="max-width: 10rem;"
+                data-bs-toggle="tooltip" data-bs-placement="top"
+                title="'$DESKNAME'">'$DESKNAME'</td>
+            <td class="text-truncate align-middle" style="max-width: 10rem;"
+                data-bs-toggle="tooltip" data-bs-placement="top"
+                title="'$DESKURL'">'$DESKURL'</td>
+            <td class="text-center">
+              <button type="submit" class="btn btn-danger btn-sm btn-small"
+                      data-bs-toggle="tooltip" data-bs-placement="top"
+                      title="'$"Remover"'">
+                  <i class="bi bi-trash-fill"></i>
+              </button>
             </td>
         </form>
     </tr>'
@@ -72,7 +83,9 @@ echo '      </tbody>
     <div class="col-2">
         <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small"
            data-bs-toggle="tooltip" data-bs-placement="top"
-           title="'$"Ir para página inicial"'">'$"Voltar"'
+           title="'$"Ir para página inicial"'">
+           <i class="bi bi-chevron-left"></i>
+           '$"Voltar"'
         </a>
     </div>
   </div>
@@ -80,27 +93,30 @@ echo '      </tbody>
 
 else
 
-echo '
+echo '<br>
     <div class="row justify-content-center">
         <div class="card border-dark bg-secondary mb-3" style="max-width: 40rem;">
-          <div class="card-header">'$"Atenção!"'</div>
           <div class="card-body">
-            <h4 class="card-title">'$"Nenhum WebApp BigLinux instalado por você!"'</h4>
+            <h5 class="card-title">'$"Atenção! Nenhum WebApp BigLinux instalado por você!"'</h5>
             <p class="card-text">'$"Se você deseja instalar um novo WebApp BigLinux, clique no botão Instalar"'</p>
           </div>
         </div>
-    </div>
+    </div><br>
     <div class="row justify-content-center">
         <div class="col-2">
             <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small"
                data-bs-toggle="tooltip" data-bs-placement="top"
-               title="'$"Ir para página inicial"'">'$"Voltar"'
+               title="'$"Ir para página inicial"'">
+               <i class="bi bi-chevron-left"></i>
+               '$"Voltar"'
             </a>
         </div>
         <div class="col-2">
             <a href="index-install.sh.htm" class="btn btn-sm btn-primary btn-small"
                data-bs-toggle="tooltip" data-bs-placement="top"
-               title="'$"Ir para página de instalação do WebApp"'">'$"Instalar"'
+               title="'$"Ir para página de instalação do WebApp"'">
+               <i class="bi bi-check2-circle"></i>
+               '$"Instalar"'
             </a>
         </div>
     </div>

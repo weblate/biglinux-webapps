@@ -22,7 +22,9 @@ echo '
 <!-- Corpo da página -->
 <body id="app">
     <div class="container-fluid">
-        <p class="text-center h3">' $"Instalar WebApps BigLinux" '</p>
+        <p class="text-center h3"><i class="bi bi-plus-circle"></i>
+            '$"Instalar WebApps BigLinux"'
+        </p>
 
         <!-- Formulário de instalação do webapp -->
         <form action="webapp-install.sh" method="get">
@@ -43,14 +45,18 @@ echo '
             <div class="row justify-content-center">
                 <div class="col-4">
                     <a data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="'$"Detecta automaticamente o título do site e sugere como nome do webapp."'"
-                       class="btn btn-sm btn-primary btn-small-lg" id="gettitle">'$"Detectar Título"'
+                       title="'$"Detecta automaticamente o título do site e sugere como nome do webapp."'"
+                       class="btn btn-sm btn-primary btn-small-lg" id="gettitle">
+                        <i class="bi bi-window"></i>
+                       '$"Detectar Título"'
                    </a>
                 </div>
                 <div class="col-3">
                   <a data-bs-toggle="tooltip" data-bs-placement="top" data-html="true"
                      title="'$"Detecta automaticamente o ícone do site, mas não são todos os sites que suportam o recurso.<br>Por exemplo, sites que necessitam de login."'"
-                     class="btn btn-sm btn-primary btn-small-lg" id="favicon">'$"Detectar Ícone"'
+                     class="btn btn-sm btn-primary btn-small-lg" id="favicon">
+                     <i class="bi bi-image-fill"></i>
+                     '$"Detectar Ícone"'
                    </a>
                 </div>
             </div>
@@ -68,7 +74,9 @@ echo '
                 <div class="mt-5 col-1">
                     <a data-bs-toggle="tooltip" data-bs-placement="top"
                        title="'$"Carrega um arquivo de imagem para ser usado como ícone."'"
-                       class="btn btn-sm btn-primary btn-small" id="btn">'$"Abrir"'
+                       class="btn btn-sm btn-primary btn-small" id="btn">
+                       <i class="bi bi-folder2-open"></i>
+                       '$"Abrir"'
                     </a>
                 </div>
             </div>
@@ -93,6 +101,7 @@ echo '
                 <div class="mt-5 col-3 form-check form-switch" id="perfil">
                     <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" for="newperfil"
                            title="'$"Essa opção permite que você crie webapps que não compartilham informações.<br>Por exemplo, para logar em contas de e-mails diferentes, assim cada webapp manterá o login separadamente."'" data-html="true">
+                           <i class="bi bi-person-plus-fill"></i>
                            '$"Novo Perfil"'</label>
                      <input class="form-check-input" type="checkbox" name="newperfil" id="newperfil" />
                 </div>
@@ -101,7 +110,10 @@ echo '
             <div class="row justify-content-center">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <div class="mt-3 col-8 form-check form-switch">
-                    <label class="form-check-label" for="desktop">'$"Adicionar atalho na Área de Trabalho"'</label>
+                    <label class="form-check-label" for="desktop">
+                      <i class="bi bi-link-45deg"></i>
+                      '$"Adicionar atalho na Área de Trabalho"'
+                    </label>
                     <input class="form-check-input" id="desktop" type="checkbox" name="shortcut"/>
                 </div>
             </div>
@@ -111,18 +123,25 @@ echo '
                     <div class="form-check form-switch">
                         <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" for="youtube"
                            title="'$"Essa opção permite que você visualize os vídeos do YouTube sem outras informações.<br>Por exemplo, sem propagandas e sem outros vídeos."'"
-                           data-html="true">'$"YouTube em Modo TV"'</label>
+                           data-html="true">
+                           <i class="bi bi-tv"></i>
+                           '$"YouTube em Modo TV"'
+                        </label>
                         <input class="form-check-input" type="checkbox" name="shortcut" id="tvmode" />
                     </div>
                 </div>
                 <div class="col-5">
                     <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small"
                        data-bs-toggle="tooltip" data-bs-placement="top"
-                       title="'$"Ir para página inicial"'">'$"Voltar"'
+                       title="'$"Ir para página inicial"'">
+                       <i class="bi bi-chevron-left"></i>
+                       '$"Voltar"'
                     </a>
                     <button type="submit" class="btn btn-sm btn-primary btn-small"
                             data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="'$"Inicia a instalação"'" id="install">'$"Instalar"'
+                            title="'$"Inicia a instalação"'" id="install">
+                            <i class="bi bi-check2-circle"></i>
+                            '$"Instalar"'
                     </button>
                 </div>
             </div>
@@ -167,7 +186,7 @@ echo '
             \$.get('./icon.sh', function(dados){
                 \$('#icondesk').val(dados);
                 \$('#preview').attr('src', dados);
-                \$('#btn').html('"$"Alterar""');
+                \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
             });
         });
 
@@ -184,11 +203,11 @@ echo '
                     \$('#icondesk').focus();
                 },2500);
             } else {
-                \$('#gettitle').html('"$"Detectando...""');
+                \$('#gettitle').html('""<i class=\"bi bi-window\"></i> "$"Detectando...""');
                 \$.get('./get_title.sh.py', url, function(title){
                     \$('#namedesk').focus();
                     \$('#namedesk').val(title.replace(/\|/g, ''));
-                    \$('#gettitle').html('"$"Detectar Título""');
+                    \$('#gettitle').html('""<i class=\"bi bi-window\"></i> "$"Detectar Título""');
                 });
             }
         });
@@ -206,12 +225,12 @@ echo '
                     \$('#icondesk').focus();
                 },2500);
             } else {
-                \$('#favicon').html('"$"Detectando...""');
+                \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectando...""');
                 \$.get('./get_favicon.sh.py', url, function(data){
                     \$('#icondesk').val(data);
                     \$('#preview').attr('src', data);
-                    \$('#favicon').html('"$"Detectar Ícone""');
-                    \$('#btn').html('"$"Alterar""');
+                    \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectar Ícone""');
+                    \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
                 });
             }
         });
