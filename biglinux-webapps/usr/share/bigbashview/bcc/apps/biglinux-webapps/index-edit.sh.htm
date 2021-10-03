@@ -52,7 +52,7 @@ for i in $DESKTOP; do
     DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
     if [ "$DESKICON" = "webapp" ];then DESKICON="img/default.png";fi
 
-echo '<tr class="table-active">
+echo '<tr class="table-light">
         <form action="index-edit2.sh.htm" method="get">
             <input type="hidden" name="filedesk" value="'$i'"/>
             <td>

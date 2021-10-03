@@ -8,16 +8,27 @@
   font-size: 2.5rem;
 }
 
+.bi.home{
+  font-size: 1.4rem;
+}
+
 .btn{
   width: 200px;
   height: 150px;
-  font-size: 13pt;
+  font-size: 12pt;
   font-weight: bold;
+  padding-top: 6px;
 }
 
 .btn-small{
   width: 105px;
   height: 38px;
+}
+
+.btn-small-home{
+  width: 48px;
+  height: 38px;
+  margin-right: 10px;
 }
 
 .btn-small-lg{
@@ -42,11 +53,15 @@
 /*  */
 body#init{
   background-image: url('../img/background.jpg');
-  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Ubuntu';
 }
 
 body#app{
-  background: url(../img/big.jpg); }
+  background: url(../img/big.jpg);
+  background-attachment: fixed;
+  font-family: 'Ubuntu';
+}
 
 .form-select-size{
   height:38px;
@@ -67,10 +82,92 @@ label{
 }
 
 p.h3{
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  text-shadow: 1px 1px 2px rgb(52, 58, 64);
   font-size: 21pt;
   font-weight: bold;
   margin-top: 10px;
+}
+
+.box-shadow{
+  padding: 0;
+}
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.table-fixed tbody {
+    height: 353px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+  display: block;
+}
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th {
+  float: left;
+  position: relative;
+
+  &::after {
+      content: '';
+      clear: both;
+      display: block;
+  }
+}
+
+.table-fixed tbody td{
+  height: 60px;
+}
+
+.table-fixed-input{
+  position: relative;
+  top: 5px;
+  left: 35px;
+  height:25px;
+  width:25px
+}
+
+.table-fixed-text{
+  position: relative;
+  top: 10px;
+}
+
+.table-fixed{
+  border-radius: 5px;
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #343a40;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(52, 58, 64,0.5);
+  -webkit-box-shadow: inset 0 0 6px #343a40;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(52, 58, 64,0.4);
 }
 
 /* START TOOLTIP STYLES

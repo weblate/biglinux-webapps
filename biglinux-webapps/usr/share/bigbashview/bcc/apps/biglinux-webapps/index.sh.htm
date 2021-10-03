@@ -36,30 +36,28 @@ else
 fi
 
 # Início da página HTML
-echo "
+echo '
 <!-- Cabeçalho -->
 <head>
 
     <!-- Carregando o tema css do app -->
-    <link rel='stylesheet' type='text/css' href='css/bootstrap.min_litera.css'>
-    <link rel='stylesheet' type='text/css' href='css/tooltip.css'>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min_litera.css">
+    <link rel="stylesheet" type="text/css" href="css/tooltip.css">
 
     <!-- Carregando jquery e o js necessário -->
-    <script src='js/jquery-3.6.0.min.js'></script>
-    <script src='js/bootstrap.bundle.min.js'></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 
 </head>
 
 <!-- Corpo da página -->
-<body oncontextmenu='return false;' id='init'>
-    <div class='container-fluid'>"
-
-    echo '<p class="text-center h3">
+<body id="init">
+    <div class="container-fluid">
+        <p class="text-center h3">
             '"$msg"'<br>
-            '$"Bem-Vindo(a) ao Gerenciador de WebApps BigLinux" '
-         </p><hr><br>'
-
-    echo '<div class="row justify-content-center">
+            '$"Bem-Vindo(a) ao Gerenciador de WebApps BigLinux"'
+        </p><hr>
+        <div class="row justify-content-center">
             <div class="col-3">
                 <a href="index-install.sh.htm"
                    class="btn btn-lg btn-init btn-dark align-content-center border-dark"
@@ -79,8 +77,8 @@ echo "
                        '$"Editar<br>WebApps"'
                 </a>
             </div>
-          </div><br/>
-          <div class="row justify-content-center">
+        </div><br/>
+        <div class="row justify-content-center">
             <div class="col-3">
                 <a href="index-remove.sh.htm"
                    class="btn btn-lg btn-init btn-dark align-content-center border-dark"

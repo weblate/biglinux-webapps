@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-if [ ! -e "$HOME/.local/share/applications/$name" ]; then
-    cp /usr/share/biglinux/webapps/$name $HOME/.local/share/applications
+if [ ! -e "$HOME/.local/share/applications/$1" ]; then
+    cp /usr/share/biglinux/webapps/$1 $HOME/.local/share/applications
     update-desktop-database -q $HOME/.local/share/applications
     kbuildsycoca5 &> /dev/null
     exit
 else
-    rm "$HOME/.local/share/applications/$name"
+    rm "$HOME/.local/share/applications/$1"
     update-desktop-database -q $HOME/.local/share/applications
     kbuildsycoca5 &> /dev/null
     exit
