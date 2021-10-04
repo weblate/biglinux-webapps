@@ -22,7 +22,8 @@ echo '
 <!-- Corpo da página -->
 <body id="app">
     <div class="container-fluid">
-        <p class="text-center h3"><i class="bi bi-plus-circle"></i>
+        <p class="text-center h3">
+            <i class="bi bi-plus-circle"></i>
             '$"Instalar WebApps BigLinux"'
         </p>
 
@@ -107,36 +108,40 @@ echo '
                 </div>
             </div>
 
-            <div class="row justify-content-center">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="mt-3 col-8 form-check form-switch">
+            <div class="row justify-content-start">
+                <div class="col-2">&nbsp;</div>
+                <div class="mt-3 col-4 form-check form-switch" style="margin-left:15px;">
                     <label class="form-check-label" for="desktop">
                       <i class="bi bi-link-45deg"></i>
-                      '$"Adicionar atalho na Área de Trabalho"'
+                      '$"Adicionar atalho"'
                     </label>
                     <input class="form-check-input" id="desktop" type="checkbox" name="shortcut"/>
                 </div>
             </div>
 
-            <div class="row justify-content-end">
-                <div class="col-5" id="modetv">
-                    <div class="form-check form-switch">
-                        <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" for="youtube"
-                           title="'$"Essa opção permite que você visualize os vídeos do YouTube sem outras informações.<br>Por exemplo, sem propagandas e sem outros vídeos."'"
-                           data-html="true">
-                           <i class="bi bi-tv"></i>
-                           '$"YouTube em Modo TV"'
-                        </label>
-                        <input class="form-check-input" type="checkbox" name="shortcut" id="tvmode" />
-                    </div>
+            <div class="row justify-content-start">
+                <div class="col-2">&nbsp;</div>
+                <div class="mt-2 col-4 form-check form-switch" id="modetv" style="margin-left:15px;">
+                    <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" for="tvmode"
+                       title="'$"Essa opção permite que você visualize os vídeos do YouTube sem outras informações.<br>Por exemplo, sem propagandas e sem outros vídeos."'" data-html="true">
+                       <i class="bi bi-tv"></i>
+                       '$"YouTube em Modo TV"'
+                    </label>
+                    <input class="form-check-input" type="checkbox" name="tvmode" id="tvmode" />
                 </div>
+                <div class="col-4" id="modetv_empty" style="margin-left:15px;">&nbsp;</div>
                 <div class="col-5">
-                    <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small"
+                    <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home"
                        data-bs-toggle="tooltip" data-bs-placement="top"
                        title="'$"Ir para página inicial"'">
-                       <i class="bi bi-chevron-left"></i>
-                       '$"Limpar"'
+                       <i class="bi home bi-house-fill"></i>
                     </a>
+                    <button type="reset" class="btn btn-sm btn-dark btn-small"
+                            data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="'$"Limpar os campos"'">
+                            <i class="bi bi-stars"></i>
+                            '$"Limpar"'
+                    </button>
                     <button type="submit" class="btn btn-sm btn-primary btn-small"
                             data-bs-toggle="tooltip" data-bs-placement="top"
                             title="'$"Iniciar instalação"'" id="install">
@@ -176,8 +181,11 @@ echo '
 
             if(\$(this).val().match(/youtu/gi)){
                 \$('#modetv').show();
+                \$('#modetv_empty').hide();
             } else {
-                \$('#modetv').hide();}
+                \$('#modetv').hide();
+                \$('#modetv_empty').show();
+            }
         });
 
         \$('#btn').click(function(e){
