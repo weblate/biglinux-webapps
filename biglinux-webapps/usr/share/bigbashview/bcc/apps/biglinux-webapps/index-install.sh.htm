@@ -97,10 +97,20 @@ echo '
                             echo '<option value="firefox" class="form-option">FIREFOX</option>'
                         fi
 
-                        if [ -e /opt/google/chrome/google-chrome -o \
-                             -e /opt/google/chrome-beta/google-chrome-beta -o \
-                             -e /opt/google/chrome-unstable/google-chrome-unstable ];then
-                            echo '<option value="google-chrome" class="form-option">GOOGLE CHROME</option>'
+                        if [ -e /usr/lib/firefox-developer-edition/firefox ];then
+                            echo '<option value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
+                        fi
+
+                        if [ -e /opt/google/chrome/google-chrome ];then
+                            echo '<option value="google-chrome" class="form-option">CHROME</option>'
+                        fi
+
+                        if [ -e /opt/google/chrome/google-chrome-beta ];then
+                            echo '<option value="google-chrome-beta" class="form-option">CHROME BETA</option>'
+                        fi
+
+                        if [ -e /opt/google/chrome/google-chrome-unstable ];then
+                            echo '<option value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
                         fi
 
                         if [ -e /usr/lib/chromium/chromium ];then

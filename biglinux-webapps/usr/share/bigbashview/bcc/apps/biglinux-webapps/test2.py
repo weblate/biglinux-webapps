@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QPushButton, QFileDialog, QApplication
+from PySide2.QtWidgets import QWidget, QPushButton, QFileDialog, QApplication
 import sys
 
 
