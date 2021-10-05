@@ -97,7 +97,7 @@ p.h3{
 *
 */
 .table-fixed tbody {
-    height: 353px;
+    height: 302px;
     overflow-y: auto;
     width: 100%;
 }

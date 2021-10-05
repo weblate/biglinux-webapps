@@ -50,16 +50,19 @@ if [ "$DESKTOP" ]; then
                         <select class="form-select form-select-size"
                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="'$"Navegador usado para abrir os webapps"'">'
-                            if type -P brave-browser;then
+
+                            if [ -e /usr/lib/brave/brave ];then
                                 echo " <option class='form-option' value='brave-browser' $selectbrave>BRAVE</option>"
                             fi
-                            if type -P chromium;then
-                                echo " <option class='form-option' value='chromium' $selectchromium>CHROMIUM</option>"
-                            fi
-                            if type -P google-chrome;then
+                            if [ -e /opt/google/chrome/google-chrome -o \
+                                 -e /opt/google/chrome-beta/google-chrome-beta -o \
+                                 -e /opt/google/chrome-unstable/google-chrome-unstable ];then
                                 echo " <option class='form-option' value='google-chrome' $selectchrome>GOOGLE CHROME</option>"
                             fi
-                            if type -P vivaldi;then
+                            if [ -e /usr/lib/chromium/chromium ];then
+                                echo " <option class='form-option' value='chromium' $selectchromium>CHROMIUM</option>"
+                            fi
+                            if [ -e /opt/vivaldi/vivaldi ];then
                                 echo " <option class='form-option' value='vivaldi' $selectvivaldi>VIVALDI</option>"
                             fi
                     echo '
