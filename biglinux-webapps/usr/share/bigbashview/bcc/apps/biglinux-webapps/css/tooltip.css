@@ -174,11 +174,11 @@ p.h3{
 .alert-fixed {
     position:fixed;
     top: 2%;
-    left: 20%;
-    width: 60%;
+    left: 25%;
+    width: 50%;
     z-index:9999;
     border-radius:5px;
-    font-size: 12pt;
+    font-size: 13pt;
 }
 
 /* START TOOLTIP STYLES
