@@ -178,6 +178,7 @@ p.h3{
     width: 60%;
     z-index:9999;
     border-radius:5px;
+    font-size: 12pt;
 }
 
 /* START TOOLTIP STYLES

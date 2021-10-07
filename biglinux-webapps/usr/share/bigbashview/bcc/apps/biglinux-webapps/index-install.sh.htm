@@ -185,10 +185,6 @@ echo '
     \$(document).ready(function(){
 
         \$('.alert').hide();
-        \$('.btn-close').click(function(e){
-            e.preventDefault();
-            \$('.alert').hide();
-        });
 
         var iconSelected = \$('select').val();
         \$('#browsericon').attr('src', 'icons/'+iconSelected+'.png');
@@ -221,6 +217,7 @@ echo '
 
             let url = \$('#urldesk').val()
             \$.get('./get_auto_icon.sh.py', url,function(resp){
+                console.log(resp);
                 if (resp) {
                     \$('#icondeskhidden').val(resp);
                     \$('#icondesk').val(resp.replace(/.*\//, ''));
@@ -253,13 +250,12 @@ echo '
             let url = \$('#urldesk').val();
 
             if (url == 'https://' || !url){
-                \$('#alert-title').fadeIn();
+                \$('#alert-url').fadeIn();
                 \$('#urldesk').focus();
-                \$('#urldesk').attr('placeholder', '"$"Insira a URL!""');
                 setTimeout(function () {
-                    \$('#urldesk').attr('placeholder', '');
-                    \$('#alert-title').fadeOut();
-                },2500);
+                    \$('#urldesk').val('https://');
+                    \$('#alert-url').fadeOut();
+                },3000);
             } else {
                 \$('#gettitle').html('""<i class=\"bi bi-window\"></i> "$"Detectando...""');
                 \$.get('./get_title.sh.py', url, function(title){
@@ -276,18 +272,28 @@ echo '
             let url = \$('#urldesk').val();
 
             if (url == 'https://' || !url){
+                \$('#alert-url').fadeIn();
                 \$('#urldesk').focus();
-                \$('#urldesk').attr('placeholder', '"$"Insira a URL!""');
-                setTimeout(function (){
-                    \$('#urldesk').val('');
-                },2500);
+                setTimeout(function () {
+                    \$('#urldesk').val('https://');
+                    \$('#alert-url').fadeOut();
+                },3000);
             } else {
                 \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectando...""');
                 \$.get('./get_favicon.sh.py', url, function(data){
-                    \$('#icondesk').val(data);
-                    \$('#preview').attr('src', data);
-                    \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectar Ícone""');
-                    \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
+                    if (data){
+                        \$('#icondesk').val(data);
+                        \$('#preview').attr('src', data);
+                        \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectar Ícone""');
+                        \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
+                    } else {
+                        \$('#alert-favicon').fadeIn();
+                        setTimeout(function(){
+                            \$('#alert-favicon').fadeOut();
+                            \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectar Ícone""');
+                        }, 3000)
+                        return;
+                    }
                 });
             }
         });
@@ -298,28 +304,39 @@ echo '
 
             if (!nome){
                 e.preventDefault();
+                 \$('#alert-name').fadeIn();
                 \$('#namedesk').focus();
-                \$('#namedesk').attr('placeholder', '"$"Insira o Nome!""');
-                setTimeout(function (){
-                    \$('#namedesk').val('');
-                },2500);
+                setTimeout(function () {
+                    \$('#namedesk').val('webapp');
+                    \$('#alert-name').fadeOut();
+                },3000);
             } else if (url == 'https://' || !url){
                 e.preventDefault();
+                \$('#alert-url').fadeIn();
                 \$('#urldesk').focus();
-                \$('#urldesk').attr('placeholder', '"$"Insira a URL!""');
-                setTimeout(function (){
-                    \$('#urldesk').val('');
-                },2500);
+                setTimeout(function () {
+                    \$('#urldesk').val('https://');
+                    \$('#alert-url').fadeOut();
+                },3000);
             } else {
                 \$('#install').submit();
             }
         });
     });
     </script>"
-echo '
 
-<div class="alert alert-dismissible alert-warning alert-fixed" id="alert-title">
-  <strong>'$"Atenção!"'</strong> Change a few things up and try submitting again.
+echo '
+<div class="alert alert-dismissible alert-warning alert-fixed" id="alert-url">
+  <div class="text-center"><strong>'$"Atenção!"'</strong> '$"Insira a URL para continuar."'</div>
+</div>
+
+<div class="alert alert-dismissible alert-warning alert-fixed" id="alert-name">
+  <div class="text-center"><strong>'$"Atenção!"'</strong> '$"Insira o Nome para continuar."'</div>
+</div>
+
+<div class="alert alert-dismissible alert-danger alert-fixed" id="alert-favicon">
+  <div class="text-center"><strong>'$"Erro!"'</strong> '$"Não foi possível detectar o ícone."'<br>
+  '$"Verifique e tente novamente."'</div>
 </div>
 
 
