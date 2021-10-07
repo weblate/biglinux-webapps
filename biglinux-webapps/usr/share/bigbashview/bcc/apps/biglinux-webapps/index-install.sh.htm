@@ -67,8 +67,9 @@ echo '
                     <img id="preview" src="img/default.png" width="48" height="48"/>
                 </div>
                 <div class="mt-5 col-5">
-                    <input type="text" id="icondesk" name="icondesk"
-                           class="form-control form-control-sm align-content-start" readonly/>
+                    <input type="text" id="icondesk" readonly
+                           class="form-control form-control-sm align-content-start"/>
+                    <input type="hidden" name="icondesk" id="icondeskhidden">
                 </div>
                 <div class="mt-5 col-1">
                     <a data-bs-toggle="tooltip" data-bs-placement="top"
@@ -211,14 +212,20 @@ echo '
                 \$('#modetv').hide();
                 \$('#modetv_empty').show();
             }
+
+            let url = \$('#urldesk').val()
+            \$.get('./get_auto_icon.sh.py', url,function(resp){
+                console.log(resp);
+            });
         });
 
         \$('#btn').click(function(e){
             e.preventDefault();
 
-            \$.get('./icon.sh.py', function(dados){
+            \$.get('./get_dialog_icon.sh.py', function(dados){
                 if (dados){
-                    \$('#icondesk').val(dados);
+                    \$('#icondeskhidden').val(dados);
+                    \$('#icondesk').val(dados.replace(/.*\//, ''));
                     \$('#preview').attr('src', dados);
                     \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
                 } else {

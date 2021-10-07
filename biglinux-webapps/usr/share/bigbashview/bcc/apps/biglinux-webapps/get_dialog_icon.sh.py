@@ -2,7 +2,7 @@
 
 from PySide2.QtWidgets import QFileDialog, QApplication
 from PySide2.QtGui import QIcon
-import sys
+import sys, os
 
 
 class Dialog(QFileDialog):
@@ -11,7 +11,7 @@ class Dialog(QFileDialog):
 
         self.setWindowIcon(QIcon.fromTheme('insert-image'))
 
-        fname = self.getOpenFileName(None, 'Images', QIcon.themeSearchPaths()[2], 'Images (*.png *.xpm *.jpg)')
+        fname = self.getOpenFileName(None, 'Images', os.path.expanduser('~'), 'Images (*.svg *.png *.xpm *.jpg *.jpeg *.ico)')
         file_name = fname[0]
         if file_name:
             print(file_name)
