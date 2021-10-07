@@ -163,6 +163,7 @@ echo '
                        <i class="bi home bi-house-fill"></i>
                     </a>
                     <button type="reset" class="btn btn-sm btn-dark btn-small"
+                            onclick="location.reload(true);"
                             data-bs-toggle="tooltip" data-bs-placement="top"
                             title="'$"Limpar os campos"'">
                             <i class="bi bi-stars"></i>
@@ -215,7 +216,14 @@ echo '
 
             let url = \$('#urldesk').val()
             \$.get('./get_auto_icon.sh.py', url,function(resp){
-                console.log(resp);
+                if (resp) {
+                    \$('#icondeskhidden').val(resp);
+                    \$('#icondesk').val(resp.replace(/.*\//, ''));
+                    \$('#preview').attr('src', resp);
+                    \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
+                } else {
+                    return;
+                }
             });
         });
 
