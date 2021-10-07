@@ -13,7 +13,6 @@ def url_parse(url):
     return name
 
 def get_icon(icon_name):
-
     icon_theme = Gtk.IconTheme.get_default()
     icon_info = icon_theme.lookup_icon(icon_name, 48, 0)
     try:
