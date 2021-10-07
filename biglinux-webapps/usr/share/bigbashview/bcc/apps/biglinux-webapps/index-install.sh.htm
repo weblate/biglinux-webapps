@@ -184,9 +184,14 @@ echo '
     <script type='text/javascript'>
     \$(document).ready(function(){
 
+        \$('.alert').hide();
+        \$('.btn-close').click(function(e){
+            e.preventDefault();
+            \$('.alert').hide();
+        });
+
         var iconSelected = \$('select').val();
         \$('#browsericon').attr('src', 'icons/'+iconSelected+'.png');
-
         if(iconSelected == 'firefox'){
             \$('#perfil').hide();
         } else {
@@ -248,11 +253,12 @@ echo '
             let url = \$('#urldesk').val();
 
             if (url == 'https://' || !url){
+                \$('#alert-title').fadeIn();
                 \$('#urldesk').focus();
-                \$('#urldesk').val('"$"Digite ou cole a URL!""');
+                \$('#urldesk').attr('placeholder', '"$"Insira a URL!""');
                 setTimeout(function () {
-                    \$('#urldesk').val('');
-                    \$('#icondesk').focus();
+                    \$('#urldesk').attr('placeholder', '');
+                    \$('#alert-title').fadeOut();
                 },2500);
             } else {
                 \$('#gettitle').html('""<i class=\"bi bi-window\"></i> "$"Detectando...""');
@@ -271,10 +277,9 @@ echo '
 
             if (url == 'https://' || !url){
                 \$('#urldesk').focus();
-                \$('#urldesk').val('"$"Digite ou cole a URL!""');
+                \$('#urldesk').attr('placeholder', '"$"Insira a URL!""');
                 setTimeout(function (){
                     \$('#urldesk').val('');
-                    \$('#icondesk').focus();
                 },2500);
             } else {
                 \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectando...""');
@@ -294,23 +299,33 @@ echo '
             if (!nome){
                 e.preventDefault();
                 \$('#namedesk').focus();
-                \$('#namedesk').val('"$"Digite ou cole o Nome!""');
+                \$('#namedesk').attr('placeholder', '"$"Insira o Nome!""');
                 setTimeout(function (){
                     \$('#namedesk').val('');
-                    \$('#icondesk').focus();
                 },2500);
             } else if (url == 'https://' || !url){
                 e.preventDefault();
                 \$('#urldesk').focus();
-                \$('#urldesk').val('"$"Digite ou cole a URL!""');
+                \$('#urldesk').attr('placeholder', '"$"Insira a URL!""');
                 setTimeout(function (){
                     \$('#urldesk').val('');
-                    \$('#icondesk').focus();
                 },2500);
             } else {
                 \$('#install').submit();
             }
         });
     });
-    </script>
-</body>"
+    </script>"
+echo '
+
+<div class="alert alert-dismissible alert-warning alert-fixed" id="alert-title">
+  <strong>'$"Atenção!"'</strong> Change a few things up and try submitting again.
+</div>
+
+
+
+
+
+
+
+</body>'
