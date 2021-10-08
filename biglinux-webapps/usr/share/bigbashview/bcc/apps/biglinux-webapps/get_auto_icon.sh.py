@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import gi, sys
+import gi, sys, os
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from urllib.parse import urlparse
@@ -18,7 +18,16 @@ def get_icon(icon_name):
     icon_info = icon_theme.lookup_icon(icon_name, 48, 0)
     try:
         filename = icon_info.get_filename()
-        print(filename)
+        ext = os.path.splitext(filename)[1]
+        name_file = os.path.basename(filename).split('.')[0]
+        if ext in ('.svg', '.ico', '.jpg', '.jpeg', '.xbm', '.webp'):
+            os.system('''convert {0} -thumbnail 32x32 \
+                                     -alpha on        \
+                                     -background none \
+                                     -flatten /tmp/{1}.png'''.format(filename, name_file))
+            print('/tmp/%s.png' % name_file)
+        else:
+            print(filename)
         sys.exit()
     except:
         sys.exit()

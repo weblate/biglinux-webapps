@@ -216,9 +216,7 @@ echo '
             }
 
             let url = \$('#urldesk').val()
-            let check_icon = \$('#icondeskhidden').val().match(/tmp/gi);
             if (url && !/\s/.test(url)){
-                if(check_icon){return;}
                 \$.get('./get_auto_icon.sh.py', url,function(resp){
                     if (resp) {
                         \$('#icondeskhidden').val(resp);
@@ -355,5 +353,28 @@ echo '
 <div class="alert alert-danger alert-fixed" id="alert-title">
   <div class="text-center"><strong>'$"Erro!"'</strong> '$"Não foi possível detectar o título!"'<br>'$"Verifique e tente novamente"'</div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">'$"Ícones"'</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row justify-content-center" id="modal-body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 </body>'
