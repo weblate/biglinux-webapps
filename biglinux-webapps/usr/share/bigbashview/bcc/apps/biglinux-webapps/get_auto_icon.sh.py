@@ -6,11 +6,11 @@ from gi.repository import Gtk
 from urllib.parse import urlparse
 
 def url_parse(url):
-    url_http = url if url in 'https://' else 'https://'+url
+    url_http = url if 'https://' in url else 'https://'+url
     _url = urlparse(url_http)
-    return _url
     _url_split = _url.netloc.split('.')[0]
-    name = _url_split if _url_split not in ('webz', 'webk', 'web', 'www') else _url.netloc.split('.')[1]
+    matches = ['webz', 'webk', 'web', 'www']
+    name = _url_split if not any(x in _url_split for x in matches) else _url.netloc.split('.')[1]
     return name
 
 def get_icon(icon_name):
@@ -24,5 +24,5 @@ def get_icon(icon_name):
         sys.exit()
 
 if __name__ == "__main__":
-    #get_icon(url_parse(sys.argv[1]))
-    print(url_parse(sys.argv[1]))
+    get_icon(url_parse(sys.argv[1]))
+    #print(url_parse(sys.argv[1]))

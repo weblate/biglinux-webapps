@@ -216,17 +216,21 @@ echo '
             }
 
             let url = \$('#urldesk').val()
-            \$.get('./get_auto_icon.sh.py', url,function(resp){
-                console.log(resp);
-                if (resp) {
-                    \$('#icondeskhidden').val(resp);
-                    \$('#icondesk').val(resp.replace(/.*\//, ''));
-                    \$('#preview').attr('src', resp);
-                    \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
-                } else {
-                    return;
-                }
-            });
+            let check_icon = \$('#icondeskhidden').val().match(/tmp/gi);
+            if (url && !/\s/.test(url)){
+                if(check_icon){return;}
+                \$.get('./get_auto_icon.sh.py', url,function(resp){
+                    if (resp) {
+                        \$('#icondeskhidden').val(resp);
+                        \$('#icondesk').val(resp.replace(/.*\//, ''));
+                        \$('#preview').attr('src', resp);
+                        \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
+                    } else {
+                        return;
+                    }
+                });
+            }
+
         });
 
         \$('#btn').click(function(e){
@@ -291,7 +295,8 @@ echo '
                 \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectando...""');
                 \$.get('./get_favicon.sh.py', url, function(data){
                     if (data){
-                        \$('#icondesk').val(data);
+                        \$('#icondeskhidden').val(data);
+                        \$('#icondesk').val(data.replace(/.*\//, ''));
                         \$('#preview').attr('src', data);
                         \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectar Ícone""');
                         \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
