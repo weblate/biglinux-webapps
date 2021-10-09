@@ -4,7 +4,7 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 
-url = str(sys.argv[1])
+url = sys.argv[1].strip()
 if 'https' not in url:
     url = 'https://'+url
 try:
@@ -13,6 +13,6 @@ try:
     html_title = html_parse.title.string.strip()
     title = html_title.replace('  ', ' ')
     _title = title.replace('|', '')
-    print(title)
+    print(_title)
 except:
     sys.exit()

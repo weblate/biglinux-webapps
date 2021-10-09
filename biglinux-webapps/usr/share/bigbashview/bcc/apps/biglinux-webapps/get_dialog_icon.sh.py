@@ -29,7 +29,7 @@ class Dialog(QWidget):
                 os.system('''convert {0} -thumbnail 32x32 \
                                          -alpha on        \
                                          -background none \
-                                         -flatten /tmp/{1}.png'''.format(filename, name_file))
+                                         -flatten /tmp/{1}.png'''.format(file_name, name_file))
                 print('/tmp/%s.png' % name_file)
             else:
                 print(file_name)

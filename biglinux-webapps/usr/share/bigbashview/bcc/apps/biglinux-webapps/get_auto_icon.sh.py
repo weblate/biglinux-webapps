@@ -6,17 +6,23 @@ from gi.repository import Gtk
 from urllib.parse import urlparse
 
 def url_parse(url):
+
     url_http = url if 'https://' in url else 'https://'+url
     _url = urlparse(url_http)
-    _url_split = _url.netloc.split('.')[0]
-    matches = ['webz', 'webk', 'web', 'www']
-    name = _url_split if not any(x in _url_split for x in matches) else _url.netloc.split('.')[1]
-    return name
+    try:
+        if _url.netloc.split('.')[1] == 'github': return 'github'
+
+        _url_split = _url.netloc.split('.')[0]
+        matches = ['webz', 'webk', 'web', 'www']
+        name = _url_split if not any(x in _url_split for x in matches) else _url.netloc.split('.')[1]
+        return name
+    except:
+        return
 
 def get_icon(icon_name):
-    icon_theme = Gtk.IconTheme.get_default()
-    icon_info = icon_theme.lookup_icon(icon_name, 48, 0)
     try:
+        icon_theme = Gtk.IconTheme.get_default()
+        icon_info = icon_theme.lookup_icon(icon_name, 128, 0)
         filename = icon_info.get_filename()
         ext = os.path.splitext(filename)[1]
         name_file = os.path.basename(filename).split('.')[0]
