@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-import gi, sys, os
+import gi, sys, os, glob
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from urllib.parse import urlparse
 
 def url_parse(url):
-
     url_http = url if 'https://' in url else 'https://'+url
     _url = urlparse(url_http)
     try:
@@ -19,7 +18,7 @@ def url_parse(url):
     except:
         return
 
-def get_icon(icon_name):
+def get_icon_theme(icon_name):
     try:
         icon_theme = Gtk.IconTheme.get_default()
         icon_info = icon_theme.lookup_icon(icon_name, 128, 0)
@@ -38,6 +37,13 @@ def get_icon(icon_name):
     except:
         sys.exit()
 
+def get_img_local(img_name):
+    for img in glob.glob('/usr/share/icons/**/*%s*.*' % img_name, recursive=True):
+        ext = ['.png', '.jpg', '.jpeg', '.svg', '.xpm']
+        if os.path.splitext(img)[1] in ext:
+            print(img)
+
 if __name__ == "__main__":
-    get_icon(url_parse(sys.argv[1]))
+    #get_icon(url_parse(sys.argv[1]))
+    get_img_local(url_parse(sys.argv[1]))
     #print(url_parse(sys.argv[1]))

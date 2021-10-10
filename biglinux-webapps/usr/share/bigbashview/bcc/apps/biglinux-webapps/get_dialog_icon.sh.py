@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-from PySide2.QtWidgets import QFileDialog, QApplication, QWidget
+from PySide2.QtWidgets import QFileDialog, QApplication
 from PySide2.QtGui import QIcon
 import sys, os
 
 app = QApplication(sys.argv)
 
-class Dialog(QWidget):
+class Dialog(QFileDialog):
     def __init__(self):
         super(Dialog, self).__init__()
         self.setWindowIcon(QIcon.fromTheme('insert-image'))
@@ -16,11 +16,10 @@ class Dialog(QWidget):
         qtRectangle.moveCenter(centerPoint)
         self.move(qtRectangle.topLeft())
 
-        file_name, _ = QFileDialog.getOpenFileName(self,
-                                                   self.tr('Open Image'),
+        file_name, _ = self.getOpenFileName(self,  self.tr('Open Image'),
                                                    os.path.expanduser('~'),
                                                    self.tr('Images (*.svg *.png *.xpm *.jpg *.jpeg *.ico)'),
-                                                   options=QFileDialog.DontUseNativeDialog)
+                                                   options=self.DontUseNativeDialog)
 
         if file_name:
             ext = os.path.splitext(file_name)[1]

@@ -90,13 +90,22 @@ echo '
             </div>
 
             <div class="col-3">
-                <a href="index2.sh.htm"
+                <a href="index2.sh.htm" id="btn-enable-0"
                    class="btn btn-lg btn-init btn-dark align-content-center border-dark"
                    data-bs-toggle="tooltip" data-bs-placement="top"
                    title="'$"Ative ou desative os WebApps instalados por padrão no sistema"'">
                       <i class="bi init bi-toggles"></i><br>
                       '$"Ativar/Desativar<br>WebApps"'
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="btn-spin"></span>
                 </a>
+                <script>
+                    $(function(){
+                        $("#btn-spin").hide();
+                        $("#btn-enable-0").click(function(){
+                            $("#btn-spin").show();
+                        });
+                    });
+                </script>
             </div>
         </div>
     </div>
