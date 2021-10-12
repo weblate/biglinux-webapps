@@ -38,10 +38,27 @@ def get_icon_theme(icon_name):
         sys.exit()
 
 def get_img_local(img_name):
-    for img in glob.glob('/usr/share/icons/**/*%s*.*' % img_name, recursive=True):
-        ext = ['.png', '.jpg', '.jpeg', '.svg', '.xpm']
-        if os.path.splitext(img)[1] in ext:
+    images_all = []
+
+    images_home = glob.glob(os.path.expanduser('~')+'/*/*.*', recursive=True)
+    images_system = glob.glob('/usr/share/icons/**/*%s*.*' % img_name, recursive=True)
+
+    ext = ['.png', '.jpg', '.jpeg', '.svg', '.xpm']
+    images_all.extend(i for i in images_home
+                      if img_name in i.lower()
+                      and os.path.splitext(i)[1] in ext)
+    images_all.extend(x for x in images_system
+                      if img_name in x.lower()
+                      and os.path.splitext(x)[1] in ext)
+
+    for img in images_all:
+        if img.endswith('.svg'):
+            with open(img, 'r') as f:
+                print(f.read())
+
+        else:
             print(img)
+
 
 if __name__ == "__main__":
     #get_icon(url_parse(sys.argv[1]))

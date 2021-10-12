@@ -13,8 +13,9 @@ echo '
     <link rel="stylesheet" type="text/css" href="css/tooltip.css">
 
     <!-- Carregando jquery e o js necessário -->
-    <script type="application/javascript" src="js/jquery-3.6.0.min.js"></script>
-    <script type="application/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 </head>
 
 <!-- Corpo da página -->
@@ -169,7 +170,7 @@ echo '
                             <i class="bi bi-stars"></i>
                             '$"Limpar"'
                     </button>
-                    <button type="submit" class="btn btn-sm btn-primary btn-small"
+                    <button type="button" class="btn btn-sm btn-primary btn-small"
                             data-bs-toggle="tooltip" data-bs-placement="top"
                             title="'$"Iniciar instalação"'" id="install">
                             <i class="bi bi-check2-circle"></i>
@@ -184,27 +185,9 @@ echo '
     <script type='text/javascript'>
     \$(document).ready(function(){
 
-        \$('.alert').hide();
 
-        var iconSelected = \$('select').val();
-        \$('#browsericon').attr('src', 'icons/'+iconSelected+'.png');
-        if(iconSelected == 'firefox'){
-            \$('#perfil').hide();
-        } else {
-            \$('#perfil').show();
-        }
 
-        \$('select').on('change', function(){
-            \$('#browsericon').attr('src', 'icons/'+this.value+'.png');
 
-            if(this.value == 'firefox'){
-                \$('#perfil').hide();
-            } else {
-                \$('#perfil').show();
-            }
-        });
-
-        \$('#modetv').hide();
         \$('#urldesk').keyup(function(){
 
             if(\$(this).val().match(/youtu/gi)){
@@ -310,30 +293,7 @@ echo '
             }
         });
 
-        \$('#install').click(function(e){
-            let nome = \$('#namedesk').val();
-            let url = \$('#urldesk').val();
 
-            if (!nome){
-                e.preventDefault();
-                 \$('#alert-name').fadeIn();
-                \$('#namedesk').focus();
-                setTimeout(function () {
-                    \$('#namedesk').val('webapp');
-                    \$('#alert-name').fadeOut();
-                },3000);
-            } else if (url == 'https://' || !url){
-                e.preventDefault();
-                \$('#alert-url').fadeIn();
-                \$('#urldesk').focus();
-                setTimeout(function () {
-                    \$('#urldesk').val('https://');
-                    \$('#alert-url').fadeOut();
-                },3000);
-            } else {
-                \$('#install').submit();
-            }
-        });
     });
     </script>"
 
