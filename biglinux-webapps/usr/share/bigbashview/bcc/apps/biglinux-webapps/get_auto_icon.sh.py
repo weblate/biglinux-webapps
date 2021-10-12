@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
-import gi, sys, os, glob
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
+import sys
+import os
+import glob
+import favicon
 from urllib.parse import urlparse
+
 
 def url_parse(url):
     url_http = url if 'https://' in url else 'https://'+url
@@ -18,49 +20,61 @@ def url_parse(url):
     except:
         return
 
-def get_icon_theme(icon_name):
-    try:
-        icon_theme = Gtk.IconTheme.get_default()
-        icon_info = icon_theme.lookup_icon(icon_name, 128, 0)
-        filename = icon_info.get_filename()
-        ext = os.path.splitext(filename)[1]
-        name_file = os.path.basename(filename).split('.')[0]
-        if ext in ('.svg', '.ico', '.jpg', '.jpeg', '.xbm', '.webp'):
-            os.system('''convert {0} -thumbnail 32x32 \
-                                     -alpha on        \
-                                     -background none \
-                                     -flatten /tmp/{1}.png'''.format(filename, name_file))
-            print('/tmp/%s.png' % name_file)
-        else:
-            print(filename)
-        sys.exit()
-    except:
-        sys.exit()
 
 def get_img_local(img_name):
+
     images_all = []
 
     images_home = glob.glob(os.path.expanduser('~')+'/*/*.*', recursive=True)
-    images_system = glob.glob('/usr/share/icons/**/*%s*.*' % img_name, recursive=True)
+    images_home_share = glob.glob(os.path.expanduser('~')+'/.local/share/icons/**/*.*', recursive=True)
+    images_system_share = glob.glob('/usr/share/icons/**/*.*', recursive=True)
+    images_system_pix = glob.glob('/usr/share/pixmaps/*.*', recursive=True)
 
     ext = ['.png', '.jpg', '.jpeg', '.svg', '.xpm']
     images_all.extend(i for i in images_home
                       if img_name in i.lower()
                       and os.path.splitext(i)[1] in ext)
-    images_all.extend(x for x in images_system
+
+    images_all.extend(s for s in images_home_share
+                      if img_name in s.lower()
+                      and os.path.splitext(s)[1] in ext)
+
+    images_all.extend(z for z in images_system_pix
+                      if img_name in z.lower()
+                      and os.path.splitext(z)[1] in ext)
+
+    images_all.extend(x for x in images_system_share
                       if img_name in x.lower()
                       and os.path.splitext(x)[1] in ext)
 
     for img in images_all:
         if img.endswith('.svg'):
             with open(img, 'r') as f:
+                print(f.name)
                 print(f.read())
 
         else:
             print(img)
 
 
+def get_favicon_site(url):
+
+    if 'https' not in url:
+        url = 'https://'+url
+    try:
+        icons = favicon.get(url)
+        if len(icons) > 1:
+            for i in icons:
+                 print(i.url)
+        else:
+            print(icons[0].url)
+    except:
+        return
+
+
 if __name__ == "__main__":
     #get_icon(url_parse(sys.argv[1]))
-    get_img_local(url_parse(sys.argv[1]))
+    arg = sys.argv[1].strip()
+    get_favicon_site(arg)
+    get_img_local(url_parse(arg))
     #print(url_parse(sys.argv[1]))
