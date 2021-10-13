@@ -24,39 +24,39 @@ $(function(){
         }
     });
 
-    $('#btn').click(function(e){
+    $("#btn").click(function(e){
         e.preventDefault();
 
-        $.get('./get_dialog_icon.sh.py', function(dados){
+        $.get("./get_dialog_icon.sh.py", function(dados){
             if (dados){
-                $('#icondeskhidden').val(dados);
-                $('#icondesk').val(dados.replace(/.*\//, ''));
-                $('#preview').attr('src', dados);
-                $('#open_folder').hide()
-                $('#open_change').show();
+                $("#icondeskhidden").val(dados);
+                $("#icondesk").val(dados.replace(/.*\//, ""));
+                $("#preview").attr("src", dados);
+                $("#open_folder").hide()
+                $("#open_change").show();
             } else {
                 return;
             }
         });
     });
 
-    $('#urldesk').keyup(function(){
+    $("#urldesk").keyup(function(){
 
         if($(this).val().match(/youtu/gi)){
-            $('#modetv').show();
-            $('#modetv_empty').hide();
+            $("#modetv").show();
+            $("#modetv_empty").hide();
         } else {
-            $('#modetv').hide();
-            $('#modetv_empty').show();
+            $("#modetv").hide();
+            $("#modetv_empty").show();
         }
 
-        // let url = $('#urldesk').val()
+        // let url = $("#urldesk").val()
         // if (url && !/\s/.test(url)){
-        //     $.get('./get_auto_icon.sh.py', url,function(resp){
+        //     $.get("./get_auto_icon.sh.py", url,function(resp){
         //         if (resp) {
-        //             $('#icondeskhidden').val(resp);
-        //             $('#icondesk').val(resp.replace(/.*\//, ''));
-        //             $('#preview').attr('src', resp);
+        //             $("#icondeskhidden").val(resp);
+        //             $("#icondesk").val(resp.replace(/.*\//, ""));
+        //             $("#preview").attr("src", resp);
         //         } else {
         //             return;
         //         }
@@ -64,34 +64,70 @@ $(function(){
         // }
     });
 
-    $('#gettitle').click(function(e){
+    $("#gettitle").click(function(e){
         e.preventDefault();
 
-        let url = $('#urldesk').val();
+        let url = $("#urldesk").val();
 
         if (!isValidURL(url) || !url || /\s/.test(url)){
-            $('#alert-url').fadeIn();
-            $('#urldesk').focus();
+            $("#alert-url").fadeIn();
+            $("#urldesk").focus();
             setTimeout(function () {
-                $('#alert-url').fadeOut();
+                $("#alert-url").fadeOut();
             },3000);
         } else {
-            $('#btn-title').hide();
-            $('#btn-title-go').show();
-            $.get('./get_title.sh.py', url, function(title){
+            $("#btn-title").hide();
+            $("#btn-title-go").show();
+            $.get("./get_title.sh.py", url, function(title){
                 if (title){
-                    $('#namedesk').focus();
-                    $('#namedesk').val(title);
-                    $('#btn-title-go').hide();
-                    $('#btn-title').show();
+                    $("#namedesk").focus();
+                    $("#namedesk").val(title);
+                    $("#btn-title-go").hide();
+                    $("#btn-title").show();
                 } else {
-                    $('#alert-title').fadeIn();
+                    $("#alert-title").fadeIn();
                     setTimeout(function(){
-                        $('#alert-title').fadeOut();
-                        $('#urldesk').focus();
-                        $('#btn-title-go').hide();
-                        $('#btn-title').show();
+                        $("#alert-title").fadeOut();
+                        $("#urldesk").focus();
+                        $("#btn-title-go").hide();
+                        $("#btn-title").show();
                     }, 3000);
+                }
+            });
+        }
+    });
+
+    $("#favicon").click(function(e){
+        e.preventDefault();
+
+        let url = $("#urldesk").val();
+
+        if (!isValidURL(url) || !url || /\s/.test(url)){
+            $("#alert-url").fadeIn();
+            $("#urldesk").focus();
+            setTimeout(function () {
+                $("#alert-url").fadeOut();
+            },3000);
+        } else {
+            $("#btn-icon").hide();
+            $("#btn-icon-go").show();
+            $.get("./get_favicon.sh.py", url, function(data){
+                if (data){
+                    $("#icondeskhidden").val(data);
+                    $("#icondesk").val(data.replace(/.*\//, ""));
+                    $("#preview").attr("src", data);
+                    $("#btn-icon-go").hide();
+                    $("#btn-icon").show();
+                    $("#open_folder").hide()
+                    $("#open_change").show();
+                } else {
+                    $("#alert-favicon").fadeIn();
+                    setTimeout(function(){
+                        $("#alert-favicon").fadeOut();
+                        $("#btn-icon-go").hide();
+                        $("#btn-icon").show();
+                    }, 3000);
+                    return;
                 }
             });
         }

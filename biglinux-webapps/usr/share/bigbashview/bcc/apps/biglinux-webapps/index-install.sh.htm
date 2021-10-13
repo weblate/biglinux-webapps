@@ -217,38 +217,7 @@ echo '
 
 
 
-        \$('#favicon').click(function(e){
-            e.preventDefault();
 
-            let url = \$('#urldesk').val();
-
-            if (url == 'https://' || !url || /\s/.test(url)){
-                \$('#alert-url').fadeIn();
-                \$('#urldesk').focus();
-                setTimeout(function () {
-                    \$('#alert-url').fadeOut();
-                    \$('#urldesk').val('');
-                },3000);
-            } else {
-                \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectando...""');
-                \$.get('./get_favicon.sh.py', url, function(data){
-                    if (data){
-                        \$('#icondeskhidden').val(data);
-                        \$('#icondesk').val(data.replace(/.*\//, ''));
-                        \$('#preview').attr('src', data);
-                        \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectar Ícone""');
-                        \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
-                    } else {
-                        \$('#alert-favicon').fadeIn();
-                        setTimeout(function(){
-                            \$('#alert-favicon').fadeOut();
-                            \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectar Ícone""');
-                        }, 3000);
-                        return;
-                    }
-                });
-            }
-        });
 
 
     });
