@@ -1,10 +1,10 @@
-function isUrlValid(url) {
-    return /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
-};
-
 $(function(){
-    $(".alert").hide();
-    $("#modetv").hide();
+
+    $(".alert, #modetv, #open_change, #btn-spin, #btn-title-go, #btn-icon-go").hide();
+
+    $("#btn-enable-0").click(function(){
+        $("#btn-spin").show();
+    });
 
     var iconSelected = $("select").val();
     $("#browsericon").attr("src", "icons/" + iconSelected + ".png");
@@ -21,6 +21,82 @@ $(function(){
             $("#perfil").hide();
         } else {
             $("#perfil").show();
+        }
+    });
+
+    $('#btn').click(function(e){
+        e.preventDefault();
+
+        $.get('./get_dialog_icon.sh.py', function(dados){
+            if (dados){
+                $('#icondeskhidden').val(dados);
+                $('#icondesk').val(dados.replace(/.*\//, ''));
+                $('#preview').attr('src', dados);
+                $('#open_folder').hide()
+                $('#open_change').show();
+            } else {
+                return;
+            }
+        });
+    });
+
+    $('#urldesk').keyup(function(){
+
+        if($(this).val().match(/youtu/gi)){
+            $('#modetv').show();
+            $('#modetv_empty').hide();
+        } else {
+            $('#modetv').hide();
+            $('#modetv_empty').show();
+        }
+
+        // let url = $('#urldesk').val()
+        // if (url && !/\s/.test(url)){
+        //     $.get('./get_auto_icon.sh.py', url,function(resp){
+        //         if (resp) {
+        //             $('#icondeskhidden').val(resp);
+        //             $('#icondesk').val(resp.replace(/.*\//, ''));
+        //             $('#preview').attr('src', resp);
+        //         } else {
+        //             return;
+        //         }
+        //     });
+        // }
+    });
+
+    $('#gettitle').click(function(e){
+        e.preventDefault();
+
+        let url = $('#urldesk').val();
+
+        if (!isValidURL(url) || !url || /\s/.test(url)){
+            $('#alert-url').fadeIn();
+            $('#urldesk').focus();
+
+            setTimeout(function () {
+                $('#alert-url').fadeOut();
+                $('#urldesk').val('');
+            },3000);
+        } else {
+            $('#btn-title').hide();
+            $('#btn-title-go').show();
+            $.get('./get_title.sh.py', url, function(title){
+                if (title){
+                    $('#namedesk').focus();
+                    $('#namedesk').val(title);
+                    $('#btn-title-go').hide();
+                    $('#btn-title').show();
+                } else {
+                    $('#alert-title').fadeIn();
+                    setTimeout(function(){
+                        $('#alert-title').fadeOut();
+                        $('#urldesk').focus();
+                        $('#urldesk').val('');
+                        $('#btn-title-go').hide();
+                        $('#btn-title').show();
+                    }, 3000);
+                }
+            });
         }
     });
 
@@ -47,4 +123,9 @@ $(function(){
         }
     });
 
+    function isValidURL(string) {
+      var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi);
+      return (res !== null)
+    };
 });
+

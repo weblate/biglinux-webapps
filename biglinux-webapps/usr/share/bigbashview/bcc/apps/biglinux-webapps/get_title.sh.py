@@ -2,17 +2,19 @@
 # -*- coding: utf-8 -*-
 import sys
 import requests
+import re
 from bs4 import BeautifulSoup
 
-url = sys.argv[1].strip()
-if 'https' not in url:
-    url = 'https://'+url
 try:
+    url = sys.argv[1].strip()
+    if 'https' not in url:
+        url = 'https://'+url
+
     r = requests.get(url)
     html_parse = BeautifulSoup(r.content, 'html.parser')
     html_title = html_parse.title.string.strip()
-    title = html_title.replace('  ', ' ')
-    _title = title.replace('|', '')
+    title = re.sub(r'[^\w]',' ', html_title)
+    _title = re.sub(r'\s+',' ', title)
     print(_title)
 except:
     sys.exit()

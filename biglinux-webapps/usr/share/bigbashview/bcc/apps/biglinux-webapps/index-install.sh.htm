@@ -44,20 +44,36 @@ echo '
 
             <div class="row justify-content-center">
                 <div class="col-4">
-                    <a data-bs-toggle="tooltip" data-bs-placement="top"
+                    <button data-bs-toggle="tooltip" data-bs-placement="top"
                        title="'$"Detecta automaticamente o título do site e sugere como nome do webapp."'"
                        class="btn btn-sm btn-primary btn-small-lg" id="gettitle">
-                        <i class="bi bi-window"></i>
-                       '$"Detectar Título"'
-                   </a>
+                        <span id="btn-title">
+                            <i class="bi bi-window"></i>
+                            '$"Detectar Título"'
+                        </span>
+                        <span id="btn-title-go">
+                            <i class="bi bi-window"></i>
+                            '$"Detectando"'
+                            <span class="spinner-border spinner-border-sm"
+                                  role="status" aria-hidden="true"></span>
+                        </span>
+                   </button>
                 </div>
                 <div class="col-3">
-                  <a data-bs-toggle="tooltip" data-bs-placement="top" data-html="true"
+                  <button data-bs-toggle="tooltip" data-bs-placement="top" data-html="true"
                      title="'$"Detecta automaticamente o ícone do site, mas não são todos os sites que suportam o recurso.<br>Por exemplo, sites que necessitam de login."'"
                      class="btn btn-sm btn-primary btn-small-lg" id="favicon">
-                     <i class="bi bi-image-fill"></i>
-                     '$"Detectar Ícone"'
-                   </a>
+                     <span id="btn-icon">
+                        <i class="bi bi-image-fill"></i>
+                        '$"Detectar Ícone"'
+                     </span>
+                     <span id="btn-icon-go">
+                        <i class="bi bi-image-fill"></i>
+                        '$"Detectando"'
+                        <span class="spinner-border spinner-border-sm"
+                              role="status" aria-hidden="true"></span>
+                     </span>
+                   </button>
                 </div>
             </div>
 
@@ -73,12 +89,19 @@ echo '
                     <input type="hidden" name="icondesk" id="icondeskhidden">
                 </div>
                 <div class="mt-5 col-1">
-                    <a data-bs-toggle="tooltip" data-bs-placement="top"
+                    <button data-bs-toggle="tooltip" data-bs-placement="top"
                        title="'$"Carrega um arquivo de imagem para ser usado como ícone."'"
                        class="btn btn-sm btn-primary btn-small" id="btn">
-                       <i class="bi bi-folder2-open"></i>
-                       '$"Abrir"'
-                    </a>
+                       <span id="open_folder">
+                            <i class="bi bi-folder2-open"></i>
+                           '$"Abrir"'
+                       </span>
+                       <span id="open_change">
+                            <i class="bi bi-arrow-repeat"></i>
+                           '$"Alterar"'
+                       </span>
+
+                    </button>
                 </div>
             </div>
 
@@ -188,89 +211,23 @@ echo '
 
 
 
-        \$('#urldesk').keyup(function(){
 
-            if(\$(this).val().match(/youtu/gi)){
-                \$('#modetv').show();
-                \$('#modetv_empty').hide();
-            } else {
-                \$('#modetv').hide();
-                \$('#modetv_empty').show();
-            }
 
-            let url = \$('#urldesk').val()
-            if (url && !/\s/.test(url)){
-                \$.get('./get_auto_icon.sh.py', url,function(resp){
-                    if (resp) {
-                        \$('#icondeskhidden').val(resp);
-                        \$('#icondesk').val(resp.replace(/.*\//, ''));
-                        \$('#preview').attr('src', resp);
-                        \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
-                    } else {
-                        return;
-                    }
-                });
-            }
 
-        });
 
-        \$('#btn').click(function(e){
-            e.preventDefault();
 
-            \$.get('./get_dialog_icon.sh.py', function(dados){
-                if (dados){
-                    \$('#icondeskhidden').val(dados);
-                    \$('#icondesk').val(dados.replace(/.*\//, ''));
-                    \$('#preview').attr('src', dados);
-                    \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
-                } else {
-                    return;
-                }
-            });
-        });
-
-        \$('#gettitle').click(function(e){
-            e.preventDefault();
-
-            let url = \$('#urldesk').val();
-
-            if (url == 'https://' || !url){
-                \$('#alert-url').fadeIn();
-                \$('#urldesk').focus();
-                setTimeout(function () {
-                    \$('#urldesk').val('https://');
-                    \$('#alert-url').fadeOut();
-                },3000);
-            } else {
-                \$('#gettitle').html('""<i class=\"bi bi-window\"></i> "$"Detectando...""');
-                \$.get('./get_title.sh.py', url, function(title){
-                    if (title){
-                        \$('#namedesk').focus();
-                        \$('#namedesk').val(title);
-                        \$('#gettitle').html('""<i class=\"bi bi-window\"></i> "$"Detectar Título""');
-                    } else {
-                        \$('#alert-title').fadeIn();
-                        setTimeout(function(){
-                            \$('#alert-title').fadeOut();
-                            \$('#gettitle').html('""<i class=\"bi bi-window\"></i> "$"Detectar Título""');
-                        }, 3000);
-                        return;
-                    }
-                });
-            }
-        });
 
         \$('#favicon').click(function(e){
             e.preventDefault();
 
             let url = \$('#urldesk').val();
 
-            if (url == 'https://' || !url){
+            if (url == 'https://' || !url || /\s/.test(url)){
                 \$('#alert-url').fadeIn();
                 \$('#urldesk').focus();
                 setTimeout(function () {
-                    \$('#urldesk').val('https://');
                     \$('#alert-url').fadeOut();
+                    \$('#urldesk').val('');
                 },3000);
             } else {
                 \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectando...""');
