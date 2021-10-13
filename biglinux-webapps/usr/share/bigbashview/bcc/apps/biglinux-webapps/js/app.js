@@ -72,10 +72,8 @@ $(function(){
         if (!isValidURL(url) || !url || /\s/.test(url)){
             $('#alert-url').fadeIn();
             $('#urldesk').focus();
-
             setTimeout(function () {
                 $('#alert-url').fadeOut();
-                $('#urldesk').val('');
             },3000);
         } else {
             $('#btn-title').hide();
@@ -91,7 +89,6 @@ $(function(){
                     setTimeout(function(){
                         $('#alert-title').fadeOut();
                         $('#urldesk').focus();
-                        $('#urldesk').val('');
                         $('#btn-title-go').hide();
                         $('#btn-title').show();
                     }, 3000);
@@ -128,4 +125,3 @@ $(function(){
       return (res !== null)
     };
 });
-
