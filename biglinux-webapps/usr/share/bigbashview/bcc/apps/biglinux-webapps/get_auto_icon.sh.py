@@ -47,11 +47,9 @@ def get_img_local(img_name):
         for img in images_all:
             if img.endswith('.svg'):
                 with open(img, 'r') as f:
-                    print(f.name)
-                    print(f.read())
-
+                    print('<div class="col-3 img-thumbnail text-center">%s</div>' % f.read())
             else:
-                print(img)
+                print('<div class="col-3"><img class="img-thumbnail" src="%s"/></div>' % img)
     except:
         return
 
@@ -64,9 +62,9 @@ def get_favicon_site(url):
         icons = favicon.get(url)
         if len(icons) > 1:
             for i in icons:
-                 print(i.url)
+                 print('<div class="col-3"><img class="img-thumbnail" src="%s"/></div>' % i.url)
         else:
-            print(icons[0].url)
+            print('<div class="col-3"><img class="img-thumbnail" src="%s"/></div>' % icons[0].url)
     except:
         return
 
