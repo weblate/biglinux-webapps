@@ -23,31 +23,26 @@ def url_parse(url):
 
 
 def get_img_local(img_name):
-
     try:
         images_all = []
 
-        images_home = glob.glob(os.path.expanduser('~')+'/*/*.*', recursive=True)
-        images_home_share = glob.glob(os.path.expanduser('~')+'/.local/share/icons/**/*.*', recursive=True)
-        images_system_share = glob.glob('/usr/share/icons/**/*.*', recursive=True)
-        images_system_pix = glob.glob('/usr/share/pixmaps/*.*', recursive=True)
+        images_home = glob.glob(os.path.expanduser('~')+'/*/%s.*' % img_name, recursive=True)
+        images_home_share = glob.glob(os.path.expanduser('~')+'/.local/share/icons/**/%s.*' % img_name, recursive=True)
+        images_system_share = glob.glob('/usr/share/icons/**/%s.*' % img_name, recursive=True)
+        images_system_pix = glob.glob('/usr/share/pixmaps/%s.*' % img_name, recursive=True)
         ext = ['.png', '.jpg', '.jpeg', '.svg', '.xpm']
 
         images_all.extend(i for i in images_home
-                          if img_name in i.lower()
-                          and os.path.splitext(i)[1] in ext)
+                          if os.path.splitext(i)[1] in ext)
 
         images_all.extend(s for s in images_home_share
-                          if img_name in s.lower()
-                          and os.path.splitext(s)[1] in ext)
+                          if os.path.splitext(s)[1] in ext)
 
         images_all.extend(z for z in images_system_pix
-                          if img_name in z.lower()
-                          and os.path.splitext(z)[1] in ext)
+                          if os.path.splitext(z)[1] in ext)
 
         images_all.extend(x for x in images_system_share
-                          if img_name in x.lower()
-                          and os.path.splitext(x)[1] in ext)
+                          if os.path.splitext(x)[1] in ext)
 
         for img in images_all:
             if img.endswith('.svg'):

@@ -14,7 +14,7 @@ $(function(){
         $("#perfil").show();
     }
 
-    $("select").on("change", function () {
+    $("select").on("change", function(){
         $("#browsericon").attr("src", "icons/" + this.value + ".png");
 
         if (this.value == "firefox") {
@@ -29,12 +29,14 @@ $(function(){
 
         $.get("./get_dialog_icon.sh.py", function(dados){
             if (dados){
+                $("#open_folder").hide()
+                $("#open_change").show();
+                $("#icondesk").focus();
                 $("#icondeskhidden").val(dados);
                 $("#icondesk").val(dados.replace(/.*\//, ""));
                 $("#preview").attr("src", dados);
-                $("#open_folder").hide()
-                $("#open_change").show();
             } else {
+                $("#btn").blur();
                 return;
             }
         });
@@ -111,11 +113,13 @@ $(function(){
         } else {
             $("#btn-icon").hide();
             $("#btn-icon-go").show();
-            $.get("./get_favicon.sh.py", url, function(data){
+            $.get("./get_auto_icon.sh.py", url, function(data){
                 if (data){
-                    $("#icondeskhidden").val(data);
-                    $("#icondesk").val(data.replace(/.*\//, ""));
-                    $("#preview").attr("src", data);
+                  //$("#icondeskhidden").val(data);
+                  //$("#icondesk").val(data.replace(/.*\//, ""));
+                  //$("#preview").attr("src", data);
+                    $("#modal-body").html(data);
+                    $(".modal").modal("show");
                     $("#btn-icon-go").hide();
                     $("#btn-icon").show();
                     $("#open_folder").hide()
@@ -141,14 +145,14 @@ $(function(){
             e.preventDefault();
             $("#alert-name").fadeIn();
             $("#namedesk").focus();
-            setTimeout(function () {
+            setTimeout(function(){
                 $("#alert-name").fadeOut();
             }, 3000);
         } else if (url == "https://" || !url) {
             e.preventDefault();
             $("#alert-url").fadeIn();
             $("#urldesk").focus();
-            setTimeout(function () {
+            setTimeout(function(){
                 $("#alert-url").fadeOut();
             }, 3000);
         } else {

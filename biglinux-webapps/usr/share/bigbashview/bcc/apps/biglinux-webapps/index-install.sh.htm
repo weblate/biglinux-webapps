@@ -86,7 +86,7 @@ echo '
                 <div class="mt-5 col-5">
                     <input type="text" id="icondesk" readonly
                            class="form-control form-control-sm align-content-start"/>
-                    <input type="hidden" name="icondesk" id="icondeskhidden">
+                    <input type="hidden" name="icondesk" id="icondeskhidden" value="img/default.png">
                 </div>
                 <div class="mt-5 col-1">
                     <button data-bs-toggle="tooltip" data-bs-placement="top"
@@ -202,28 +202,8 @@ echo '
                 </div>
             </div>
         </form>
-    </div>'
+    </div>
 
-    echo "
-    <script type='text/javascript'>
-    \$(document).ready(function(){
-
-
-
-
-
-
-
-
-
-
-
-
-
-    });
-    </script>"
-
-echo '
 <div class="alert alert-warning alert-fixed" id="alert-url">
   <div class="text-center">
     <i class="bi bi-exclamation-octagon"></i>
@@ -264,7 +244,7 @@ echo '
       <div class="modal-header">
         <h5 class="modal-title" id="modalLabel">'$"Ícones"'</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true">X</span>
         </button>
       </div>
       <div class="modal-body">
@@ -275,8 +255,5 @@ echo '
     </div>
   </div>
 </div>
-
-
-
 
 </body>'
