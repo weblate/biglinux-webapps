@@ -113,13 +113,29 @@ $(function(){
         } else {
             $("#btn-icon").hide();
             $("#btn-icon-go").show();
-            $.get("./get_auto_icon.sh.py", url, function(data){
+            $.get("./get_favicon.sh.py", url, function(data){
                 if (data){
-                  //$("#icondeskhidden").val(data);
-                  //$("#icondesk").val(data.replace(/.*\//, ""));
-                  //$("#preview").attr("src", data);
-                    $("#modal-body").html(data);
-                    $(".modal").modal("show");
+                    if (/.*tmp.*/.test(data)){
+                      $("#icondeskhidden").val(data);
+                      $("#icondesk").val(data.replace(/.*\//, ""));
+                      $("#preview").attr("src", data);
+                    } else {
+                      $("#modal-body").html(data);
+                      $(".modal").modal("show");
+                      $("img#input_img").each(function(){
+                        $(this).click(function(){
+                          $(".modal").modal("hide");
+                          let url = $(this).attr("src");
+                          $.get('./save_favicon.sh.py', url,function(img){
+                            $("#icondeskhidden").val(img);
+                            $("#icondesk").val(img.replace(/.*\//, ""));
+                            $("#preview").attr("src", '');
+                            $("#preview").attr("src", img);
+                          });
+                        });
+                      });
+                    }
+
                     $("#btn-icon-go").hide();
                     $("#btn-icon").show();
                     $("#open_folder").hide()
@@ -136,6 +152,8 @@ $(function(){
             });
         }
     });
+
+
 
     $("#install").click(function (e) {
         let nome = $("#namedesk").val();

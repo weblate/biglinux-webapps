@@ -13,8 +13,7 @@ def url_parse(url_http):
 
 url = sys.argv[1].strip()
 ext = os.path.splitext(url)[1]
-url_http = url if 'https://' in url else 'https://'+url
-name_file = url_parse(url_http)
+name_file = url_parse(url)
 
 try:
     resp = requests.get(url, stream=True)
@@ -26,8 +25,8 @@ try:
                                          -alpha on        \
                                          -background none \
                                          -flatten /tmp/{0}.png'''.format(name_file, ext))
-        ext = '.png'
+        os.remove('/tmp/{0}{1}'.format(name_file, ext))
 
-    print('/tmp/{}{}'.format(name_file, ext))
+    print('/tmp/{}.png'.format(name_file))
 except:
     sys.exit()
