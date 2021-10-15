@@ -73,8 +73,10 @@ def get_favicon_site(url, name_file):
         if len(icons) > 1:
             for i in icons:
                  html += '''
-                 <div class="col-3">
-                    <img class="img-thumbnail" src="{0}" id="input_img"/>
+                 <div class="col-3 text-center" id="input_img">
+                    <img class="img-thumbnail" src="{0}"/><br>
+                    <span class="spinner-border spinner-border-sm"
+                          role="status" aria-hidden="true" id="btn-spin"></span>
                  </div>'''.format(i.url)
         else:
             ext = os.path.splitext(icons[0].url)[1]

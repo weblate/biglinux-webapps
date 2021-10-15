@@ -115,22 +115,23 @@ $(function(){
             $("#btn-icon-go").show();
             $.get("./get_favicon.sh.py", url, function(data){
                 if (data){
-                    if (/.*tmp.*/.test(data)){
+                    if (/\/tmp\/.*/.test(data)){
                       $("#icondeskhidden").val(data);
                       $("#icondesk").val(data.replace(/.*\//, ""));
                       $("#preview").attr("src", data);
                     } else {
                       $("#modal-body").html(data);
                       $(".modal").modal("show");
-                      $("img#input_img").each(function(){
+                      $("div#input_img").each(function(){
+                        $("span#btn-spin").hide();
                         $(this).click(function(){
-                          $(".modal").modal("hide");
-                          let url = $(this).attr("src");
+                          $(this).children("span#btn-spin").show();
+                          let url = $(this).children("img").attr("src");
                           $.get('./save_favicon.sh.py', url,function(img){
                             $("#icondeskhidden").val(img);
                             $("#icondesk").val(img.replace(/.*\//, ""));
-                            $("#preview").attr("src", '');
                             $("#preview").attr("src", img);
+                            $(".modal").modal("hide");
                           });
                         });
                       });
