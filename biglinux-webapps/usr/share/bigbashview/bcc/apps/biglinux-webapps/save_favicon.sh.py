@@ -4,12 +4,19 @@ import requests
 import sys, os
 from urllib.parse import urlparse
 
-def url_parse(url_http):
-    _url = urlparse(url_http)
-    _url_split = _url.netloc.split('.')[0]
-    matches = ['webz', 'webk', 'web', 'www', 'mobile', 'hp', 'static.xx', 'm']
-    name = _url_split if not any(x in _url_split for x in matches) else _url.netloc.split('.')[1]
-    return name
+def url_parse(url):
+    try:
+        url_http = url if 'https://' in url else 'https://'+url
+        _url = urlparse(url_http)
+        _url_split = _url.netloc.split('.')
+
+        if _url_split[1] == 'github': return 'github'
+
+        matches = ['webz', 'webk', 'web', 'www', 'mobile', 'hp', 'static.xx', 'm']
+        name = _url_split[0] if not any(x in _url_split[0] for x in matches) else _url_split[1]
+        return name
+    except:
+        return
 
 url = sys.argv[1].strip()
 ext = os.path.splitext(url)[1]

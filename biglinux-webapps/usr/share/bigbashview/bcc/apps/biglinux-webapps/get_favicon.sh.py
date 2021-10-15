@@ -55,9 +55,9 @@ def get_img_local(img_name):
         for img in images_all:
             if img.endswith('.svg'):
                 with open(img, 'r') as f:
-                    html += '<div class="col-3 img-thumbnail text-center">%s</div>' % f.read()
+                    html += '<div class="col-3 img-thumbnail text-center" id="input_img">%s</div>' % f.read()
             else:
-                html += '<div class="col-3"><img class="img-thumbnail" src="%s"/></div>' % img
+                html += '<div class="col-3"><img class="img-thumbnail" id="input_img" src="%s"/></div>' % img
         return html
     except:
         return
@@ -75,7 +75,7 @@ def get_favicon_site(url, name_file):
                  html += '''
                  <div class="col-3 text-center" id="input_img">
                     <img class="img-thumbnail" src="{0}"/><br>
-                    <span class="spinner-border spinner-border-sm"
+                    <span class="spinner-border spinner-border-sm mt-2 text-primary"
                           role="status" aria-hidden="true" id="btn-spin"></span>
                  </div>'''.format(i.url)
         else:
