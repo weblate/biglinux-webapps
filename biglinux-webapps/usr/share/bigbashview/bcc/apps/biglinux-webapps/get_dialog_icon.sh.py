@@ -22,8 +22,9 @@ class Dialog(QFileDialog):
                                                    options=self.DontUseNativeDialog)
 
         if file_name:
-            ext = os.path.splitext(file_name)[1]
-            name_file = os.path.basename(file_name).split('.')[0]
+            base_name = os.path.basename(file_name)
+            name_file, ext = os.path.splitext(base_name)
+
             if ext in ('.svg', '.ico', '.jpg', '.jpeg', '.xbm', '.webp'):
                 os.system('''convert {0} -thumbnail 32x32 \
                                          -alpha on        \

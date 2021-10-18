@@ -24,12 +24,9 @@ def get_favicon_site(url):
         else:
             url_icon = icons[0].url
             base_name = os.path.basename(url_icon)
-            base_name_split = os.path.splitext(base_name)
-            if base_name_split[0] == 'favicon':
-                name_file = '%s-%s' % (base_name_split[0], random.randint(0, 10000000))
-            else:
-                name_file = base_name_split[0]
-            ext = base_name_split[1]
+            name_file, ext = os.path.splitext(base_name)
+            if name_file == 'favicon':
+                name_file = '%s-%s' % (name_file, random.randint(0, 10000000))
 
             resp = requests.get(url_icon, stream=True)
             with open('/tmp/{}{}'.format(name_file, ext), 'wb') as img:
