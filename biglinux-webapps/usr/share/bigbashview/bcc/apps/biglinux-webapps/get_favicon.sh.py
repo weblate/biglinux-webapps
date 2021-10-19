@@ -3,14 +3,13 @@
 import sys
 import favicon
 import subprocess
+import glob
 
 def get_favicon_site(url):
     try:
-        if 'https' not in url:
-            url = 'https://'+url
-
         icons = favicon.get(url)
         html = ''
+
         if len(icons) > 1:
             for i in icons:
                 html += '''
@@ -29,4 +28,6 @@ def get_favicon_site(url):
 
 if __name__ == "__main__":
     url = sys.argv[1].strip()
+    if 'https' not in url:
+        url = 'https://'+url
     get_favicon_site(url)
