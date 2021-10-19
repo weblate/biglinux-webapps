@@ -3,7 +3,6 @@
 import sys
 import favicon
 import subprocess
-import glob
 
 def get_favicon_site(url):
     try:
@@ -26,8 +25,7 @@ def get_favicon_site(url):
     except:
         return
 
-if __name__ == "__main__":
-    url = sys.argv[1].strip()
-    if 'https' not in url:
-        url = 'https://'+url
-    get_favicon_site(url)
+url = sys.argv[1].strip()
+if 'https' not in url:
+    url = 'https://'+url
+get_favicon_site(url)

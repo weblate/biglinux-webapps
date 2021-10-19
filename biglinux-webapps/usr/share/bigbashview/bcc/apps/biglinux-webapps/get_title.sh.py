@@ -17,8 +17,7 @@ def get_title(url):
     except:
         return
 
-if __name__ == "__main__":
-    url = sys.argv[1].strip()
-    if 'https' not in url:
-        url = 'https://'+url
-    get_title(url)
+url = sys.argv[1].strip()
+if 'https' not in url:
+    url = 'https://'+url
+get_title(url)

@@ -2,7 +2,8 @@
 
 from PySide2.QtWidgets import QFileDialog, QApplication
 from PySide2.QtGui import QIcon
-import sys, os
+import sys
+import os
 
 app = QApplication(sys.argv)
 
@@ -25,8 +26,8 @@ class Dialog(QFileDialog):
             base_name = os.path.basename(file_name)
             name_file, ext = os.path.splitext(base_name)
 
-            if ext in ('.svg', '.ico', '.jpg', '.jpeg', '.xbm', '.webp'):
-                os.system('''convert {0} -thumbnail 48x48 \
+            if ext != '.png':
+                os.system('''convert {0} -thumbnail 32x32 \
                                          -alpha on        \
                                          -background none \
                                          -flatten /tmp/{1}.png'''.format(file_name, name_file))

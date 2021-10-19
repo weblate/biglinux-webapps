@@ -14,10 +14,7 @@ def save(url):
         name_file = '%s-%s' % (name_file, random.randint(0, 10000000))
 
     try:
-        resp = requests.get(url, stream=True)
-       #with open('/tmp/{}{}'.format(name_file, ext), 'wb') as img:
-       #    img.write(resp.content)
-
+        resp = requests.get(url, stream=True, timeout=3)
         with Image.open(io.BytesIO(resp.content)) as img:
             img.save('/tmp/{}{}'.format(name_file, ext))
 
@@ -27,7 +24,7 @@ def save(url):
                                                      -alpha on        \
                                                      -background none \
                                                      -flatten /tmp/{0}.png'''.format(name_file, ext))
-                    os.remove('/tmp/{0}{1}'.format(name_file, ext))
+                    os.remove('/tmp/{}{}'.format(name_file, ext))
                     print('/tmp/%s.png' % name_file)
                 else:
                     print('/tmp/%s.png' % name_file)
@@ -38,12 +35,11 @@ def save(url):
                                          -alpha on        \
                                          -background none \
                                          -flatten /tmp/{1}.png'''.format(url, name_file, ext))
-
+        os.remove('/tmp/{}{}'.format(name_file, ext))
         print('/tmp/%s.png' % name_file)
 
     else:
         return
 
-if __name__ == "__main__":
-    url = sys.argv[1].strip()
-    save(url)
+url = sys.argv[1].strip()
+save(url)
