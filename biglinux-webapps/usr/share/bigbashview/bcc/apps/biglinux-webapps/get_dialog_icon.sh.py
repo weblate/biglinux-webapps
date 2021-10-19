@@ -26,7 +26,7 @@ class Dialog(QFileDialog):
             name_file, ext = os.path.splitext(base_name)
 
             if ext in ('.svg', '.ico', '.jpg', '.jpeg', '.xbm', '.webp'):
-                os.system('''convert {0} -thumbnail 32x32 \
+                os.system('''convert {0} -thumbnail 48x48 \
                                          -alpha on        \
                                          -background none \
                                          -flatten /tmp/{1}.png'''.format(file_name, name_file))
