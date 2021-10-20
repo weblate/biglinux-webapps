@@ -3,19 +3,19 @@
 import requests
 import sys
 import os
-import random
-import io
+from random import randint
+from io import BytesIO
 from PIL import Image, UnidentifiedImageError
 
 def save(url):
     base_name = os.path.basename(url)
     name_file, ext = os.path.splitext(base_name)
     if name_file == 'favicon':
-        name_file = '%s-%s' % (name_file, random.randint(0, 10000000))
+        name_file = '%s-%s' % (name_file, randint(0, 10000000))
 
     try:
-        resp = requests.get(url, stream=True, timeout=3)
-        with Image.open(io.BytesIO(resp.content)) as img:
+        resp = requests.get(url, stream=True)
+        with Image.open(BytesIO(resp.content)) as img:
             img.save('/tmp/{}{}'.format(name_file, ext))
 
             if img.verify:
