@@ -81,6 +81,7 @@ $(function(){
             $("#btn-title").hide();
             $("#btn-title-go").show();
             $.get("./get_title.sh.py", url, function(title){
+                console.log(title)
                 if (title){
                     $("#namedesk").focus();
                     $("#namedesk").val(title);

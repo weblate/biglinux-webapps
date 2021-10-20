@@ -7,9 +7,14 @@ from bs4 import BeautifulSoup
 
 def get_title(url):
     try:
-        resp = requests.get(url)
+        headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5)'
+        'AppleWebKit/537.36 (KHTML, like Gecko)'
+        'Chrome/50.0.2661.102 Safari/537.36'
+        }
+        resp = requests.get(url, headers=headers)
         if resp.status_code >= 400: return
-        html_parse = BeautifulSoup(resp.content, 'html.parser')
+        html_parse = BeautifulSoup(resp.text, 'html.parser')
         html_title = html_parse.title.string.strip()
         title = re.sub(r'[^\w]',' ', html_title)
         _title = re.sub(r'\s+',' ', title)

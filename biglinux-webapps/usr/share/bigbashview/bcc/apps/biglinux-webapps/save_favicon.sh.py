@@ -14,7 +14,12 @@ def save(url):
         name_file = '%s-%s' % (name_file, randint(0, 10000000))
 
     try:
-        resp = requests.get(url, stream=True)
+        headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5)'
+        'AppleWebKit/537.36 (KHTML, like Gecko)'
+        'Chrome/50.0.2661.102 Safari/537.36'
+        }
+        resp = requests.get(url, stream=True, headers=headers)
         with Image.open(BytesIO(resp.content)) as img:
             img.save('/tmp/{}{}'.format(name_file, ext))
 
