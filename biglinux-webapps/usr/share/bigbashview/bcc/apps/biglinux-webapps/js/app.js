@@ -155,8 +155,6 @@ $(function(){
         }
     });
 
-
-
     $("#install").click(function (e) {
         let nome = $("#namedesk").val();
         let url = $("#urldesk").val();

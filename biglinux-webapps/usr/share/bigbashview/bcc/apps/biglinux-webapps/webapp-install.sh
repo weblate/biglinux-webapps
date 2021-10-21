@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-echo "$icondesk"
-exit
+
 #Translation
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps
