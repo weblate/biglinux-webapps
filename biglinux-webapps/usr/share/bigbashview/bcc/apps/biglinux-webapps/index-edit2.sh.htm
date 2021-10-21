@@ -103,7 +103,7 @@ echo '
                         <select name="browser" class="mt-5 form-select form-select-size">'
 
                             if [ -e /usr/lib/brave/brave ];then
-                                if [ $(grep brave $filedesk) ];then
+                                if [ "$(grep brave $filedesk)" ];then
                                     echo '<option value="brave-browser" class="form-option" selected>BRAVE BROWSER</option>'
                                 else
                                     echo '<option value="brave-browser" class="form-option">BRAVE BROWSER</option>'
@@ -111,7 +111,7 @@ echo '
                             fi
 
                             if [ -e /usr/lib/firefox/firefox ];then
-                                if [ $(grep firefox $filedesk) ];then
+                                if [ "$(grep firefox $filedesk)" ];then
                                     echo '<option value="firefox" class="form-option" selected>FIREFOX</option>'
                                 else
                                     echo '<option value="firefox" class="form-option">FIREFOX</option>'
