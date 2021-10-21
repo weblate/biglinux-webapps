@@ -10,7 +10,7 @@ DESKICON="$(grep "Icon=" $filedesk | sed 's|Icon=||')"
 if [ "$DESKICON" = "internet-web-browser" ];then
     DESKICON="default.png"
 fi
-if [ "$(grep "Exec=" $filedesk | grep 'firefox')" != "" ];then
+if [ "$(grep "Exec=" $filedesk | grep 'firefox')" ];then
     DESKEXEC="$(grep "Exec=" $filedesk | sed 's|Exec=||')"
     DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
 else
@@ -100,13 +100,47 @@ echo '
                 </div>
                 <div class="col-3">
                         <select name="browser" class="mt-5 form-select form-select-size">'
-                            for i in "${WEB[@]}"; do
-                                if type -P "$i" &>/dev/null;then
-                                    [ "$(grep $i $filedesk)" ] && selected="selected" || selected=
-                                    echo "<option value=$i data-icon=icons/$i.png $selected
-                                                  class='form-option'>${i^^}</option>"
+
+                            if [ -e /usr/lib/brave/brave ];then
+                                if [ $(grep brave $filedesk) ];then
+                                    echo '<option value="brave-browser" class="form-option" selected>BRAVE BROWSER</option>'
+                                else
+                                    echo '<option value="brave-browser" class="form-option">BRAVE BROWSER</option>'
                                 fi
-                            done
+                            fi
+
+                            if [ -e /usr/lib/firefox/firefox ];then
+                                if [ $(grep firefox $filedesk) ];then
+                                    echo '<option value="firefox" class="form-option" selected>FIREFOX</option>'
+                                else
+                                    echo '<option value="firefox" class="form-option">FIREFOX</option>'
+                                fi
+                            fi
+
+                            if [ -e /usr/lib/firefox-developer-edition/firefox ];then
+                                echo '<option value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
+                            fi
+
+                            if [ -e /opt/google/chrome/google-chrome ];then
+                                echo '<option value="google-chrome" class="form-option">CHROME</option>'
+                            fi
+
+                            if [ -e /opt/google/chrome/google-chrome-beta ];then
+                                echo '<option value="google-chrome-beta" class="form-option">CHROME BETA</option>'
+                            fi
+
+                            if [ -e /opt/google/chrome/google-chrome-unstable ];then
+                                echo '<option value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
+                            fi
+
+                            if [ -e /usr/lib/chromium/chromium ];then
+                                echo '<option value="chromium" class="form-option">CHROMIUM</option>'
+                            fi
+
+                            if [ -e /opt/vivaldi/vivaldi ];then
+                                echo '<option value="vivaldi" class="form-option">VIVALDI</option>'
+                            fi
+
                 echo   '</select>
                 </div>
                 <div class="mt-5 col-3 form-check form-switch" id="perfil">
