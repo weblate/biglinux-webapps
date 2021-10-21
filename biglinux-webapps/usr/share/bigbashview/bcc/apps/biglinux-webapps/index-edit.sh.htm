@@ -23,13 +23,13 @@ echo '
 
 DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop)"
 
-if [ $DESKTOP ];then
+if [ "$DESKTOP" ];then
 
 echo '<div class="row">
         <div class="col-2"></div>
         <div class="col-8">
           <table class="table table-hover table-striped">
-            <thead>
+            <thead class="table-dark">
                 <tr>
                   <th class="text-center" scope="col">'$"ÍCONE"'</th>
                   <th class="text-center" scope="col">'$"NOME"'</th>
@@ -56,7 +56,7 @@ echo '<tr class="table-light">
         <form action="index-edit2.sh.htm" method="get">
             <input type="hidden" name="filedesk" value="'$i'"/>
             <td>
-                <img class="center" src="'$DESKICON'" width="42" height="42"/>
+                <img class="img-thumbnail center" src="'$DESKICON'" width="42" height="42"/>
             </td>
             <td class="text-truncate align-middle" style="max-width: 10rem;"
                 data-bs-toggle="tooltip" data-bs-placement="top"
