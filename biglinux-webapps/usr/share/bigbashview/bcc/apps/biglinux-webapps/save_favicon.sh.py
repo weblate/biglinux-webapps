@@ -9,8 +9,13 @@ from PIL import Image, UnidentifiedImageError
 
 def save(url):
     base_name = os.path.basename(url)
-    name_file, exten = os.path.splitext(base_name)
-    ext = exten if exten else '.png'
+    name_file, extension = os.path.splitext(base_name)
+
+    if extension:
+        ext = extension
+    else:
+        ext = '.webp'
+
     if name_file == 'favicon':
         name_file = '%s-%s' % (name_file, randint(0, 10000000))
 
@@ -31,10 +36,9 @@ def save(url):
                                                      -background none \
                                                      -flatten /tmp/{0}.png'''.format(name_file, ext))
                     os.remove('/tmp/{}{}'.format(name_file, ext))
-
-                    print('/tmp/{}.png'.format(name_file)
+                    print('/tmp/%s.png' % name_file)
                 else:
-                    print('/tmp/{}.png'.format(name_file)
+                    print('/tmp/%s.png' % name_file)
 
     except UnidentifiedImageError:
         os.system('''wget -q {0} -O /tmp/{1}{2}

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-
+echo "<font color='#fff'>$namedesk<br>$urldesk<br>$icondesk<br>$browser</font>"
+exit
 #Translation
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps

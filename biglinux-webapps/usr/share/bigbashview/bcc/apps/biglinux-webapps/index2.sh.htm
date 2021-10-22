@@ -47,9 +47,7 @@ if [ "$DESKTOP" ]; then
                     <th scope="col" class="text-center col-3">'$"NAVEGADOR:"'</th>
                     <th scope="col" class="col-1">&nbsp;</th>
                     <th scope="col" class="text-center col-4">
-                        <select class="form-select form-select-size"
-                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                title="'$"Navegador usado para abrir os webapps"'">'
+                        <select class="form-select form-select-size">'
 
                             if [ -e /usr/lib/brave/brave ];then
                                 echo " <option class='form-option' value='brave-browser' $selectbrave>BRAVE</option>"

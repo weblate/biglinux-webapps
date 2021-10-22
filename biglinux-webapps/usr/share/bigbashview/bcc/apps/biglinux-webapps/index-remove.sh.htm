@@ -21,25 +21,33 @@ DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop)"
 
 if [ "$DESKTOP" ];then
 
-echo '<p class="text-center h3">
-      <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home"
-         data-bs-toggle="tooltip" data-bs-placement="top"
-         title="'$"Ir para página inicial"'">
-        <i class="bi home bi-house-fill"></i>
-      </a>
-        <i class="bi bi-trash-fill"></i>
-        '$"Remover WebApps BigLinux"'
-      </p>
+echo '<div class="row">
+        <div class="col-1"></div>
+        <div class="col-1">
+          <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home mt-2"
+             data-bs-toggle="tooltip" data-bs-placement="top"
+             title="'$"Ir para página inicial"'">
+            <i class="bi home bi-house-fill"></i>
+          </a>
+        </div>
+        <div class="col-8">
+          <p class="text-center h3">
+            <i class="bi bi-trash-fill"></i>
+            '$"Remover WebApps BigLinux"'
+          </p>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-1"></div>
         <div class="col-10">
-          <table class="table table-hover table-striped">
+          <table class="table table-hover table-striped table-fixed">
             <thead class="table-dark">
                 <tr>
-                  <th class="text-center" scope="col">'$"ÍCONE"'</th>
-                  <th class="text-center" scope="col">'$"NOME"'</th>
-                  <th class="text-center" scope="col">'$"URL"'</th>
-                  <th class="text-center" scope="col">'$"AÇÃO"'</th>
+                  <th class="text-center col-1" scope="col">'$"ÍCONE"'</th>
+                  <th class="text-center col-4" scope="col">'$"NOME"'</th>
+                  <th class="text-center col-5" scope="col">'$"URL"'</th>
+                  <th class="text-center col-2" scope="col">'$"AÇÃO"'</th>
                 </tr>
             </thead>
             <tbody>'
@@ -57,19 +65,19 @@ for i in $DESKTOP; do
     DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
     if [ "$DESKICON" = "webapp" ];then DESKICON="img/default.png";fi
 
-echo '<tr class="table-light">
+echo '<tr class="table-light" style="line-height:38px">
         <form action="webapp-remove.sh" method="get">
             <input type="hidden" name="filedesk" value="'$i'"/>
-            <td>
+            <td class="col-1">
                 <img class="img-thumbnail center" src="'$DESKICON'" width="42" height="42"/>
             </td>
-            <td class="text-truncate align-middle" style="max-width: 10rem;"
+            <td class="text-truncate align-middle col-4 text-center"
                 data-bs-toggle="tooltip" data-bs-placement="top"
                 title="'$DESKNAME'">'$DESKNAME'</td>
-            <td class="text-truncate align-middle" style="max-width: 10rem;"
+            <td class="text-truncate align-middle col-5 text-center"
                 data-bs-toggle="tooltip" data-bs-placement="top"
                 title="'$DESKURL'">'$DESKURL'</td>
-            <td class="text-center">
+            <td class="text-center col-2">
               <button type="submit" class="btn btn-danger btn-sm btn-small"
                       data-bs-toggle="tooltip" data-bs-placement="top"
                       title="'$"Remover"'">

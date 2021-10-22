@@ -15,26 +15,38 @@ echo '
 </head>
 <body id="app">
 
-    <div class="container-fluid">
-        <p class="text-center h3">
-          <i class="bi bi-pencil-square"></i>
-          '$"Editar WebApps BigLinux"'
-        </p>'
+    <div class="container-fluid">'
 
 DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop)"
 
 if [ "$DESKTOP" ];then
 
 echo '<div class="row">
-        <div class="col-2"></div>
+        <div class="col-1"></div>
+        <div class="col-1">
+          <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home mt-2"
+             data-bs-toggle="tooltip" data-bs-placement="top"
+             title="'$"Ir para página inicial"'">
+            <i class="bi home bi-house-fill"></i>
+          </a>
+        </div>
         <div class="col-8">
-          <table class="table table-hover table-striped">
+          <p class="text-center h3">
+            <i class="bi bi-pencil-square"></i>
+            '$"Editar WebApps BigLinux"'
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <table class="table table-hover table-striped table-fixed">
             <thead class="table-dark">
                 <tr>
-                  <th class="text-center" scope="col">'$"ÍCONE"'</th>
-                  <th class="text-center" scope="col">'$"NOME"'</th>
-                  <th class="text-center" scope="col">'$"URL"'</th>
-                  <th class="text-center" scope="col">'$"AÇÃO"'</th>
+                  <th class="text-center col-1" scope="col">'$"ÍCONE"'</th>
+                  <th class="text-center col-4" scope="col">'$"NOME"'</th>
+                  <th class="text-center col-5" scope="col">'$"URL"'</th>
+                  <th class="text-center col-2" scope="col">'$"AÇÃO"'</th>
                 </tr>
             </thead>
             <tbody>'
@@ -52,19 +64,19 @@ for i in $DESKTOP; do
     DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
     if [ "$DESKICON" = "webapp" ];then DESKICON="img/default.png";fi
 
-echo '<tr class="table-light">
+echo '<tr class="table-light" style="line-height:38px">
         <form action="index-edit2.sh.htm" method="get">
             <input type="hidden" name="filedesk" value="'$i'"/>
-            <td>
+            <td class="col-1">
                 <img class="img-thumbnail center" src="'$DESKICON'" width="42" height="42"/>
             </td>
-            <td class="text-truncate align-middle" style="max-width: 10rem;"
+            <td class="text-truncate align-middle col-4 text-center"
                 data-bs-toggle="tooltip" data-bs-placement="top"
                 title="'$DESKNAME'">'$DESKNAME'</td>
-            <td class="text-truncate align-middle" style="max-width: 10rem;"
+            <td class="text-truncate align-middle col-5 text-center"
                 data-bs-toggle="tooltip" data-bs-placement="top"
                 title="'$DESKURL'">'$DESKURL'</td>
-            <td class="text-center">
+            <td class="text-center col-2">
               <button type="submit" class="btn btn-info btn-sm btn-small"
                       data-bs-toggle="tooltip" data-bs-placement="top"
                       title="'$"Editar"'">
@@ -79,20 +91,15 @@ echo '      </tbody>
         </table>
       </div>
   </div>
-  <div class="row justify-content-center">
-    <div class="col-2">
-         <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home"
-           data-bs-toggle="tooltip" data-bs-placement="top"
-           title="'$"Ir para página inicial"'">
-           <i class="bi home bi-house-fill"></i>
-        </a>
-    </div>
-  </div>
 </div>'
 
 else
 
-echo '<br>
+echo '
+    <p class="text-center h3">
+        <i class="bi bi-pencil-square"></i>
+        '$"Editar WebApps BigLinux"'
+    </p>
     <div class="row justify-content-center">
         <div class="card border-dark bg-secondary mb-3" style="max-width: 40rem;">
           <div class="card-body">
