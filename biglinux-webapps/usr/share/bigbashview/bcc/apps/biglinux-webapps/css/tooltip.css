@@ -63,7 +63,7 @@ body#app{
 }
 
 .form-select-size{
-  height:38px;
+  height:35px;
   font-size:11pt;
   font-weight:bold;
 }
@@ -98,7 +98,7 @@ p.h3{
 *
 */
 .table-fixed tbody {
-    height: 302px;
+    height: 352px;
     overflow-y: auto;
     width: 100%;
 }
