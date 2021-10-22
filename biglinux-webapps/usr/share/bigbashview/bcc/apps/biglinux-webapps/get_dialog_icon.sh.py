@@ -31,9 +31,9 @@ class Dialog(QFileDialog):
                                          -alpha on        \
                                          -background none \
                                          -flatten /tmp/{1}.png'''.format(file_name, name_file))
-                print('/tmp/%s.png' % name_file)
+                print('/tmp/%s.png' % name_file, end='')
             else:
-                print(file_name)
+                print(file_name, end='')
             sys.exit()
         else:
             sys.exit()

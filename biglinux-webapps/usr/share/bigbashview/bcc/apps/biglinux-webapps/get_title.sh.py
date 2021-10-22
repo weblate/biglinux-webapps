@@ -18,7 +18,7 @@ def get_title(url):
         html_title = html_parse.title.string.strip()
         title = re.sub(r'[^\w]',' ', html_title)
         _title = re.sub(r'\s+',' ', title)
-        print(_title)
+        print(_title, end='')
     except:
         return
 

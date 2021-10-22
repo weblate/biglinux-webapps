@@ -21,7 +21,7 @@ def get_favicon_site(url):
             url_icon = icons[0].url
             html = subprocess.getoutput('./save_favicon.sh.py %s' % url_icon)
 
-        print(html)
+        print(html, end='')
     except:
         return
 

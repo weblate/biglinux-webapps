@@ -25,27 +25,34 @@ echo '
     </head>
     <body id="app">
         <div class="container-fluid">
-            <p class="text-center h3">
-                <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home"
-                   data-bs-toggle="tooltip" data-bs-placement="top"
-                   title="'$"Ir para página inicial"'">
-                   <i class="bi home bi-house-fill"></i>
-                </a>
-                <i class="bi bi-toggles"></i>
-                '$"Ative ou desative os WebApps BigLinux"'
-            </p>'
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-1">
+                    <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home mt-2"
+                       data-bs-toggle="tooltip" data-bs-placement="top"
+                       title="'$"Ir para página inicial"'">
+                       <i class="bi home bi-house-fill"></i>
+                    </a>
+                </div>
+                <div class="col-8">
+                    <p class="text-center h3">
+                        <i class="bi bi-toggles"></i>
+                        '$"Ative ou desative os WebApps BigLinux"'
+                    </p>
+                </div>
+            </div>'
 
 DESKTOP="$(ls /usr/share/biglinux/webapps/*.desktop | sort )"
 
 if [ "$DESKTOP" ]; then
     echo '<div class="row">
-        <div class="col-2"></div>
-        <div class="col-8 box-shadow">
+        <div class="col-1"></div>
+        <div class="col-10 box-shadow">
           <table class="table table-hover table-striped mb-0 table-fixed">
             <thead>
                 <tr class="table-dark" style="line-height:38px">
-                    <th scope="col" class="text-center col-3">'$"NAVEGADOR:"'</th>
-                    <th scope="col" class="col-1">&nbsp;</th>
+                    <th scope="col" class="text-center col-2">'$"NAVEGADOR:"'</th>
+
                     <th scope="col" class="text-center col-4">
                         <select class="form-select form-select-size">'
 
@@ -67,9 +74,15 @@ if [ "$DESKTOP" ]; then
                         </select>
 
                     </th>
-                    <th scope="col" class="col-2">&nbsp;</th>
-                    <th scope="col" class="text-center col-2">
+                    <th scope="col" class="text-center col-1">
                         <img id="browsericon" width="38" height="38" class="center">
+                    </th>
+                    <th scope="col" class="col-1">&nbsp;</th>
+                    <th scope="col" class="col-1">
+                        '$"Filtrar:"'
+                    </th>
+                    <th scope="col" class="col-3">
+                        <input type="text" class="form-control" style="line-height:20px" id="filter">
                     </th>
                 </tr>
                 <tr class="table-dark">
@@ -78,7 +91,7 @@ if [ "$DESKTOP" ]; then
                   <th class="text-center col-2" scope="col">'$"AÇÃO"'</th>
                 </tr>
             </thead>
-            <tbody>'
+            <tbody id="table-filter">'
 for i in $DESKTOP; do
 
     namedesk="$(basename $i)"
@@ -144,6 +157,13 @@ done
 
         $("input[type=checkbox]").on("change", function(){
             $.get("./enable-disable.sh", this.value);
+        });
+
+        $("#filter").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#table-filter tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
         });
     });
 </script>

@@ -14,7 +14,7 @@ def save(url):
     if extension:
         ext = extension
     else:
-        ext = '.webp'
+        ext = '.png'
 
     if name_file == 'favicon':
         name_file = '%s-%s' % (name_file, randint(0, 10000000))
@@ -36,9 +36,9 @@ def save(url):
                                                      -background none \
                                                      -flatten /tmp/{0}.png'''.format(name_file, ext))
                     os.remove('/tmp/{}{}'.format(name_file, ext))
-                    print('/tmp/%s.png' % name_file)
+                    print('/tmp/%s.png' % name_file, end='')
                 else:
-                    print('/tmp/%s.png' % name_file)
+                    print('/tmp/%s.png' % name_file, end='')
 
     except UnidentifiedImageError:
         os.system('''wget -q {0} -O /tmp/{1}{2}
@@ -47,7 +47,7 @@ def save(url):
                                          -background none \
                                          -flatten /tmp/{1}.png'''.format(url, name_file, ext))
         os.remove('/tmp/{}{}'.format(name_file, ext))
-        print('/tmp/%s.png' % name_file)
+        print('/tmp/%s.png' % name_file, end='')
 
     else:
         return
