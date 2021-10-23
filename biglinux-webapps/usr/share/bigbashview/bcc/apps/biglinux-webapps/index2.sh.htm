@@ -158,13 +158,14 @@ done
         });
 
         $("input[type=checkbox]").on("change", function(){
-            let box = $.get("./enable-disable.sh", this.value, function(s){ return s.responseText; });
-            console.log(box);
-            if (box == "on"){
-                $(this).tooltip("hide").attr("data-original-title", "'$"Desativar"'").tooltip("show");
-            } else {
-                $(this).tooltip("hide").attr("data-original-title", "'$"Ativar"'").tooltip("show");
-            }
+            var dis = $(this);
+            $.get("./enable-disable.sh", this.value, function(s){
+                if (s == "on"){
+                    dis.tooltip("hide").attr("data-original-title", "'$"Desativar"'").tooltip("show");
+                } else {
+                    dis.tooltip("hide").attr("data-original-title", "'$"Ativar"'").tooltip("show");
+                }
+            });
         });
 
         $("#filter").on("keyup", function() {
