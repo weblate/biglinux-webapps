@@ -23,19 +23,31 @@ if [ "$DESKTOP" ];then
 
 echo '<div class="row">
         <div class="col-1"></div>
+
         <div class="col-1">
           <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home mt-2"
              data-bs-toggle="tooltip" data-bs-placement="top"
-             title="'$"Ir para página inicial"'">
+             title="'$"Tela Inicial"'">
             <i class="bi home bi-house-fill"></i>
           </a>
         </div>
-        <div class="col-8">
+
+        <div class="col-7">
           <p class="text-center h3">
-            <i class="bi bi-pencil-square"></i>
             '$"Editar WebApps BigLinux"'
           </p>
         </div>
+
+         <div class="col-2">
+          <div class="input-group input-group-sm">
+            <span class="input-group-text mt-3" style="height:33px">
+                <i class="bi bi-funnel-fill"></i>
+            </span>
+            <input type="text" class="form-control form-control-sm mt-3"
+                   id="filter" placeholder="'$"Filtrar"'">
+          </div>
+        </div>
+
       </div>
       <div class="row">
         <div class="col-1"></div>
@@ -49,7 +61,7 @@ echo '<div class="row">
                   <th class="text-center col-2" scope="col">'$"AÇÃO"'</th>
                 </tr>
             </thead>
-            <tbody>'
+            <tbody id="table-filter-edt">'
 
 for i in $DESKTOP; do
 
@@ -97,7 +109,6 @@ else
 
 echo '
     <p class="text-center h3">
-        <i class="bi bi-pencil-square"></i>
         '$"Editar WebApps BigLinux"'
     </p>
     <div class="row justify-content-center">
@@ -112,7 +123,7 @@ echo '
         <div class="col-3">
             <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home"
                data-bs-toggle="tooltip" data-bs-placement="top"
-               title="'$"Ir para página inicial"'">
+               title="'$"Tela Inicial"'">
                <i class="bi home bi-house-fill"></i>
             </a>
             <a href="index-install.sh.htm" class="btn btn-sm btn-primary btn-small">
@@ -124,4 +135,16 @@ echo '
 </div>'
 fi
 
-echo '</body>'
+echo '
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $("#filter").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#table-filter-edt tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+</body>'

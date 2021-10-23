@@ -116,12 +116,6 @@ p.h3{
 .table-fixed thead > tr > th {
   float: left;
   position: relative;
-
-  &::after {
-      content: '';
-      clear: both;
-      display: block;
-  }
 }
 
 .table-fixed tbody td{
@@ -183,6 +177,18 @@ p.h3{
 
 #input_img{
   cursor: pointer;
+}
+
+::-webkit-input-placeholder { /* Edge */
+  font-style: italic;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  font-style: italic;
+}
+
+::placeholder {
+  font-style: italic;
 }
 
 /* START TOOLTIP STYLES
