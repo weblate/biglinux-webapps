@@ -5,9 +5,11 @@ if [ ! -e "$HOME/.local/share/applications/$1" ]; then
     update-desktop-database -q $HOME/.local/share/applications
     kbuildsycoca5 &> /dev/null
     echo -n 'on'
+    exit
 else
     rm "$HOME/.local/share/applications/$1"
     update-desktop-database -q $HOME/.local/share/applications
     kbuildsycoca5 &> /dev/null
     echo -n 'off'
+    exit
 fi

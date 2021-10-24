@@ -82,7 +82,7 @@ if [ "$DESKTOP" ]; then
                         <span class="input-group-text" style="height:36px;margin-top:1px">
                           <i class="bi bi-funnel-fill"></i>
                         </span>
-                        <input type="text" class="form-control" placeholder="'$"Filtrar"'"
+                        <input type="text" class="form-control" placeholder="'$"Filtro"'"
                                id="filter" style="line-height:20px">
                       </div>
                     </th>
@@ -90,7 +90,11 @@ if [ "$DESKTOP" ]; then
                 <tr class="table-dark">
                   <th class="text-center col-2" scope="col">'$"ÍCONE"'</th>
                   <th class="text-center col-8" scope="col">'$"NOME"'</th>
-                  <th class="text-center col-2" scope="col">'$"AÇÃO"'</th>
+                  <th class="text-center col-2" scope="col">'$"AÇÃO"'
+                    <input type="checkbox" id="checkAll" style="width:16px;height:16px;top:2px;position:relative"
+                           data-bs-toggle="tooltip" data-bs-placement="top"
+                           title="'$"Marcar todos"'"/>
+                  </th>
                 </tr>
             </thead>
             <tbody id="table-filter">'
@@ -131,7 +135,7 @@ for i in $DESKTOP; do
             <td class="col-2">
                 <div class="form-check">
                     <label class="form-check-label"></label>
-                    <input class="form-check-input table-fixed-input" '$check'
+                    <input class="form-check-input table-fixed-input input-desk" '$check'
                            type="checkbox" data-bs-toggle="tooltip"
                            data-bs-placement="top" title="'$STATUS'" value="'$namedesk'"/>
                 </div>
@@ -152,28 +156,43 @@ done
         let iconSelected = $("select").val();
         $("#browsericon").attr("src", "icons/"+iconSelected+".png");
 
-        $("select").on("change", function() {
+        $("select").on("change", function(){
             $.get("./change_browser.sh", this.value);
             $("#browsericon").attr("src", "icons/"+this.value+".png");
         });
 
-$("#checkAll").click(function () {
-$('input:checkbox').not(this).prop('checked', this.checked);
-this.change()
-});
+        if ($("input[type=checkbox].input-desk").prop("checked", fun) )
 
-        $("input[type=checkbox]").on("change", function(){
+        $("#checkAll").click(function(){
+            $("input[type=checkbox].input-desk").not(this).prop("checked", this.checked);
+            $("input[type=checkbox].input-desk").each(function(){
+                var tis = $(this);
+                setTimeout(function(){
+
+                    $.get("./enable-disable.sh", tis.val(), function(s){
+                        if (s == "on"){
+                            tis.tooltip("hide").attr("data-original-title", "'$"Desativar"'");
+                        } else {
+                            tis.tooltip("hide").attr("data-original-title", "'$"Ativar"'");
+                        }
+                    });
+
+                }, 100);
+            });
+        });
+
+        $("input[type=checkbox].input-desk").on("change", function(){
             var dis = $(this);
-            $.get("./enable-disable.sh", this.value, function(s){
+            $.get("./enable-disable.sh", dis.val(), function(s){
                 if (s == "on"){
-                    dis.tooltip("hide").attr("data-original-title", "'$"Desativar"'").tooltip("show");
+                    dis.tooltip("hide").attr("data-original-title", "'$"Desativar"'");
                 } else {
-                    dis.tooltip("hide").attr("data-original-title", "'$"Ativar"'").tooltip("show");
+                    dis.tooltip("hide").attr("data-original-title", "'$"Ativar"'");
                 }
             });
         });
 
-        $("#filter").on("keyup", function() {
+        $("#filter").on("keyup", function(){
             var value = $(this).val().toLowerCase();
             $("#table-filter tr").filter(function() {
               $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
