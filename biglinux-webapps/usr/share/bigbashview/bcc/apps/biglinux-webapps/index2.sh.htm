@@ -157,6 +157,11 @@ done
             $("#browsericon").attr("src", "icons/"+this.value+".png");
         });
 
+$("#checkAll").click(function () {
+$('input:checkbox').not(this).prop('checked', this.checked);
+this.change()
+});
+
         $("input[type=checkbox]").on("change", function(){
             var dis = $(this);
             $.get("./enable-disable.sh", this.value, function(s){
@@ -174,6 +179,8 @@ done
               $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+
+
     });
 </script>
 '
