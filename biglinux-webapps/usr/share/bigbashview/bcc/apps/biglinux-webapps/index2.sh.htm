@@ -90,11 +90,7 @@ if [ "$DESKTOP" ]; then
                 <tr class="table-dark">
                   <th class="text-center col-2" scope="col">'$"ÍCONE"'</th>
                   <th class="text-center col-8" scope="col">'$"NOME"'</th>
-                  <th class="text-center col-2" scope="col">'$"AÇÃO"'
-                    <input type="checkbox" id="checkAll" style="width:16px;height:16px;top:2px;position:relative"
-                           data-bs-toggle="tooltip" data-bs-placement="top"
-                           title="'$"Marcar todos"'"/>
-                  </th>
+                  <th class="text-center col-2" scope="col">'$"AÇÃO"'</th>
                 </tr>
             </thead>
             <tbody id="table-filter">'
@@ -170,34 +166,6 @@ done
         } else {
           $("#checkAll").attr("checked", false);
         }
-
-        $("#checkAll").click(function(){
-            $("input[type=checkbox].input-desk").not(this).prop("checked", this.checked);
-            $("input[type=checkbox].input-desk").each(function(){
-                let tis = $(this);
-                if (tis.is(":checked")){
-                    return true;
-                }
-                setTimeout(function(){
-
-                    $.get("./enable-disable.sh", tis.val(), function(s){
-                        if (s == "on"){
-                            tis.tooltip("hide").attr("data-original-title", "'$"Desativar"'");
-                        } else {
-                            tis.tooltip("hide").attr("data-original-title", "'$"Ativar"'");
-                        }
-                    });
-
-                }, 800);
-            });
-
-            let cc = $("input[type=checkbox].input-desk:checked").length;
-            if (cc == 0){
-              $(this).tooltip("hide").attr("data-original-title", "'$"Marcar todos"'");
-            } else {
-              $(this).tooltip("hide").attr("data-original-title", "'$"Desmarcar todos"'");
-            }
-        });
 
         $("input[type=checkbox].input-desk").on("change", function(){
             let dis = $(this);

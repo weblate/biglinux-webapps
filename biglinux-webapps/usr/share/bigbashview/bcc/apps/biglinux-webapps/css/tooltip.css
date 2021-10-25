@@ -124,10 +124,10 @@ p.h3{
 
 .table-fixed-input{
   position: relative;
-  top: 5px;
-  left: 50px;
-  height:25px;
-  width:25px
+  top: 3px;
+  left: 48px;
+  height:30px;
+  width:30px
 }
 
 .table-fixed-text{
