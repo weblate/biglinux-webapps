@@ -161,12 +161,20 @@ done
             $("#browsericon").attr("src", "icons/"+this.value+".png");
         });
 
-        if ($("input[type=checkbox].input-desk").prop("checked", fun) )
+        let c = $("input[type=checkbox].input-desk").length;
+        let cc = $("input[type=checkbox].input-desk:checked").length;
+
+        if (cc == c){
+          $("#checkAll").attr("checked", true);
+          $("#checkAll").tooltip("hide").attr("data-original-title", "'$"Desmarcar todos"'");
+        } else {
+          $("#checkAll").attr("checked", false);
+        }
 
         $("#checkAll").click(function(){
             $("input[type=checkbox].input-desk").not(this).prop("checked", this.checked);
             $("input[type=checkbox].input-desk").each(function(){
-                var tis = $(this);
+                let tis = $(this);
                 setTimeout(function(){
 
                     $.get("./enable-disable.sh", tis.val(), function(s){
@@ -177,12 +185,19 @@ done
                         }
                     });
 
-                }, 100);
+                }, 800);
             });
+
+            let cc = $("input[type=checkbox].input-desk:checked").length;
+            if (cc == 0){
+              $(this).tooltip("hide").attr("data-original-title", "'$"Marcar todos"'");
+            } else {
+              $(this).tooltip("hide").attr("data-original-title", "'$"Desmarcar todos"'");
+            }
         });
 
         $("input[type=checkbox].input-desk").on("change", function(){
-            var dis = $(this);
+            let dis = $(this);
             $.get("./enable-disable.sh", dis.val(), function(s){
                 if (s == "on"){
                     dis.tooltip("hide").attr("data-original-title", "'$"Desativar"'");
@@ -190,10 +205,22 @@ done
                     dis.tooltip("hide").attr("data-original-title", "'$"Ativar"'");
                 }
             });
+
+            let c = $("input[type=checkbox].input-desk").length;
+            let cc = $("input[type=checkbox].input-desk:checked").length;
+
+            if (cc == c){
+              $("#checkAll").attr("checked", true);
+              $("#checkAll").tooltip("hide").attr("data-original-title", "'$"Desmarcar todos"'");
+            } else {
+              $("#checkAll").attr("checked", false);
+              $("#checkAll").tooltip("hide").attr("data-original-title", "'$"Marcar todos"'");
+            }
+
         });
 
         $("#filter").on("keyup", function(){
-            var value = $(this).val().toLowerCase();
+            let value = $(this).val().toLowerCase();
             $("#table-filter tr").filter(function() {
               $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
