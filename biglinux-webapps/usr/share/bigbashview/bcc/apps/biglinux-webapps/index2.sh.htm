@@ -175,6 +175,9 @@ done
             $("input[type=checkbox].input-desk").not(this).prop("checked", this.checked);
             $("input[type=checkbox].input-desk").each(function(){
                 let tis = $(this);
+                if (tis.is(":checked")){
+                    return true;
+                }
                 setTimeout(function(){
 
                     $.get("./enable-disable.sh", tis.val(), function(s){
