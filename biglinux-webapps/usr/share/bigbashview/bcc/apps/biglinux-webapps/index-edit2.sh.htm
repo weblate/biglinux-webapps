@@ -103,68 +103,69 @@ echo '
                         <select name="browser" class="mt-5 form-select form-select-size">'
 
 
-                    if [ -e ];then
-                        if [ "$(grep brave $filedesk)" ];then
-                            echo '<option value="brave-browser" class="form-option" selected>BRAVE BROWSER</option>'
-                        else
-                            echo '<option value="brave-browser" class="form-option">BRAVE BROWSER</option>'
-                        fi
-                    fi
+if [ -e /usr/lib/brave/brave ];then
+    if [ "$(grep brave $filedesk)" ];then
+        echo '<option value="brave-browser" class="form-option" selected>BRAVE BROWSER</option>'
+    else
+        echo '<option value="brave-browser" class="form-option">BRAVE BROWSER</option>'
+    fi
+fi
 
-                    if [ -e ];then
-                        if [ "$(grep firefox $filedesk)" ];then
-                            echo '<option value="firefox" class="form-option" selected>FIREFOX</option>'
-                        else
-                            echo '<option value="firefox" class="form-option">FIREFOX</option>'
-                        fi
-                    fi
+if [ -e /usr/lib/firefox/firefox ];then
+    if [ "$(grep firefox $filedesk)" ];then
+        echo '<option value="firefox" class="form-option" selected>FIREFOX</option>'
+    else
+        echo '<option value="firefox" class="form-option">FIREFOX</option>'
+    fi
+fi
 
-                    if [ -e ];then
-                        if [ "$(grep firefox $filedesk)" ];then
-                            echo '<option selected value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
-                        else
-                            echo '<option value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
-                        fi
-                    fi
+if [ -e /usr/lib/firefox-developer-edition/firefox ];then
+    if [ "$(grep firefox $filedesk)" ];then
+        echo '<option selected value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
+    else
+        echo '<option value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
+    fi
+fi
 
-                    if [ -e ];then
-                        if [ "$(grep google-chrome $filedesk)" ];then
-                            echo '<option selected value="google-chrome" class="form-option">CHROME</option>'
-                        else
-                            echo '<option value="google-chrome" class="form-option">CHROME</option>'
-                        fi
-                    fi
+if [ -e /opt/google/chrome/google-chrome ];then
+    if [ "$(grep google-chrome $filedesk)" ];then
+        echo '<option selected value="google-chrome" class="form-option">CHROME</option>'
+    else
+        echo '<option value="google-chrome" class="form-option">CHROME</option>'
+    fi
+fi
 
-                    if [ -e ];then
-                        if [ "$(grep google-chrome-beta $filedesk)" ];then
-                            echo '<option selected value="google-chrome-beta" class="form-option">CHROME BETA</option>'
-                        else
-                            echo '<option value="google-chrome-beta" class="form-option">CHROME BETA</option>'
-                        fi
-                    fi
+if [ -e /opt/google/chrome/google-chrome-beta ];then
+    if [ "$(grep google-chrome-beta $filedesk)" ];then
+        echo '<option selected value="google-chrome-beta" class="form-option">CHROME BETA</option>'
+    else
+        echo '<option value="google-chrome-beta" class="form-option">CHROME BETA</option>'
+    fi
+fi
 
-                    if [ -e ];then
-                        if [ "$(grep google-chrome-unstable $filedesk)" ];then
-                            echo '<option selected value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
-                        else
-                            echo '<option value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
-                        fi
-                    fi
+if [ -e /opt/google/chrome/google-chrome-unstable ];then
+    if [ "$(grep google-chrome-unstable $filedesk)" ];then
+        echo '<option selected value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
+    else
+        echo '<option value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
+    fi
+fi
 
-                    if [ -e ];then
-                        if [ "$(grep chromium $filedesk)" ];then
-                            echo '<option selected value="chromium" class="form-option">CHROMIUM</option>'
-                    else
-                        echo '<option value="chromium" class="form-option">CHROMIUM</option>'
-                    fi
+if [ -e /usr/lib/chromium/chromium ];then
+    if [ "$(grep chromium $filedesk)" ];then
+        echo '<option selected value="chromium" class="form-option">CHROMIUM</option>'
+    else
+        echo '<option value="chromium" class="form-option">CHROMIUM</option>'
+    fi
+fi
 
-                    if [ -e ];then
-                        if [ "$(grep vivaldi $filedesk)" ];then
-                            echo '<option selected value="vivaldi" class="form-option">VIVALDI</option>'
-                        else
-                            echo '<option value="vivaldi" class="form-option">VIVALDI</option>'
-                        fi
-                    fi
+if [ -e /opt/vivaldi/vivaldi ];then
+    if [ "$(grep vivaldi $filedesk)" ];then
+        echo '<option selected value="vivaldi" class="form-option">VIVALDI</option>'
+    else
+        echo '<option value="vivaldi" class="form-option">VIVALDI</option>'
+    fi
+fi
 
                 echo   '</select>
                 </div>
@@ -177,12 +178,13 @@ echo '
                 </div>
             </div>
 
-            <div class="row justify-content-center">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="mt-3 col-8 form-check form-switch">
-                    <label class="form-check-label" for="desktop">
+           <div class="row justify-content-start">
+                <div class="col-2">&nbsp;</div>
+                <div class="mt-3 col-4 form-check form-switch" style="margin-left:15px;">
+                    <label class="form-check-label" for="desktop" data-bs-toggle="tooltip"
+                           data-bs-placement="top" title="'$"Adiciona um atalho na área de trabalho"'">
                       <i class="bi bi-link-45deg"></i>
-                      '$"Adicionar atalho na Área de Trabalho"'
+                      '$"Adicionar atalho"'
                     </label>'
 
             [ -e "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" ] && checked="checked"
@@ -192,30 +194,31 @@ echo '
                 </div>
             </div>
 
-            <div class="row justify-content-end">
-                <div class="col-5" id="modetv">
-                    <div class="form-check form-switch">
-                        <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" for="youtube"
-                           title="'$"Essa opção permite que você visualize os vídeos do YouTube sem outras informações.<br>Por exemplo, sem propagandas e sem outros vídeos."'"
-                           data-html="true">
-                           <i class="bi bi-tv"></i>
-                           '$"YouTube em Modo TV"'
-                        </label>
-                        <input class="form-check-input" type="checkbox" name="shortcut" id="tvmode" />
-                    </div>
+            <div class="row justify-content-start">
+                <div class="col-2">&nbsp;</div>
+                <div class="mt-2 col-4 form-check form-switch" id="modetv" style="margin-left:15px;">
+                    <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" for="tvmode"
+                       title="'$"Essa opção permite que você visualize os vídeos do YouTube sem outras informações.<br>Por exemplo, sem propagandas e sem outros vídeos."'" data-html="true">
+                       <i class="bi bi-tv"></i>
+                       '$"YouTube em Modo TV"'
+                    </label>
+                    <input class="form-check-input" type="checkbox" name="tvmode" id="tvmode" />
                 </div>
+                <div class="col-4" id="modetv_empty" style="margin-left:15px;">&nbsp;</div>
                 <div class="col-5">
-                    <a href="index-edit.sh.htm" class="btn btn-sm btn-dark btn-small"
+                    <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home"
                        data-bs-toggle="tooltip" data-bs-placement="top"
-                       title="'$"Ir para página anterior"'">
-                       <i class="bi bi-chevron-left"></i>
-                       '$"Voltar"'
+                       title="'$"Tela Inicial"'">
+                       <i class="bi home bi-house-fill"></i>
                     </a>
-                    <button type="submit" class="btn btn-sm btn-primary btn-small"
-                            data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="'$"Concluir a edição"'" id="install">
+                    <button type="reset" class="btn btn-sm btn-dark btn-small"
+                            onclick="location.reload(true);">
+                            <i class="bi bi-stars"></i>
+                            '$"Limpar"'
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-primary btn-small" id="install">
                             <i class="bi bi-check2-circle"></i>
-                            '$"Concluir"'
+                            '$"Instalar"'
                     </button>
                 </div>
             </div>

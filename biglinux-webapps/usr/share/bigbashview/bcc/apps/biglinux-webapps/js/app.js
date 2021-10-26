@@ -78,10 +78,10 @@ $(function(){
                 $("#alert-url").fadeOut();
             },3000);
         } else {
+            $("#gettitle").tooltip("hide");
             $("#btn-title").hide();
             $("#btn-title-go").show();
             $.get("./get_title.sh.py", url, function(title){
-                console.log(title)
                 if (title){
                     $("#namedesk").focus();
                     $("#namedesk").val(title);
