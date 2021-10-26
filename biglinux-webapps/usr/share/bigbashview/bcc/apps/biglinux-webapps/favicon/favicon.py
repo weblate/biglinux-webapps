@@ -60,6 +60,7 @@ def get(url, *args, **request_kwargs):
         request_kwargs.setdefault('headers', args[0])
 
     request_kwargs.setdefault('headers', HEADERS)
+    request_kwargs.setdefault('timeout', 10)
     request_kwargs.setdefault('allow_redirects', True)
 
     response = requests.get(url, **request_kwargs)

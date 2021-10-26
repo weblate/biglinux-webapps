@@ -31,7 +31,7 @@ def save(url):
                 img.save('/tmp/{}{}'.format(name_file, ext))
 
                 if img.format != 'PNG':
-                    os.system('''convert /tmp/{0}{1} -resize 32x32^ \
+                    status = os.system('''convert /tmp/{0}{1} -resize 32x32^ \
                                                      -alpha on        \
                                                      -background none \
                                                      -flatten /tmp/{0}.png'''.format(name_file, ext))
@@ -41,7 +41,7 @@ def save(url):
                     print('/tmp/%s.png' % name_file, end='')
 
     except UnidentifiedImageError:
-        os.system('''wget -q {0} -O /tmp/{1}{2}
+        status = os.system('''wget -q {0} -O /tmp/{1}{2}
                      convert /tmp/{1}{2} -thumbnail 32x32^ \
                                          -alpha on        \
                                          -background none \

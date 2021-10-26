@@ -12,7 +12,7 @@ def get_title(url):
         'AppleWebKit/537.36 (KHTML, like Gecko)'
         'Chrome/50.0.2661.102 Safari/537.36'
         }
-        resp = requests.get(url, headers=headers)
+        resp = requests.get(url, headers=headers, timeout=10)
         if resp.status_code >= 400: return
         html_parse = BeautifulSoup(resp.text, 'html.parser')
         html_title = html_parse.title.string.strip()

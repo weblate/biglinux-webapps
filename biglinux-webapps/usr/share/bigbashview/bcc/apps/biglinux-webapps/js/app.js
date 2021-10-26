@@ -112,6 +112,7 @@ $(function(){
                 $("#alert-url").fadeOut();
             },3000);
         } else {
+            $("#favicon").tooltip("hide");
             $("#btn-icon").hide();
             $("#btn-icon-go").show();
             $.get("./get_favicon.sh.py", url, function(data){
