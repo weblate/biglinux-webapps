@@ -51,19 +51,6 @@ $(function(){
             $("#modetv").hide();
             $("#modetv_empty").show();
         }
-
-        // let url = $("#urldesk").val()
-        // if (url && !/\s/.test(url)){
-        //     $.get("./get_auto_icon.sh.py", url,function(resp){
-        //         if (resp) {
-        //             $("#icondeskhidden").val(resp);
-        //             $("#icondesk").val(resp.replace(/.*\//, ""));
-        //             $("#preview").attr("src", resp);
-        //         } else {
-        //             return;
-        //         }
-        //     });
-        // }
     });
 
     $("#gettitle").click(function(e){
@@ -122,23 +109,22 @@ $(function(){
                       $("#icondesk").val(data.replace(/.*\//, ""));
                       $("#preview").attr("src", data);
                     } else {
-                      $("#modal-body").html(data);
-                      $(".modal").modal("show");
-                      $("div#input_img").each(function(){
-                        $("span#btn-spin").hide();
-                        $(this).click(function(){
-                          $(this).children("span#btn-spin").show();
-                          let url = $(this).children("img").attr("src");
-                          $.get('./save_favicon.sh.py', url,function(img){
-                            $("#icondeskhidden").val(img);
-                            $("#icondesk").val(img.replace(/.*\//, ""));
-                            $("#preview").attr("src", img);
-                            $(".modal").modal("hide");
-                          });
+                        $("#modal-body").html(data);
+                        $(".modal").modal("show");
+                        $("div#input_img").each(function(){
+                            $("span#btn-spin").hide();
+                            $(this).click(function(){
+                                $(this).children("span#btn-spin").show();
+                                let url = $(this).children("img").attr("src");
+                                $.get('./save_favicon.sh.py', url,function(img){
+                                    $("#icondeskhidden").val(img);
+                                    $("#icondesk").val(img.replace(/.*\//, ""));
+                                    $("#preview").attr("src", img);
+                                    $(".modal").modal("hide");
+                                });
+                            });
                         });
-                      });
                     }
-
                     $("#btn-icon-go").hide();
                     $("#btn-icon").show();
                     $("#open_folder").hide()
@@ -167,7 +153,7 @@ $(function(){
             setTimeout(function(){
                 $("#alert-name").fadeOut();
             }, 3000);
-        } else if (url == "https://" || !url) {
+        } else if (!isValidURL(url) || !url || /\s/.test(url)) {
             e.preventDefault();
             $("#alert-url").fadeIn();
             $("#urldesk").focus();
@@ -179,8 +165,8 @@ $(function(){
         }
     });
 
-    function isValidURL(string) {
-      var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi);
-      return (res !== null)
-    };
+function isValidURL(string) {
+  var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi);
+  return (res !== null)
+};
 });

@@ -205,7 +205,7 @@ echo '
                     </label>'
 
             [ -e "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" ] && checked="checked"
-            [ "$(grep embed $DESKURL)" ] && checked_you="checked"
+            [ "$(grep embed <<< $DESKURL)" ] && checked_you="checked"
             echo '
                     <input class="form-check-input" id="desktop"
                            type="checkbox" name="shortcut" '$checked'/>
@@ -222,9 +222,8 @@ echo '
                     </label>
                     <input class="form-check-input" type="checkbox" name="tvmode" id="tvmode" '$checked_you' />
                 </div>
-                <div class="col-4" id="modetv_empty"
-                     style="margin-left:15px;">&nbsp;</div>
-                <div class="col-4">
+                <div class="col-4" id="modetv_empty" style="margin-left:15px;">&nbsp;</div>
+                <div class="col-5">
                     <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home"
                        data-bs-toggle="tooltip" data-bs-placement="top"
                        title="'$"Tela Inicial"'">
