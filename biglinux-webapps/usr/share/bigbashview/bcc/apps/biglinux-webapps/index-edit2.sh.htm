@@ -14,8 +14,13 @@ if [ "$(grep "Exec=" $filedesk | grep 'firefox')" ];then
     DESKEXEC="$(grep "Exec=" $filedesk | sed 's|Exec=||')"
     DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
 else
+    DESKEXEC="$(grep "Exec=" $filedesk | sed 's|Exec=||')"
     DESKURL="$(grep "Exec=" $filedesk | awk -F'--app=' '{print $NF}')"
 fi
+
+[ -e "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" ] && checked="checked"
+[ "$(grep embed <<< $DESKURL)" ] && checked_you="checked"
+[ "$(grep user-data-dir <<< $DESKEXEC)" ] && checked_new="checked"
 
 echo '
 <!-- Cabeçalho -->
@@ -191,7 +196,7 @@ echo '
                            title="'$"Essa opção permite que você crie webapps que não compartilham informações.<br>Por exemplo, para logar em contas de e-mails diferentes, assim cada webapp manterá o login separadamente."'" data-html="true">
                            <i class="bi bi-person-plus-fill"></i>
                            '$"Novo Perfil"'</label>
-                     <input class="form-check-input" type="checkbox" name="newperfil" id="newperfil" />
+                     <input class="form-check-input" type="checkbox" name="newperfil" id="newperfil" '$checked_new'/>
                 </div>
             </div>
 
@@ -203,9 +208,6 @@ echo '
                       <i class="bi bi-link-45deg"></i>
                       '$"Adicionar atalho"'
                     </label>'
-
-            [ -e "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" ] && checked="checked"
-            [ "$(grep embed <<< $DESKURL)" ] && checked_you="checked"
             echo '
                     <input class="form-check-input" id="desktop"
                            type="checkbox" name="shortcut" '$checked'/>

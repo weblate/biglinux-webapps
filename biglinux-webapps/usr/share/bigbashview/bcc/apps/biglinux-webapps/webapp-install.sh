@@ -179,7 +179,6 @@ rm "/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
         ln "$HOME/.local/share/applications/$NAMEDESK-$browser-webapp-biglinux-custom.desktop" \
         "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
         chmod 777 "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
-        gio set "$(xdg-user-dir DESKTOP)/$namedesk.desktop" -t string metadata::trust "true"
     fi
 fi
 
