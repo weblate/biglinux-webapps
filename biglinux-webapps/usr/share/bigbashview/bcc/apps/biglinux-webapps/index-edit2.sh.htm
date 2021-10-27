@@ -34,7 +34,7 @@ echo '
 <!-- Corpo da página -->
 <body id="app">
     <div class="container-fluid">
-        <p class="text-center h3"><i class="bi bi-pencil-square"></i>
+        <p class="text-center h3">
             '$"Editar WebApps BigLinux"'
         </p>
 
@@ -49,27 +49,43 @@ echo '
                 </div>
                 <div class="mb-2 col-8">
                     <label for="urldesk" class="mt-2">'$"URL:"'</label>
-                    <input type="text" class="form-control form-control-sm"
+                    <input type="text" class="form-control form-control-sm" readonly
                        name="urldesk" id="urldesk" value="'$DESKURL'" required/>
                 </div>
             </div>
 
             <div class="row justify-content-center">
                 <div class="col-4">
-                    <a data-bs-toggle="tooltip" data-bs-placement="top"
-                       title="'$"Detecta automaticamente o título do site e sugere como nome do webapp."'"
+                   <button data-bs-toggle="tooltip" data-bs-placement="top"
+                       title="'$"Detecta automaticamente o título do site e sugere como nome do webapp"'"
                        class="btn btn-sm btn-primary btn-small-lg" id="gettitle">
-                        <i class="bi bi-window"></i>
-                       '$"Detectar Título"'
-                   </a>
+                        <span id="btn-title">
+                            <i class="bi bi-window"></i>
+                            '$"Detectar Título"'
+                        </span>
+                        <span id="btn-title-go">
+                            <i class="bi bi-window"></i>
+                            '$"Detectando"'
+                            <span class="spinner-border spinner-border-sm"
+                                  role="status" aria-hidden="true"></span>
+                        </span>
+                   </button>
                 </div>
                 <div class="col-3">
-                  <a data-bs-toggle="tooltip" data-bs-placement="top" data-html="true"
-                     title="'$"Detecta automaticamente o ícone do site, mas não são todos os sites que suportam o recurso.<br>Por exemplo, sites que necessitam de login."'"
+                  <button data-bs-toggle="tooltip" data-bs-placement="top" data-html="true"
+                     title="'$"Detecta automaticamente o ícone do site, mas não são todos os sites que suportam o recurso.<br>Por exemplo, sites que necessitam de login"'"
                      class="btn btn-sm btn-primary btn-small-lg" id="favicon">
-                     <i class="bi bi-image-fill"></i>
-                     '$"Detectar Ícone"'
-                   </a>
+                     <span id="btn-icon">
+                        <i class="bi bi-image-fill"></i>
+                        '$"Detectar Ícone"'
+                     </span>
+                     <span id="btn-icon-go">
+                        <i class="bi bi-image-fill"></i>
+                        '$"Detectando"'
+                        <span class="spinner-border spinner-border-sm"
+                              role="status" aria-hidden="true"></span>
+                     </span>
+                   </button>
                 </div>
             </div>
 
@@ -80,8 +96,9 @@ echo '
                     <img id="preview" src="'$DESKICON'" width="48" height="48"/>
                 </div>
                 <div class="mt-5 col-5">
-                    <input type="text" id="icondesk" name="icondesk" value="'$DESKICON'"
+                    <input type="text" id="icondesk" value="'$(basename $DESKICON)'"
                            class="form-control form-control-sm align-content-start" readonly/>
+                    <input type="hidden" name="icondesk" id="icondeskhidden" value="'$DESKICON'">
                 </div>
                 <div class="mt-5 col-1">
                     <a data-bs-toggle="tooltip" data-bs-placement="top"
@@ -103,69 +120,69 @@ echo '
                         <select name="browser" class="mt-5 form-select form-select-size">'
 
 
-if [ -e /usr/lib/brave/brave ];then
-    if [ "$(grep brave $filedesk)" ];then
-        echo '<option value="brave-browser" class="form-option" selected>BRAVE BROWSER</option>'
-    else
-        echo '<option value="brave-browser" class="form-option">BRAVE BROWSER</option>'
-    fi
-fi
+                if [ -e /usr/lib/brave/brave ];then
+                    if [ "$(grep brave $filedesk)" ];then
+                        echo '<option value="brave-browser" class="form-option" selected>BRAVE BROWSER</option>'
+                    else
+                        echo '<option value="brave-browser" class="form-option">BRAVE BROWSER</option>'
+                    fi
+                fi
 
-if [ -e /usr/lib/firefox/firefox ];then
-    if [ "$(grep firefox $filedesk)" ];then
-        echo '<option value="firefox" class="form-option" selected>FIREFOX</option>'
-    else
-        echo '<option value="firefox" class="form-option">FIREFOX</option>'
-    fi
-fi
+                if [ -e /usr/lib/firefox/firefox ];then
+                    if [ "$(grep firefox $filedesk)" ];then
+                        echo '<option value="firefox" class="form-option" selected>FIREFOX</option>'
+                    else
+                        echo '<option value="firefox" class="form-option">FIREFOX</option>'
+                    fi
+                fi
 
-if [ -e /usr/lib/firefox-developer-edition/firefox ];then
-    if [ "$(grep firefox $filedesk)" ];then
-        echo '<option selected value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
-    else
-        echo '<option value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
-    fi
-fi
+                if [ -e /usr/lib/firefox-developer-edition/firefox ];then
+                    if [ "$(grep firefox $filedesk)" ];then
+                        echo '<option selected value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
+                    else
+                        echo '<option value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
+                    fi
+                fi
 
-if [ -e /opt/google/chrome/google-chrome ];then
-    if [ "$(grep google-chrome $filedesk)" ];then
-        echo '<option selected value="google-chrome" class="form-option">CHROME</option>'
-    else
-        echo '<option value="google-chrome" class="form-option">CHROME</option>'
-    fi
-fi
+                if [ -e /opt/google/chrome/google-chrome ];then
+                    if [ "$(grep google-chrome $filedesk)" ];then
+                        echo '<option selected value="google-chrome" class="form-option">CHROME</option>'
+                    else
+                        echo '<option value="google-chrome" class="form-option">CHROME</option>'
+                    fi
+                fi
 
-if [ -e /opt/google/chrome/google-chrome-beta ];then
-    if [ "$(grep google-chrome-beta $filedesk)" ];then
-        echo '<option selected value="google-chrome-beta" class="form-option">CHROME BETA</option>'
-    else
-        echo '<option value="google-chrome-beta" class="form-option">CHROME BETA</option>'
-    fi
-fi
+                if [ -e /opt/google/chrome/google-chrome-beta ];then
+                    if [ "$(grep google-chrome-beta $filedesk)" ];then
+                        echo '<option selected value="google-chrome-beta" class="form-option">CHROME BETA</option>'
+                    else
+                        echo '<option value="google-chrome-beta" class="form-option">CHROME BETA</option>'
+                    fi
+                fi
 
-if [ -e /opt/google/chrome/google-chrome-unstable ];then
-    if [ "$(grep google-chrome-unstable $filedesk)" ];then
-        echo '<option selected value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
-    else
-        echo '<option value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
-    fi
-fi
+                if [ -e /opt/google/chrome/google-chrome-unstable ];then
+                    if [ "$(grep google-chrome-unstable $filedesk)" ];then
+                        echo '<option selected value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
+                    else
+                        echo '<option value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
+                    fi
+                fi
 
-if [ -e /usr/lib/chromium/chromium ];then
-    if [ "$(grep chromium $filedesk)" ];then
-        echo '<option selected value="chromium" class="form-option">CHROMIUM</option>'
-    else
-        echo '<option value="chromium" class="form-option">CHROMIUM</option>'
-    fi
-fi
+                if [ -e /usr/lib/chromium/chromium ];then
+                    if [ "$(grep chromium $filedesk)" ];then
+                        echo '<option selected value="chromium" class="form-option">CHROMIUM</option>'
+                    else
+                        echo '<option value="chromium" class="form-option">CHROMIUM</option>'
+                    fi
+                fi
 
-if [ -e /opt/vivaldi/vivaldi ];then
-    if [ "$(grep vivaldi $filedesk)" ];then
-        echo '<option selected value="vivaldi" class="form-option">VIVALDI</option>'
-    else
-        echo '<option value="vivaldi" class="form-option">VIVALDI</option>'
-    fi
-fi
+                if [ -e /opt/vivaldi/vivaldi ];then
+                    if [ "$(grep vivaldi $filedesk)" ];then
+                        echo '<option selected value="vivaldi" class="form-option">VIVALDI</option>'
+                    else
+                        echo '<option value="vivaldi" class="form-option">VIVALDI</option>'
+                    fi
+                fi
 
                 echo   '</select>
                 </div>
@@ -188,6 +205,7 @@ fi
                     </label>'
 
             [ -e "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" ] && checked="checked"
+            [ "$(grep embed $DESKURL)" ] && checked_you="checked"
             echo '
                     <input class="form-check-input" id="desktop"
                            type="checkbox" name="shortcut" '$checked'/>
@@ -196,146 +214,80 @@ fi
 
             <div class="row justify-content-start">
                 <div class="col-2">&nbsp;</div>
-                <div class="mt-2 col-4 form-check form-switch" id="modetv" style="margin-left:15px;">
+                <div class="mt-2 col-4 form-check form-switch" id="modetv" style="margin-left:15px">
                     <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" for="tvmode"
                        title="'$"Essa opção permite que você visualize os vídeos do YouTube sem outras informações.<br>Por exemplo, sem propagandas e sem outros vídeos."'" data-html="true">
                        <i class="bi bi-tv"></i>
                        '$"YouTube em Modo TV"'
                     </label>
-                    <input class="form-check-input" type="checkbox" name="tvmode" id="tvmode" />
+                    <input class="form-check-input" type="checkbox" name="tvmode" id="tvmode" '$checked_you' />
                 </div>
-                <div class="col-4" id="modetv_empty" style="margin-left:15px;">&nbsp;</div>
-                <div class="col-5">
+                <div class="col-4" id="modetv_empty"
+                     style="margin-left:15px;">&nbsp;</div>
+                <div class="col-4">
                     <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home"
                        data-bs-toggle="tooltip" data-bs-placement="top"
                        title="'$"Tela Inicial"'">
                        <i class="bi home bi-house-fill"></i>
                     </a>
-                    <button type="reset" class="btn btn-sm btn-dark btn-small"
-                            onclick="location.reload(true);">
-                            <i class="bi bi-stars"></i>
-                            '$"Limpar"'
-                    </button>
+                    <a href="index-edit.sh.htm" class="btn btn-sm btn-dark btn-small">
+                        <i class="bi bi-arrow-left"></i>
+                        '$"Voltar"'
+                    </a>
                     <button type="submit" class="btn btn-sm btn-primary btn-small" id="install">
                             <i class="bi bi-check2-circle"></i>
-                            '$"Instalar"'
+                            '$"Concluir"'
                     </button>
                 </div>
             </div>
         </form>
-    </div>'
+    </div>
 
-    echo "
-    <script type='text/javascript'>
-    \$(document).ready(function(){
+<div class="alert alert-warning alert-fixed" id="alert-name">
+  <div class="text-center">
+    <i class="bi bi-exclamation-octagon"></i>
+    <strong>'$"ATENÇÃO:"'</strong>
+      '$"Insira um nome para continuar"'
+  </div>
+</div>
 
-        var iconSelected = \$('select').val();
-        \$('#browsericon').attr('src', 'icons/'+iconSelected+'.png');
+<div class="alert alert-danger alert-fixed" id="alert-favicon">
+  <div class="text-center">
+    <i class="bi bi-x-octagon"></i>
+    <strong>'$"Erro:"'</strong>
+      '$"Não foi possível detectar o ícone!"'<br>'$"Verifique e tente novamente"'
+  </div>
+</div>
 
-        if(iconSelected == 'firefox'){
-            \$('#perfil').hide();
-        } else {
-            \$('#perfil').show();
-        }
+<div class="alert alert-danger alert-fixed" id="alert-title">
+  <div class="text-center">
+    <i class="bi bi-x-octagon"></i>
+    <strong>'$"Erro:"'</strong>
+      '$"Não foi possível detectar o título!"'<br>'$"Verifique e tente novamente"'
+  </div>
+</div>
 
-        \$('select').on('change', function(){
-            \$('#browsericon').attr('src', 'icons/'+this.value+'.png');
 
-            if(this.value == 'firefox'){
-                \$('#perfil').hide();
-            } else {
-                \$('#perfil').show();
-            }
-        });
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content justify-content-center">
+      <div class="modal-header text-center">
+        <b class="modal-title" id="modalLabel" style="padding-left:16%">
+          '$"Encontramos mais de um ícone no site!"'</b>
+        <button type="button" class="btn-close"
+                data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <h6 class="text-center mb-3">'$"Escolha um deles e clique para selecionar:"'</h6>
+          <div class="row justify-content-center" id="modal-body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        \$('#modetv').hide();
-        \$('#urldesk').keyup(function(){
-
-            if(\$(this).val().match(/youtu/gi)){
-                \$('#modetv').show();
-            } else {
-                \$('#modetv').hide();}
-        });
-
-        \$('#btn').click(function(e){
-            e.preventDefault();
-
-            \$.get('./icon.sh', function(dados){
-                \$('#icondesk').val(dados);
-                \$('#preview').attr('src', dados);
-                \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
-            });
-        });
-
-        \$('#gettitle').click(function(e){
-            e.preventDefault();
-
-            let url = \$('#urldesk').val();
-
-            if (url == 'https://' || !url){
-                \$('#urldesk').focus();
-                \$('#urldesk').val('"$"Digite ou cole a URL!""');
-                setTimeout(function () {
-                    \$('#urldesk').val('');
-                    \$('#icondesk').focus();
-                },2500);
-            } else {
-                \$('#gettitle').html('""<i class=\"bi bi-window\"></i> "$"Detectando...""');
-                \$.get('./get_title.sh.py', url, function(title){
-                    \$('#namedesk').focus();
-                    \$('#namedesk').val(title.replace(/\|/g, ''));
-                    \$('#gettitle').html('""<i class=\"bi bi-window\"></i> "$"Detectar Título""');
-                });
-            }
-        });
-
-        \$('#favicon').click(function(e){
-            e.preventDefault();
-
-            let url = \$('#urldesk').val();
-
-            if (url == 'https://' || !url){
-                \$('#urldesk').focus();
-                \$('#urldesk').val('"$"Digite ou cole a URL!""');
-                setTimeout(function (){
-                    \$('#urldesk').val('');
-                    \$('#icondesk').focus();
-                },2500);
-            } else {
-                \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectando...""');
-                \$.get('./get_favicon.sh.py', url, function(data){
-                    \$('#icondesk').val(data);
-                    \$('#preview').attr('src', data);
-                    \$('#favicon').html('""<i class=\"bi bi-image-fill\"></i> "$"Detectar Ícone""');
-                    \$('#btn').html('""<i class=\"bi bi-arrow-repeat\"></i> "$"Alterar""');
-                });
-            }
-        });
-
-        \$('#install').click(function(e){
-            let nome = \$('#namedesk').val();
-            let url = \$('#urldesk').val();
-
-            if (!nome){
-                e.preventDefault();
-                \$('#namedesk').focus();
-                \$('#namedesk').val('"$"Digite ou cole o Nome!""');
-                setTimeout(function (){
-                    \$('#namedesk').val('');
-                    \$('#icondesk').focus();
-                },2500);
-            } else if (url == 'https://' || !url){
-                e.preventDefault();
-                \$('#urldesk').focus();
-                \$('#urldesk').val('"$"Digite ou cole a URL!""');
-                setTimeout(function (){
-                    \$('#urldesk').val('');
-                    \$('#icondesk').focus();
-                },2500);
-            } else {
-                \$('#install').submit();
-            }
-        });
-    });
-    </script>
-</body>"
+</body>'
