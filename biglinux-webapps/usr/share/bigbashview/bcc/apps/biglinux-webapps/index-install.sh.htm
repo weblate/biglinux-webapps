@@ -27,7 +27,7 @@ echo '
         </p>
 
         <!-- Formulário de instalação do webapp -->
-        <form action="webapp-install.sh" method="get">
+        <form action="webapp-install.sh" method="get" id="form-install">
 
             <div class="row justify-content-center">
                 <div class="col-8">
@@ -38,7 +38,7 @@ echo '
                 <div class="mb-2 col-8">
                     <label for="urldesk" class="mt-2">'$"URL:"'</label>
                     <input type="text" class="form-control form-control-sm"
-                       name="urldesk" id="urldesk" required/>
+                       name="urldesk" id="urldesk" required autofocus/>
                 </div>
             </div>
 
@@ -232,9 +232,9 @@ echo '
   </div>
 </div>
 
-
 <!-- Modal -->
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-favicon"
+     aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content justify-content-center">
       <div class="modal-header text-center">
@@ -250,6 +250,32 @@ echo '
           <h6 class="text-center mb-3">'$"Escolha um deles e clique para selecionar:"'</h6>
           <div class="row justify-content-center" id="modal-body"></div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-install"
+     aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content justify-content-center">
+      <div class="modal-header text-center">
+        <b class="modal-title" id="modalLabel" style="padding-left:16%">
+          '$"O WebApp foi instalado com sucesso!"'</b>
+        <button type="button" class="btn-close"
+                data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center mb-3">'$"Deseja instalar outro WebApp?"'</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm btn-small"
+                onclick="location.reload(true);">'$"Sim"'</button>
+        <button type="button" class="btn btn-secondary btn-sm btn-small"
+                data-dismiss="modal">'$"Não"'</button>
       </div>
     </div>
   </div>

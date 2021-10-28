@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-#echo "<font color='#fff'>$namedesk<br>$urldesk<br>$icondesk<br>$browser</font>"
-#exit
+
 #Translation
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps
@@ -184,14 +183,3 @@ fi
 
 nohup update-desktop-database -q $HOME/.local/share/applications &
 nohup kbuildsycoca5 &> /dev/null &
-
-kdialog --title "BigLinux WebApps" --icon "internet-web-browser" \
-        --yesno $"O WebApp foi instalado com sucesso!\nVocê deseja instalar outro WebApp?"
-
-if [ "$?" != "0" ]; then
-    echo '<script>window.location.replace("index.sh.htm");</script>'
-    exit
-else
-    echo '<script>window.location.replace("index-install.sh.htm");</script>'
-    exit
-fi

@@ -110,7 +110,7 @@ $(function(){
                       $("#preview").attr("src", data);
                     } else {
                         $("#modal-body").html(data);
-                        $(".modal").modal("show");
+                        $(".modal#modal-favicon").modal("show");
                         $("div#input_img").each(function(){
                             $("span#btn-spin").hide();
                             $(this).click(function(){
@@ -120,7 +120,7 @@ $(function(){
                                     $("#icondeskhidden").val(img);
                                     $("#icondesk").val(img.replace(/.*\//, ""));
                                     $("#preview").attr("src", img);
-                                    $(".modal").modal("hide");
+                                    $(".modal#modal-favicon").modal("hide");
                                 });
                             });
                         });
@@ -143,6 +143,34 @@ $(function(){
     });
 
     $("#install").click(function (e) {
+        e.preventDefault();
+        let nome = $("#namedesk").val();
+        let url = $("#urldesk").val();
+
+        if (!nome) {
+            $("#alert-name").fadeIn();
+            $("#namedesk").focus();
+            setTimeout(function(){
+                $("#alert-name").fadeOut();
+            }, 3000);
+        } else if (!isValidURL(url) || !url || /\s/.test(url)) {
+            $("#alert-url").fadeIn();
+            $("#urldesk").focus();
+            setTimeout(function(){
+                $("#alert-url").fadeOut();
+            }, 3000);
+        } else {
+            let formUrl = $("#form-install").attr("action");
+            let formData = $("#form-install").serialize();
+
+            $.get(formUrl, formData, function(ret){
+                $(".modal#modal-install").modal("show");
+                $("#install").blur();
+            });
+        }
+    });
+
+    $("#install-edit").click(function (e) {
         let nome = $("#namedesk").val();
         let url = $("#urldesk").val();
 
