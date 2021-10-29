@@ -163,10 +163,16 @@ $(function(){
             let formUrl = $("#form-install").attr("action");
             let formData = $("#form-install").serialize();
 
-            $.get(formUrl, formData, function(ret){
-                $(".modal#modal-install").modal("show");
+            $.get(formUrl, formData, function(){
+                $("#form-install").trigger("reset");
+                $("#alert-install").fadeIn();
                 $("#install").blur();
             });
+
+            setTimeout(function(){
+                $("#alert-install").fadeOut();
+                $("#namedesk").focus();
+            }, 3000);
         }
     });
 
