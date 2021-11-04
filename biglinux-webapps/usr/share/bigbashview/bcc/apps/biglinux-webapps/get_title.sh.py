@@ -14,7 +14,7 @@ def get_title(url):
         }
         resp = requests.get(url, headers=headers, timeout=10)
         if resp.status_code >= 400: return
-        html_parse = BeautifulSoup(resp.text, 'html.parser')
+        html_parse = BeautifulSoup(resp.text, features='html.parser')
         html_title = html_parse.title.string.strip()
         title = re.sub(r'[^\w]',' ', html_title)
         _title = re.sub(r'\s+',' ', title)
