@@ -177,25 +177,36 @@ $(function(){
     });
 
     $("#install-edit").click(function (e) {
+        e.preventDefault();
         let nome = $("#namedesk").val();
         let url = $("#urldesk").val();
 
         if (!nome) {
-            e.preventDefault();
             $("#alert-name").fadeIn();
             $("#namedesk").focus();
             setTimeout(function(){
                 $("#alert-name").fadeOut();
             }, 3000);
         } else if (!isValidURL(url) || !url || /\s/.test(url)) {
-            e.preventDefault();
             $("#alert-url").fadeIn();
             $("#urldesk").focus();
             setTimeout(function(){
                 $("#alert-url").fadeOut();
             }, 3000);
         } else {
-            $("#install").submit();
+            let formUrl = $("#form-edit").attr("action");
+            let formData = $("#form-edit").serialize();
+
+            $.get(formUrl, formData, function(){
+                $("#form-edit").trigger("reset");
+                $("#alert-edit").fadeIn();
+                $("#install").blur();
+            });
+
+            setTimeout(function(){
+                $("#alert-edit").fadeOut();
+                $("#namedesk").focus();
+            }, 3000);
         }
     });
 
