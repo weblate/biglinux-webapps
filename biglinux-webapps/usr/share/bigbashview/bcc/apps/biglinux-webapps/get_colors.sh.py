@@ -49,196 +49,51 @@ class Window(QWidget):
         LinkVisited = self.palette().color(QPalette.LinkVisited).name()
 
         COLORS = '''
+<title>Colors Qt</title>
 <style>
 body{
     background-color: %s;
 }
 
-#div2{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div3{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div4{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div5{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div6{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div7{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div8{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div9{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div10{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div11{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div12{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div13{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div14{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div15{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div16{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div17{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div18{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div19{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
-#div20{
-    background-color: %s;
-    width:100px;
-    height:80px;
-    text-align:center;
-    display: block;
-}
-
 </style>
 <body>
-%s
-<div>
-  <div id="div2">%s</div>
-  <div id="div3">%s</div>
-  <div id="div4">%s</div>
-  <div id="div5">%s</div>
-  <div id="div6">%s</div>
-  <div id="div7">%s</div>
-  <div id="div8">%s</div>
-  <div id="div9">%s</div>
-  <div id="div10">%s</div>
-  <div id="div11">%s</div>
-  <div id="div12">%s</div>
-  <div id="div13">%s</div>
-  <div id="div14">%s</div>
-  <div id="div15">%s</div>
-  <div id="div16">%s</div>
-  <div id="div17">%s</div>
-  <div id="div18">%s</div>
-  <div id="div19">%s</div>
-  <div id="div20">%s</div>
-</div>
+Background: %s
+<table cellspacing="15">
+  <tr>
+    <td id="div2" style="background-color:%s;width:200px;height:100px"><font color="orange">Foreground: %s</font></td>
+    <td id="div3" style="background-color:%s;width:200px;height:100px"><font color="orange">Base: %s</font></td>
+    <td id="div4" style="background-color:%s;width:200px;height:100px"><font color="orange">AlternateBase: %s</font></td>
+    <td id="div5" style="background-color:%s;width:200px;height:100px"><font color="orange">ToolTipBase: %s</font></td>
+  </tr>
+  <tr>
+    <td id="div6" style="background-color:%s;width:200px;height:100px"><font color="orange">ToolTipText: %s</font></td>
+    <td id="div7" style="background-color:%s;width:200px;height:100px"><font color="orange">PlaceholderText: %s</font></td>
+    <td id="div8" style="background-color:%s;width:200px;height:100px"><font color="orange">Text: %s</font></td>
+    <td id="div9" style="background-color:%s;width:200px;height:100px"><font color="orange">Button: %s</font></td>
+  </tr>
+  <tr>
+    <td id="div10" style="background-color:%s;width:200px;height:100px"><font color="orange">ButtonText: %s</font></td>
+    <td id="div11" style="background-color:%s;width:200px;height:100px"><font color="orange">BrightText: %s</font></td>
+    <td id="div12" style="background-color:%s;width:200px;height:100px"><font color="orange">Light: %s</font></td>
+    <td id="div13" style="background-color:%s;width:200px;height:100px"><font color="orange">Midlight: %s</font></td>
+  </tr>
+  <tr>
+    <td id="div14" style="background-color:%s;width:200px;height:100px"><font color="orange">Dark: %s</font></td>
+    <td id="div15" style="background-color:%s;width:200px;height:100px"><font color="orange">Mid: %s</font></td>
+    <td id="div16" style="background-color:%s;width:200px;height:100px"><font color="orange">Shadow: %s</font></td>
+    <td id="div17" style="background-color:%s;width:200px;height:100px"><font color="orange">Highlight: %s</font></td>
+  </tr>
+  <tr>
+    <td id="div18" style="background-color:%s;width:200px;height:100px"><font color="orange">HighlightedText: %s</font></td>
+    <td id="div19" style="background-color:%s;width:200px;height:100px"><font color="orange">Link: %s</font></td>
+    <td id="div20" style="background-color:%s;width:200px;height:100px"><font color="orange">LinkVisited: %s</font></td>
+  </tr>
+</table>
 </body>
-        ''' % (Background, Foreground, Base, AlternateBase, ToolTipBase,
-               ToolTipText, PlaceholderText, Text, Button, ButtonText,
-               BrightText, Light, Midlight, Dark, Mid, Shadow, Highlight,
-               HighlightedText, Link, LinkVisited,
-               Background, Foreground, Base, AlternateBase, ToolTipBase,
-               ToolTipText, PlaceholderText, Text, Button, ButtonText,
-               BrightText, Light, Midlight, Dark, Mid, Shadow, Highlight,
-               HighlightedText, Link, LinkVisited)
+        ''' % (Background, Background, Foreground, Foreground, Base, Base, AlternateBase, AlternateBase, ToolTipBase, ToolTipBase,
+               ToolTipText, ToolTipText, PlaceholderText, PlaceholderText, Text, Text, Button, Button, ButtonText, ButtonText,
+               BrightText, BrightText, Light, Light, Midlight, Midlight, Dark, Dark, Mid, Mid, Shadow, Shadow, Highlight, Highlight,
+               HighlightedText, HighlightedText, Link, Link, LinkVisited, LinkVisited)
         print(COLORS)
         sys.exit()
 
@@ -246,3 +101,4 @@ body{
 app = QApplication(sys.argv)
 main = Window()
 app.exec_()
+
