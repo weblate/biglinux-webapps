@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import sys, math
-from PySide2.QtWidgets import QWidget, QApplication
+from PySide2.QtWidgets import QWidget, QApplication, QPushButton
 from PySide2.QtGui import QPalette, QFont
 
 class Window(QWidget):
@@ -33,6 +33,7 @@ class Window(QWidget):
                         63 : "DemiBold", 75 : "Bold", 81 : "ExtraBold", 87 : "Black" }
         FontWeight = NamesWeight[QFont().weight()]
         FontStyle = QFont().styleName()
+        ButtonQt = QPushButton().rect()
 
         COLORS = '''
 <title>Colors Qt</title>
@@ -100,6 +101,8 @@ background-color: %s
         <font color="orange">LinkVisited: %s</font></td>
   </tr>
 </table>
+
+%s
 </body>
         ''' % (Background, FontFamily, FontSize, FontWeight, FontStyle,
                Background, Foreground, Foreground, Base, Base, AlternateBase, AlternateBase,
@@ -107,7 +110,7 @@ background-color: %s
                PlaceholderText, Text, Text, Button, Button, ButtonText, ButtonText,
                BrightText, BrightText, Light, Light, Midlight, Midlight, Dark, Dark,
                Mid, Mid, Shadow, Shadow, Highlight, Highlight, HighlightedText, HighlightedText,
-               Link, Link, LinkVisited, LinkVisited)
+               Link, Link, LinkVisited, LinkVisited, ButtonQt)
         print(COLORS)
         sys.exit()
 
