@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 from PySide2.QtWidgets import QWidget, QApplication
-from PySide2.QtGui import QPalette
+from PySide2.QtGui import QPalette, QFont
 
 class Window(QWidget):
     """doc for class"""
@@ -48,6 +48,12 @@ class Window(QWidget):
 
         LinkVisited = self.palette().color(QPalette.LinkVisited).name()
 
+        FontFamily = QFont().family()
+
+        FontSize = QFont().pointSize()
+
+        FontWeight = QFont().weight()*10
+
         COLORS = '''
 <title>Colors Qt</title>
 <style>
@@ -57,6 +63,9 @@ body{
 
 </style>
 <body>
+Font-Family: %s<br>
+Font-Size: %spt<br>
+Font-Weight: %s<br>
 Background: %s
 <table cellspacing="15">
   <tr>
@@ -90,7 +99,8 @@ Background: %s
   </tr>
 </table>
 </body>
-        ''' % (Background, Background, Foreground, Foreground, Base, Base, AlternateBase, AlternateBase, ToolTipBase, ToolTipBase,
+        ''' % (Background, FontFamily, FontSize, FontWeight, Background, Foreground, Foreground, Base, Base, AlternateBase, AlternateBase,
+               ToolTipBase, ToolTipBase,
                ToolTipText, ToolTipText, PlaceholderText, PlaceholderText, Text, Text, Button, Button, ButtonText, ButtonText,
                BrightText, BrightText, Light, Light, Midlight, Midlight, Dark, Dark, Mid, Mid, Shadow, Shadow, Highlight, Highlight,
                HighlightedText, HighlightedText, Link, Link, LinkVisited, LinkVisited)
