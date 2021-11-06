@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import sys, math
-from PySide2.QtWidgets import QWidget, QApplication, QPushButton
+from PySide2.QtWidgets import QWidget, QApplication
 from PySide2.QtGui import QPalette, QFont
 
 class Window(QWidget):
@@ -29,17 +29,18 @@ class Window(QWidget):
         LinkVisited = self.palette().color(QPalette.LinkVisited).name()
         FontFamily = QFont().family()
         FontSize = QFont().pointSize()
-        NamesWeight = { 0 : "Thin", 12 : "ExtraLight", 25 : "Light", 50 : "Normal", 57 : "Medium",
-                        63 : "DemiBold", 75 : "Bold", 81 : "ExtraBold", 87 : "Black" }
+        NamesWeight = { 0 : "Thin", 12 : "ExtraLight", 25 : "Light",
+                        50 : "Normal", 57 : "Medium", 63 : "DemiBold",
+                        75 : "Bold", 81 : "ExtraBold", 87 : "Black" }
         FontWeight = NamesWeight[QFont().weight()]
         FontStyle = QFont().styleName()
-        ButtonQt = QPushButton().rect()
 
         COLORS = '''
 <title>Colors Qt</title>
 <style>
 body{
     background-color: %s;
+    color:%s;
 }
 
 </style>
@@ -101,16 +102,14 @@ background-color: %s
         <font color="orange">LinkVisited: %s</font></td>
   </tr>
 </table>
-
-%s
 </body>
-        ''' % (Background, FontFamily, FontSize, FontWeight, FontStyle,
+        ''' % (Background, Foreground, FontFamily, FontSize, FontWeight, FontStyle,
                Background, Foreground, Foreground, Base, Base, AlternateBase, AlternateBase,
                ToolTipBase, ToolTipBase, ToolTipText, ToolTipText, PlaceholderText,
                PlaceholderText, Text, Text, Button, Button, ButtonText, ButtonText,
                BrightText, BrightText, Light, Light, Midlight, Midlight, Dark, Dark,
-               Mid, Mid, Shadow, Shadow, Highlight, Highlight, HighlightedText, HighlightedText,
-               Link, Link, LinkVisited, LinkVisited, ButtonQt)
+               Mid, Mid, Shadow, Shadow, Highlight, Highlight, HighlightedText,
+               HighlightedText, Link, Link, LinkVisited, LinkVisited)
         print(COLORS)
         sys.exit()
 
@@ -118,4 +117,3 @@ background-color: %s
 app = QApplication(sys.argv)
 main = Window()
 app.exec_()
-

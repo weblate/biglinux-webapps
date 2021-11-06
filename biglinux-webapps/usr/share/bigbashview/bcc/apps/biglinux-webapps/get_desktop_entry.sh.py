@@ -5,7 +5,7 @@ import glob, json
 
 HOME = BaseDirectory.xdg_data_home
 files = glob.glob(HOME+'/applications/*custom.desktop')
-
+x = { "Name" : [], "Exec" : [], "Icon" : [] }
 for f in files:
     filedesk = DesktopEntry.DesktopEntry(f)
     fileexec = filedesk.getExec()
@@ -17,5 +17,8 @@ for f in files:
             line = fx.readlines()[39]
             _execfile = line.split()[8].replace('"', '')
 
-    x = { "Name" : filedesk.getName(), "Exec" : _execfile, "Icon" : filedesk.getIcon()}
-    print(json.dumps(x))
+    x["Name"].append(filedesk.getName())
+    x["Exec"].append(_execfile)
+    x["Icon"].append(filedesk.getIcon())
+
+print(json.dumps(x))
