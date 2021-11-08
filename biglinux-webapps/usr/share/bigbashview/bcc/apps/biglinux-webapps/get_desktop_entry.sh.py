@@ -7,17 +7,17 @@ HOME = BaseDirectory.xdg_data_home
 files = glob.glob(HOME+'/applications/*custom.desktop')
 
 dict = {
-        "NAME" : [],
-        "URL" : [],
-        "ICON" : []
+        "NAME" :     [],
+        "URL" :      [],
+        "ICON" :     [],
+        "FILEDESK" : []
        }
 
-for f in files:
+for f in sorted(files):
     filedesk = DesktopEntry.DesktopEntry(f)
     fileexec = filedesk.getExec()
-    fileexec_chrom = fileexec.split()[3].replace('--app=', '')
-
     if not fileexec.startswith('/home'):
+        fileexec_chrom = fileexec.split()[3].replace('--app=', '')
         _urlfile = (fileexec_chrom
                 if fileexec_chrom != '--profile-directory=Default'
                 else fileexec.split()[4].replace('--app=', ''))
@@ -29,5 +29,6 @@ for f in files:
     dict["NAME"].append(filedesk.getName())
     dict["URL"].append(_urlfile)
     dict["ICON"].append(filedesk.getIcon())
+    dict["FILEDESK"].append(f)
 
 print(json.dumps(dict, ensure_ascii=False))

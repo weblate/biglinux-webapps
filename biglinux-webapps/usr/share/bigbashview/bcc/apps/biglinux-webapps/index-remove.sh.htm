@@ -78,7 +78,7 @@ for i in $DESKTOP; do
     DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
     if [ "$DESKICON" = "webapp" ];then DESKICON="img/default.png";fi
 
-echo '<tr class="table-light" style="line-height:38px">
+echo '<tr class="table-light" style="line-height:38px" id="table-tr">
         <form action="webapp-remove.sh" method="get">
             <input type="hidden" name="filedesk" value="'$i'"/>
             <td class="col-1">
@@ -139,6 +139,19 @@ fi
 echo '
 <script type="text/javascript">
     $(document).ready(function(){
+
+        $.getJSON("get_desktop_entry.sh.py", function(jsonData){
+            let NAME = jsonData.NAME;
+            let URL = jsonData.URL;
+            let ICON = jsonData.ICON;
+            let FILEDESK = jsonData.FILEDESK;
+            $.each(NAME, function(i){
+                console.log(FILEDESK[i]);
+                console.log(ICON[i]);
+                console.log(NAME[i]);
+                console.log(URL[i]);
+            });
+        });
 
         $("#filter").on("keyup", function() {
             var value = $(this).val().toLowerCase();
