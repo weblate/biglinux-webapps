@@ -8,7 +8,7 @@ $(function(){
 
     var iconSelected = $("select").val();
     $("#browsericon").attr("src", "icons/" + iconSelected + ".png");
-    if (iconSelected == "firefox") {
+    if (iconSelected == "firefox" || iconSelected == "firefox-developer-edition" || iconSelected == "firefox-nightly") {
         $("#perfil").hide();
     } else {
         $("#perfil").show();

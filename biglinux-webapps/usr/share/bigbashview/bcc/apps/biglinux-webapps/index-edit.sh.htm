@@ -69,7 +69,7 @@ for i in $DESKTOP; do
         DESKEXEC="$(grep Exec= $i | sed 's|Exec=||')"
         DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
     else
-        DESKURL="$(grep Exec= $i | awk -F'--app=' '{print $NF}')"
+        DESKURL="$(grep Exec= $i | sed 's|.*app=||')"
     fi
 
     DESKNAME="$(grep "Name=" $i | sed 's|Name=||')"
