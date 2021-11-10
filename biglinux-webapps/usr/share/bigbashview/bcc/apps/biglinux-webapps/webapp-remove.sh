@@ -4,6 +4,10 @@
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps
 
+./get_desktop_entry_one.sh.py "$filedesk"
+echo "$ICON"
+exit
+
 kdialog --title "BigLinux WebApps" --icon "internet-web-browser" \
         --yesno $"Você tem certeza que deseja remover este WebApp?"
 

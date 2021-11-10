@@ -8,7 +8,11 @@ $(function(){
 
     var iconSelected = $("select").val();
     $("#browsericon").attr("src", "icons/" + iconSelected + ".png");
-    switch(iconSelected){
+
+    $("select").on("change", function(){
+        $("#browsericon").attr("src", "icons/" + this.value + ".png");
+
+        switch(this.value){
         case "firefox":
             $("#perfil").hide();
         break;
@@ -22,16 +26,7 @@ $(function(){
         break;
         default:
             $("#perfil").show();
-    }
-
-    $("select").on("change", function(){
-        $("#browsericon").attr("src", "icons/" + this.value + ".png");
-
-        if (this.value == "firefox") {
-            $("#perfil").hide();
-        } else {
-            $("#perfil").show();
-        }
+      }
     });
 
     $("#btn").click(function(e){
