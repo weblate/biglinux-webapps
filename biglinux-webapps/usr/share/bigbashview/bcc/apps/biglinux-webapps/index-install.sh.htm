@@ -115,7 +115,7 @@ echo '
                     <select name="browser" class="mt-5 form-select form-select-size">'
 
                         if [ -e /usr/lib/brave/brave ];then
-                            echo '<option value="brave-browser" class="form-option">BRAVE BROWSER</option>'
+                            echo '<option value="brave" class="form-option">BRAVE</option>'
                         fi
 
                         if [ -e /usr/lib/firefox/firefox ];then
@@ -126,15 +126,19 @@ echo '
                             echo '<option value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
                         fi
 
+                        if [ -e /opt/firefox-nightly ];then
+                            echo '<option value="firefox-nightly" class="form-option">FIREFOX NIGHTLY</option>'
+                        fi
+
                         if [ -e /opt/google/chrome/google-chrome ];then
                             echo '<option value="google-chrome" class="form-option">CHROME</option>'
                         fi
 
-                        if [ -e /opt/google/chrome/google-chrome-beta ];then
+                        if [ -e /opt/google/chrome-beta/google-chrome-beta ];then
                             echo '<option value="google-chrome-beta" class="form-option">CHROME BETA</option>'
                         fi
 
-                        if [ -e /opt/google/chrome/google-chrome-unstable ];then
+                        if [ -e /opt/google/chrome-unstable/google-chrome-unstable ];then
                             echo '<option value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
                         fi
 
@@ -143,7 +147,7 @@ echo '
                         fi
 
                         if [ -e /opt/vivaldi/vivaldi ];then
-                            echo '<option value="vivaldi" class="form-option">VIVALDI</option>'
+                            echo '<option value="vivaldi-stable" class="form-option">VIVALDI</option>'
                         fi
 
             echo   '</select>

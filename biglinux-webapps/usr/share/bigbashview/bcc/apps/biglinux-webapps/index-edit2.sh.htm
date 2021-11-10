@@ -142,9 +142,9 @@ echo '
 
                 if [ -e /usr/lib/firefox-developer-edition/firefox ];then
                     if [ "$(grep firefox-developer-edition $filedesk)" ];then
-                        echo '<option selected value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
+                        echo '<option selected value="firefox-developer-edition" class="form-option">FIREFOX DEVELOPER</option>'
                     else
-                        echo '<option value="firefox-developer-edition" class="form-option">FIREFOX DEV</option>'
+                        echo '<option value="firefox-developer-edition" class="form-option">FIREFOX DEVELOPER</option>'
                     fi
                 fi
 
@@ -174,9 +174,9 @@ echo '
 
                 if [ -e /opt/google/chrome-unstable/google-chrome-unstable ];then
                     if [ "$(grep google-chrome-unstable $filedesk)" ];then
-                        echo '<option selected value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
+                        echo '<option selected value="google-chrome-unstable" class="form-option">CHROME UNSTABLE</option>'
                     else
-                        echo '<option value="google-chrome-unstable" class="form-option">CHROME DEV</option>'
+                        echo '<option value="google-chrome-unstable" class="form-option">CHROME UNSTABLE</option>'
                     fi
                 fi
 

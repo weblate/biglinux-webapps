@@ -8,10 +8,20 @@ $(function(){
 
     var iconSelected = $("select").val();
     $("#browsericon").attr("src", "icons/" + iconSelected + ".png");
-    if (iconSelected == "firefox" || iconSelected == "firefox-developer-edition" || iconSelected == "firefox-nightly") {
-        $("#perfil").hide();
-    } else {
-        $("#perfil").show();
+    switch(iconSelected){
+        case "firefox":
+            $("#perfil").hide();
+        break;
+
+        case "firefox-developer-edition":
+            $("#perfil").hide();
+        break;
+
+        case "firefox-nightly":
+            $("#perfil").hide();
+        break;
+        default:
+            $("#perfil").show();
     }
 
     $("select").on("change", function(){
