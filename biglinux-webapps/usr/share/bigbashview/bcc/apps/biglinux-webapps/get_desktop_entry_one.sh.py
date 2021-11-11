@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from xdg import DesktopEntry
-from os import environ
-from sys import argv, exit
+import json
+from sys import argv
 
 def update_env(f):
     filedesk = DesktopEntry.DesktopEntry(f)
@@ -17,13 +17,12 @@ def update_env(f):
             line = fx.readlines()[39]
             _urlfile = line.split()[8].replace('"', '')
 
-    environ.copy()
-    environ["NAME"] = filedesk.getName()
-    environ["URL"] = _urlfile
-    environ["ICON"] = filedesk.getIcon()
-    environ["FILEDESK"] = f
-    environ.update()
-    exit()
+    dict = {}
+    dict['NAME'] = filedesk.getName()
+    dict['URL'] = _urlfile
+    dict['ICON'] = filedesk.getIcon()
+    dict['FILE'] = f
+    print(json.dumps(dict))
 
 filedesk = argv[1]
 update_env(filedesk)

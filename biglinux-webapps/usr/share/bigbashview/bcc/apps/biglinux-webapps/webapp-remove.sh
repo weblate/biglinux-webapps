@@ -4,8 +4,9 @@
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps
 
-./get_desktop_entry_one.sh.py "$filedesk"
-echo "$ICON"
+vars=$(./get_desktop_entry_one.sh.py "$filedesk")
+jq -rc '.ICON' <<< ${vars}
+
 exit
 
 kdialog --title "BigLinux WebApps" --icon "internet-web-browser" \
