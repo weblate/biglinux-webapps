@@ -10,8 +10,10 @@ BROWSER="$(<~/.bigwebapps/BROWSER)"
 case $BROWSER in
     brave) selectbrave="selected" ;;
     chromium) selectchromium="selected" ;;
-    google-chrome) selectchrome="selected" ;;
-    vivaldi) selectvivaldi="selected" ;;
+    google-chrome-stable) selectchrome="selected" ;;
+    google-chrome-beta) selectchromebeta="selected" ;;
+    google-chrome-unstable) selectchromeunstable="selected" ;;
+    vivaldi-stable) selectvivaldi="selected" ;;
 esac
 
 echo '
@@ -56,18 +58,22 @@ if [ "$DESKTOP" ]; then
                         <select class="form-select form-select-size">'
 
                             if [ -e /usr/lib/brave/brave ];then
-                                echo " <option class='form-option' value='brave-browser' $selectbrave>BRAVE</option>"
+                                echo " <option class='form-option' value='brave' $selectbrave>BRAVE</option>"
                             fi
-                            if [ -e /opt/google/chrome/google-chrome -o \
-                                 -e /opt/google/chrome-beta/google-chrome-beta -o \
-                                 -e /opt/google/chrome-unstable/google-chrome-unstable ];then
-                                echo " <option class='form-option' value='google-chrome' $selectchrome>GOOGLE CHROME</option>"
+                            if [ -e /opt/google/chrome/google-chrome ];then
+                                echo " <option class='form-option' value='google-chrome-stable' $selectchrome>GOOGLE CHROME</option>"
+                            fi
+                            if [ -e /opt/google/chrome-beta/google-chrome-beta ];then
+                                echo " <option class='form-option' value='google-chrome-beta' $selectchromebeta>GOOGLE CHROME BETA</option>"
+                            fi
+                            if [ -e /opt/google/chrome-unstable/google-chrome-unstable ];then
+                                echo " <option class='form-option' value='google-chrome-unstable' $selectchromeunstable>GOOGLE CHROME UNSTABLE</option>"
                             fi
                             if [ -e /usr/lib/chromium/chromium ];then
                                 echo " <option class='form-option' value='chromium' $selectchromium>CHROMIUM</option>"
                             fi
                             if [ -e /opt/vivaldi/vivaldi ];then
-                                echo " <option class='form-option' value='vivaldi' $selectvivaldi>VIVALDI</option>"
+                                echo " <option class='form-option' value='vivaldi-stable' $selectvivaldi>VIVALDI</option>"
                             fi
                     echo '
                         </select>

@@ -53,7 +53,7 @@ echo '
                 </div>
                 <div class="mb-2 col-8">
                     <label for="urldesk" class="mt-2">'$"URL:"'</label>
-                    <input type="text" class="form-control form-control-sm" readonly
+                    <input type="text" class="form-control form-control-sm" readonly="readonly"
                        name="urldesk" id="urldesk" value="'$DESKURL'" required/>
                 </div>
             </div>
@@ -120,7 +120,7 @@ echo '
                     <label class="mb-1">'$"NAVEGADOR:"'</label>
                     <img src="" id="browsericon" width="48" height="48">
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                         <select name="browser" class="mt-5 form-select form-select-size">'
 
 
@@ -158,9 +158,9 @@ echo '
 
                 if [ -e /opt/google/chrome/google-chrome ];then
                     if [ "$(grep google-chrome-stable $filedesk)" ];then
-                        echo '<option selected value="google-chrome" class="form-option">CHROME</option>'
+                        echo '<option selected value="google-chrome-stable" class="form-option">CHROME</option>'
                     else
-                        echo '<option value="google-chrome" class="form-option">CHROME</option>'
+                        echo '<option value="google-chrome-stable" class="form-option">CHROME</option>'
                     fi
                 fi
 
@@ -283,7 +283,8 @@ echo '
 </div>
 
 <!-- Modal -->
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-favicon"
+     aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content justify-content-center">
       <div class="modal-header text-center">
