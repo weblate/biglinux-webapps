@@ -17,12 +17,12 @@ def update_env(f):
             line = fx.readlines()[39]
             _urlfile = line.split()[8].replace('"', '')
 
-    dict = {}
-    dict['NAME'] = filedesk.getName()
-    dict['URL'] = _urlfile
-    dict['ICON'] = filedesk.getIcon()
-    dict['FILE'] = f
-    print(json.dumps(dict))
+    info = {}
+    info['NAME'] = filedesk.getName()
+    info['URL'] = _urlfile
+    info['ICON'] = filedesk.getIcon()
+
+    print(json.dumps(info))
 
 filedesk = argv[1]
 update_env(filedesk)
