@@ -28,11 +28,11 @@ hour="$(date +%H)"
 
 # Mensagem personalizada conforme a hora do sistema
 if [ "$hour" -ge "06" -a "$hour" -le "12" ];then
-    msg=$"Bom Dia ""$USER!"
+    msg=$"Bom dia ""$USER!"
 elif [ "$hour" -ge "12" -a "$hour" -le "18" ];then
-    msg=$"Boa Tarde ""$USER!"
+    msg=$"Boa tarde ""$USER!"
 else
-    msg=$"Boa Noite ""$USER!"
+    msg=$"Boa noite ""$USER!"
 fi
 
 # Início da página HTML
