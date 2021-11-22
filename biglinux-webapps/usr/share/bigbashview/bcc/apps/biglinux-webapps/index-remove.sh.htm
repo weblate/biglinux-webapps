@@ -150,14 +150,20 @@ echo '
       </div>
       <div class="modal-body">
         <div class="text-center h6">
-            '$"Você tem certeza que deseja remover este WebApp?"'<br><br>
-            <span class="text-danger" style="text-decoration:underline;" id="txt-name"></span>
+            '$"Você tem certeza que deseja remover o WebApp"'<br>
+            "<span id="txt-name" class="text-dark"></span>" ?
         </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark btn-small" data-dismiss="modal">'$"Não"'</button>
-        <button type="button" class="btn btn-primary btn-small" id="btn-del">'$"Sim"'</button>
+        <button type="button" class="btn btn-dark btn-small" data-dismiss="modal">
+          <i class="bi bi-x-circle"></i>
+          '$"Não"'
+        </button>
+        <button type="button" class="btn btn-primary btn-small" id="btn-del">
+          <i class="bi bi-check2-circle"></i>
+          '$"Sim"'
+        </button>
       </div>
     </div>
   </div>
@@ -188,7 +194,10 @@ echo '
                 $("#btn-del").click(function(e){
                     e.preventDefault();
                     $(".modal").modal("hide");
-                    form.submit();
+                    let argv = form.serialize();
+                    $.get("./webapp-remove.sh?"+argv,function(ok){
+                        console.log(ok);
+                    });
                 });
             });
         });
