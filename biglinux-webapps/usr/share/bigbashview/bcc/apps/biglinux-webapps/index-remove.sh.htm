@@ -64,7 +64,7 @@ echo '<div class="row">
                 </tr>
             </thead>
             <tbody id="table-filter-del">'
-
+c=0
 for i in $DESKTOP; do
 
     if [ "$(grep Exec= $i | grep firefox)" ];then
@@ -81,26 +81,74 @@ for i in $DESKTOP; do
     fi
 
 echo '<tr class="table-light" style="line-height:38px" id="table-tr">
-        <form action="webapp-remove.sh" method="get" id="form-remove">
-            <input type="hidden" name="filedesk" value="'$i'"/>
-            <td class="col-1">
-                <img class="img-thumbnail center" src="'$DESKICON'" width="42" height="42"/>
-            </td>
-            <td class="text-truncate align-middle col-4 text-center"
-                data-bs-toggle="tooltip" data-bs-placement="top"
-                title="'$DESKNAME'" id="td-name">'$DESKNAME'</td>
-            <td class="text-truncate align-middle col-5 text-center"
-                data-bs-toggle="tooltip" data-bs-placement="top"
-                title="'$DESKURL'">'$DESKURL'</td>
-            <td class="text-center col-2">
-              <button type="submit" class="btn btn-danger btn-sm btn-small"
-                      data-bs-toggle="tooltip" data-bs-placement="top"
-                      title="'$"Remover"'" id="btn-remove">
-                  <i class="bi bi-trash-fill"></i>
-              </button>
-            </td>
-        </form>
-    </tr>'
+        <input type="hidden" id="filedesk'$c'" value="'$i'"/>
+        <td class="col-1">
+            <img class="img-thumbnail center" src="'$DESKICON'" width="42" height="42"/>
+        </td>
+        <td class="text-truncate align-middle col-4 text-center"
+            data-bs-toggle="tooltip" data-bs-placement="top"
+            title="'$DESKNAME'">'$DESKNAME'</td>
+        <td class="text-truncate align-middle col-5 text-center"
+            data-bs-toggle="tooltip" data-bs-placement="top"
+            title="'$DESKURL'">'$DESKURL'</td>
+        <td class="text-center col-2">
+          <button type="submit" class="btn btn-danger btn-sm btn-small"
+                  data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="'$"Remover"'" id="btn-remove'$c'">
+              <i class="bi bi-trash-fill"></i>
+          </button>
+        </td>
+    </tr>
+
+<!----------------------------------------------------------------------------------->
+<div class="modal fade" id="modal'$c'">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="margin-left:40%">'$"Atenção!"'</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center h6">
+            '$"Você tem certeza que deseja remover o WebApp"'<br>
+            "<cite>'$DESKNAME'</cite>" ?
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark btn-small" data-dismiss="modal">
+          <i class="bi bi-x-circle"></i>
+          '$"Não"'
+        </button>
+        <button type="button" class="btn btn-primary btn-small" id="btn-del'$c'">
+          <i class="bi bi-check2-circle"></i>
+          '$"Sim"'
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#btn-remove'$c'").click(function(e){
+        e.preventDefault();
+
+        $(".modal#modal'$c'").modal("show");
+        $(this).tooltip("hide");
+        $("#btn-del'$c'").click(function(e){
+            e.preventDefault();
+            $(".modal#modal'$c'").modal("hide");
+            let argv = $("#filedesk'$c'").val();
+            $.get("./webapp-remove.sh?filedesk="+argv,function(ok){
+                console.log(ok);
+            });
+        });
+    });
+});
+</script>'
+c=$((c+1))
 done
 echo '      </tbody>
         </table>
@@ -139,71 +187,15 @@ echo '
 fi
 
 echo '
-<div class="modal fade">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" style="margin-left:40%">'$"Atenção!"'</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true"></span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="text-center h6">
-            '$"Você tem certeza que deseja remover o WebApp"'<br>
-            "<cite id="txt-name"></cite>" ?
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark btn-small" data-dismiss="modal">
-          <i class="bi bi-x-circle"></i>
-          '$"Não"'
-        </button>
-        <button type="button" class="btn btn-primary btn-small" id="btn-del">
-          <i class="bi bi-check2-circle"></i>
-          '$"Sim"'
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script type="text/javascript">
-    $(document).ready(function(){
-        $(".modal").hide();
-
-        $("#filter").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#table-filter-del tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
+$(document).ready(function(){
+    $("#filter").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#table-filter-del tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
-
-        $("button#btn-remove").each(function(){
-            var btn = $(this);
-            var form = $(this.form);
-
-            btn.click(function(e){
-                e.preventDefault();
-
-                let nameTd = btn.parent().parent().children("#td-name").html();
-                $("#txt-name").html(nameTd);
-                $(".modal").modal("show");
-                btn.tooltip("hide");
-                $("#btn-del").click(function(e){
-                    e.preventDefault();
-                    $(".modal").modal("hide");
-                    let argv = form.serialize();
-                    $.get("./webapp-remove.sh?"+argv,function(ok){
-                        console.log(ok);
-                    });
-                });
-            });
-        });
-
-
-
     });
+});
 </script>
+
 </body>'
