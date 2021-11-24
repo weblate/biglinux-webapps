@@ -92,9 +92,9 @@ echo '<tr class="table-light" style="line-height:38px" id="table-tr">
             data-bs-toggle="tooltip" data-bs-placement="top"
             title="'$DESKURL'">'$DESKURL'</td>
         <td class="text-center col-2">
-          <button type="submit" class="btn btn-danger btn-sm btn-small"
+          <button type="button" class="btn btn-danger btn-sm btn-small"
                   data-bs-toggle="tooltip" data-bs-placement="top"
-                  title="'$"Remover"'" id="btn-remove'$c'">
+                  title="'$"Remover"'" onclick="openModal(this, '$c')">
               <i class="bi bi-trash-fill"></i>
           </button>
         </td>
@@ -122,7 +122,7 @@ echo '<tr class="table-light" style="line-height:38px" id="table-tr">
           <i class="bi bi-x-circle"></i>
           '$"Não"'
         </button>
-        <button type="button" class="btn btn-primary btn-small" id="btn-del'$c'">
+        <button type="button" class="btn btn-primary btn-small" onclick="closeModal('$c')">
           <i class="bi bi-check2-circle"></i>
           '$"Sim"'
         </button>
@@ -130,29 +130,33 @@ echo '<tr class="table-light" style="line-height:38px" id="table-tr">
     </div>
   </div>
 </div>
-<script type="text/javascript">
-$(document).ready(function(){
-    $("#btn-remove'$c'").click(function(e){
-        e.preventDefault();
-
-        $(".modal#modal'$c'").modal("show");
-        $(this).tooltip("hide");
-        $("#btn-del'$c'").click(function(e){
-            e.preventDefault();
-            $(".modal#modal'$c'").modal("hide");
-            let argv = $("#filedesk'$c'").val();
-            $.get("./webapp-remove.sh?filedesk="+argv,function(ok){
-                console.log(ok);
-            });
-        });
-    });
-});
-</script>'
+'
 c=$((c+1))
 done
 echo '      </tbody>
         </table>
       </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-success">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="margin-left:40%">'$"Sucesso!"'</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center h6">'$"O WebApp foi removido com sucesso!"'</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark btn-small"
+                data-dismiss="modal" style="width:130px">
+          <i class="bi bi-x-circle"></i> '$"Fechar"' </button>
+      </div>
+    </div>
   </div>
 </div>'
 
@@ -188,7 +192,30 @@ fi
 
 echo '
 <script type="text/javascript">
-$(document).ready(function(){
+function openModal(elem, n){
+    $(".modal#modal"+n).modal("show");
+    $(elem).tooltip("hide");
+}
+
+function closeModal(i){
+    $(".modal#modal"+i).modal("hide");
+    let valueFiledesk = $("#filedesk"+i).val();
+    startRemove(valueFiledesk);
+}
+
+function startRemove(file){
+    fetch("./webapp-remove.sh?filedesk="+file)
+    .then(data => {
+        return data.text();
+    })
+    .then(resp => {
+        if(resp=="ok"){
+            $(".modal#modal-success").modal("show");
+            //location.reload(true);
+        }
+    })
+}
+$(function(){
     $("#filter").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $("#table-filter-del tr").filter(function() {
