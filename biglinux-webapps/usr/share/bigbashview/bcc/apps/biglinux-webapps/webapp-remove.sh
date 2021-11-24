@@ -30,11 +30,5 @@ nohup update-desktop-database -q $HOME/.local/share/applications &
 nohup kbuildsycoca5 &> /dev/null &
 
 resp="$?"
-
-if [ "$resp" = "0" ]; then
-    echo -n "ok"
-    exit
-else
-    echo -n "erro"
-    exit
-fi
+echo -n $resp
+exit

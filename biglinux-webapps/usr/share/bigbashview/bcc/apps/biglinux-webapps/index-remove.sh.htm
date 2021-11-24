@@ -149,7 +149,9 @@ echo '      </tbody>
         </button>
       </div>
       <div class="modal-body">
-        <div class="text-center h6">'$"O WebApp foi removido com sucesso!"'</div>
+        <div class="text-center h6" id="text-body">
+          '$"O WebApp foi removido com sucesso!"'
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-dark btn-small"
@@ -209,11 +211,17 @@ function startRemove(file){
         return data.text();
     })
     .then(resp => {
-        if(resp=="ok"){
+        if(resp==0){
             $(".modal#modal-success").modal("show");
-            //location.reload(true);
+            $(".modal#modal-success").on("hide.bs.modal", function(){
+                location.reload(true);
+            });
+        } else {
+            $("h5.modal-title").text("'$"Erro"'!");
+            $("#text-body").html("'$"Não foi possível remover o WebApp!<br>Por favor, verifique e tente novamente."'");
+            $(".modal#modal-success").modal("show");
         }
-    })
+    });
 }
 $(function(){
     $("#filter").on("keyup", function() {
