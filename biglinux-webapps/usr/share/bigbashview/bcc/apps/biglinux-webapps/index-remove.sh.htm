@@ -160,6 +160,30 @@ echo '      </tbody>
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="modal-error">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="margin-left:40%">'$"Erro!"'</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center h6" id="text-body">
+          '$"Não foi possível remover o WebApp!"'<br>
+          '$"Por favor, verifique e tente novamente."'
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark btn-small"
+                data-dismiss="modal" style="width:130px">
+          <i class="bi bi-x-circle"></i> '$"Fechar"' </button>
+      </div>
+    </div>
+  </div>
 </div>'
 
 else
@@ -217,9 +241,7 @@ function startRemove(file){
                 location.reload(true);
             });
         } else {
-            $("h5.modal-title").text("'$"Erro"'!");
-            $("#text-body").html("'$"Não foi possível remover o WebApp!<br>Por favor, verifique e tente novamente."'");
-            $(".modal#modal-success").modal("show");
+            $(".modal#modal-error").modal("show");
         }
     });
 }
