@@ -8,13 +8,14 @@ NAMEDESK="$(basename -s .desktop "$filedesk" | sed 's|-webapp-biglinux-custom||'
 ICONDESK="$(grep "Icon=" $filedesk | sed 's|Icon=||')"
 DESKNAME="$(grep "Name=" $filedesk | sed 's|Name=||')"
 
-if [ "$(grep "firefox$" $filedesk)" ];then
-
+if [ "$(grep -E 'firefox-.*-webapp-biglinux-custom' $filedesk)" ];then
+    echo -n $NAMEDESK
+    exit
     if [ -d $HOME/.bigwebapps/"$NAMEDESK" ]; then
         rm -r $HOME/.bigwebapps/"$NAMEDESK"
     fi
     unlink "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" &> /dev/null
-    rm "$(grep "Exec=" "$filedesk" | sed 's|Exec=||')"
+    rm "$(grep "Exec" $filedesk | sed 's|Exec=||')"
     xdg-desktop-menu uninstall "$filedesk"
     rm "$ICONDESK"
 else

@@ -235,6 +235,7 @@ function startRemove(file){
         return data.text();
     })
     .then(resp => {
+        console.log(resp);
         if(resp==0){
             $(".modal#modal-success").modal("show");
             $(".modal#modal-success").on("hide.bs.modal", function(){
