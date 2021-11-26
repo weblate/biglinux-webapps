@@ -4,18 +4,21 @@
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps
 
-DESKNAME="$(grep "Name=" $filedesk | sed 's|Name=||')"
-DESKICON="$(grep "Icon=" $filedesk | sed 's|Icon=||')"
-if [ "$DESKICON" = "webapp" ];then
-    DESKICON="img/default.png"
-fi
-if [ "$(grep "Exec=" $filedesk | grep 'firefox')" ];then
-    DESKEXEC="$(grep "Exec=" $filedesk | sed 's|Exec=||')"
-    DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
-else
-    DESKEXEC="$(grep "Exec=" $filedesk | sed 's|Exec=||')"
-    DESKURL="$(grep Exec= $filedesk | sed 's|.*app=||')"
-fi
+#DESKNAME="$(grep "Name=" $filedesk | sed 's|Name=||')"
+#DESKICON="$(grep "Icon=" $filedesk | sed 's|Icon=||')"
+#if [ "$DESKICON" = "webapp" ];then
+#   DESKICON="img/default.png"
+#fi
+#if [ "$(grep "Exec=" $filedesk | grep 'firefox')" ];then
+#   DESKEXEC="$(grep "Exec=" $filedesk | sed 's|Exec=||')"
+#   DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
+#else
+#   DESKEXEC="$(grep "Exec=" $filedesk | sed 's|Exec=||')"
+#   DESKURL="$(grep Exec= $filedesk | sed 's|.*app=||')"
+#fi
+
+echo -n "$filedesk<br><br>$DESKNAME<br>$DESKICON<br>$DESKEXEC<br>$DESKURL"
+exit
 
 [ -e "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" ] && checked="checked"
 [ "$(grep embed <<< $DESKURL)" ] && checked_you="checked"

@@ -170,6 +170,8 @@ $(function(){
 
             $.get(formUrl, formData, function(){
                 $("#form-install").trigger("reset");
+                $("#preview").attr("src", "img/default.png");
+                $("select").trigger("change");
                 $("#alert-install").fadeIn();
                 $("#install").blur();
             });

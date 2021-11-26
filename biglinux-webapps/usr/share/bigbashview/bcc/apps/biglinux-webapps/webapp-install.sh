@@ -6,7 +6,7 @@ export TEXTDOMAIN=biglinux-webapps
 
 NAMEDESK="$(sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAaAeEeEiIoOoOoOuUuUcC/;s|^ *||;s| *$||g;s| |-|g;s|/|-|g;s|\.|-|g;s|\:|-|g;s|.*|\L&|' <<< "$namedesk")"
 
-if [ "$browser" = "firefox" ];then
+if [ "$(grep firefox <<< $browser)" ];then
 
     if [ ! "$(grep 'https://' <<< $urldesk)" ];then
 

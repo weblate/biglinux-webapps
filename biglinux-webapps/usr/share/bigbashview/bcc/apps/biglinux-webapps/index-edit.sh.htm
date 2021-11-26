@@ -65,20 +65,25 @@ echo '<div class="row">
 
 for i in $DESKTOP; do
 
-    if [ "$(grep Exec= $i | grep firefox)" ];then
-        DESKEXEC="$(grep Exec= $i | sed 's|Exec=||')"
+    if [ "$(grep "Exec=" $i | grep firefox)" ];then
+        DESKEXEC="$(grep "Exec=" $i | sed 's|Exec=||')"
         DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
     else
-        DESKURL="$(grep Exec= $i | sed 's|.*app=||')"
+        DESKEXEC="$(grep "Exec=" $i | sed 's|Exec=||')"
+        DESKURL="$(grep "Exec=" $i | sed 's|.*app=||')"
     fi
 
     DESKNAME="$(grep "Name=" $i | sed 's|Name=||')"
     DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
-    if [ "$DESKICON" = "webapp" ];then DESKICON="img/default.png";fi
+    [ "$DESKICON" = "webapp" ] && DESKICON="img/default.png"
 
 echo '<tr class="table-light" style="line-height:38px">
         <form action="index-edit2.sh.htm" method="get">
             <input type="hidden" name="filedesk" value="'$i'"/>
+            <input type="hidden" name="DESKNAME" value="'$DESKNAME'"/>
+            <input type="hidden" name="DESKICON" value="'$DESKICON'"/>
+            <input type="hidden" name="DESKURL" value="'$DESKURL'"/>
+            <input type="hidden" name="DESKEXEC" value="'$DESKEXEC'"/>
             <td class="col-1">
                 <img class="img-thumbnail center" src="'$DESKICON'" width="42" height="42"/>
             </td>
