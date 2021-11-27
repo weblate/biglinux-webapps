@@ -186,7 +186,6 @@ $(function(){
     $("#install-edit").click(function (e) {
         e.preventDefault();
         let nome = $("#namedesk").val();
-        let url = $("#urldesk").val();
 
         if (!nome) {
             $("#alert-name").fadeIn();
@@ -194,18 +193,21 @@ $(function(){
             setTimeout(function(){
                 $("#alert-name").fadeOut();
             }, 3000);
-        } else if (!isValidURL(url) || !url || /\s/.test(url)) {
-            $("#alert-url").fadeIn();
-            $("#urldesk").focus();
-            setTimeout(function(){
-                $("#alert-url").fadeOut();
-            }, 3000);
         } else {
+            let namedesk = $("#namedesk").val();
+            $("#namedesk").val(namedesk);
+
+            let icondesk = $("#icondesk").val();
+            $("#icondesk").val(icondesk);
+
+            let browser = $("#browser").val();
+            $("#browser").val(browser);
+
             let formUrl = $("#form-edit").attr("action");
             let formData = $("#form-edit").serialize();
 
-            $.get(formUrl, formData, function(){
-                $("#form-edit").trigger("reset");
+            $.get(formUrl, formData, function(resp){
+                alert(resp);
                 $("#alert-edit").fadeIn();
                 $("#install").blur();
             });

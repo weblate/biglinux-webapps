@@ -4,22 +4,6 @@
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps
 
-#DESKNAME="$(grep "Name=" $filedesk | sed 's|Name=||')"
-#DESKICON="$(grep "Icon=" $filedesk | sed 's|Icon=||')"
-#if [ "$DESKICON" = "webapp" ];then
-#   DESKICON="img/default.png"
-#fi
-#if [ "$(grep "Exec=" $filedesk | grep 'firefox')" ];then
-#   DESKEXEC="$(grep "Exec=" $filedesk | sed 's|Exec=||')"
-#   DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
-#else
-#   DESKEXEC="$(grep "Exec=" $filedesk | sed 's|Exec=||')"
-#   DESKURL="$(grep Exec= $filedesk | sed 's|.*app=||')"
-#fi
-
-echo -n "$filedesk<br><br>$DESKNAME<br>$DESKICON<br>$DESKEXEC<br>$DESKURL"
-exit
-
 [ -e "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" ] && checked="checked"
 [ "$(grep embed <<< $DESKURL)" ] && checked_you="checked"
 [ "$(grep user-data-dir <<< $DESKEXEC)" ] && checked_new="checked"
@@ -46,7 +30,7 @@ echo '
         </p>
 
         <!-- Formulário de edição do webapp -->
-        <form action="webapp-install2.sh" method="get" id="form-edit">
+        <form action="webapp-edit.sh" method="get" id="form-edit">
             <input type="hidden" value="'$filedesk'" name="filedesk">
             <div class="row justify-content-center">
                 <div class="col-8">
@@ -130,14 +114,25 @@ echo '
                 if [ -e /usr/lib/brave/brave ];then
                     if [ "$(grep brave $filedesk)" ];then
                         echo '<option value="brave" class="form-option" selected>BRAVE</option>'
+                        BROWSEROLD='brave'
                     else
                         echo '<option value="brave" class="form-option">BRAVE</option>'
+                    fi
+                fi
+
+                if [ -e /usr/lib/chromium/chromium ];then
+                    if [ "$(grep chromium $filedesk)" ];then
+                        echo '<option selected value="chromium" class="form-option">CHROMIUM</option>'
+                        BROWSEROLD='chromium'
+                    else
+                        echo '<option value="chromium" class="form-option">CHROMIUM</option>'
                     fi
                 fi
 
                 if [ -e /usr/lib/firefox/firefox ];then
                     if [ "$(grep firefox $filedesk)" ];then
                         echo '<option value="firefox" class="form-option" selected>FIREFOX</option>'
+                        BROWSEROLD='firefox'
                     else
                         echo '<option value="firefox" class="form-option">FIREFOX</option>'
                     fi
@@ -146,6 +141,7 @@ echo '
                 if [ -e /usr/lib/firefox-developer-edition/firefox ];then
                     if [ "$(grep firefox-developer-edition $filedesk)" ];then
                         echo '<option selected value="firefox-developer-edition" class="form-option">FIREFOX DEVELOPER</option>'
+                        BROWSEROLD='firefox-developer-edition'
                     else
                         echo '<option value="firefox-developer-edition" class="form-option">FIREFOX DEVELOPER</option>'
                     fi
@@ -154,6 +150,7 @@ echo '
                 if [ -e /opt/firefox-nightly/firefox ];then
                     if [ "$(grep firefox-nightly $filedesk)" ];then
                         echo '<option selected value="firefox-nightly" class="form-option">FIREFOX NIGHTLY</option>'
+                        BROWSEROLD='firefox-nightly'
                     else
                         echo '<option value="firefox-nightly" class="form-option">FIREFOX NIGHTLY</option>'
                     fi
@@ -161,39 +158,35 @@ echo '
 
                 if [ -e /opt/google/chrome/google-chrome ];then
                     if [ "$(grep google-chrome-stable $filedesk)" ];then
-                        echo '<option selected value="google-chrome-stable" class="form-option">CHROME</option>'
+                        echo '<option selected value="google-chrome-stable" class="form-option">GOOGLE CHROME</option>'
+                        BROWSEROLD='google-chrome-stable'
                     else
-                        echo '<option value="google-chrome-stable" class="form-option">CHROME</option>'
+                        echo '<option value="google-chrome-stable" class="form-option">GOOGLE CHROME</option>'
                     fi
                 fi
 
                 if [ -e /opt/google/chrome-beta/google-chrome-beta ];then
                     if [ "$(grep google-chrome-beta $filedesk)" ];then
-                        echo '<option selected value="google-chrome-beta" class="form-option">CHROME BETA</option>'
+                        echo '<option selected value="google-chrome-beta" class="form-option">GOOGLE CHROME BETA</option>'
+                        BROWSEROLD='google-chrome-beta'
                     else
-                        echo '<option value="google-chrome-beta" class="form-option">CHROME BETA</option>'
+                        echo '<option value="google-chrome-beta" class="form-option">GOOGLE CHROME BETA</option>'
                     fi
                 fi
 
                 if [ -e /opt/google/chrome-unstable/google-chrome-unstable ];then
                     if [ "$(grep google-chrome-unstable $filedesk)" ];then
-                        echo '<option selected value="google-chrome-unstable" class="form-option">CHROME UNSTABLE</option>'
+                        echo '<option selected value="google-chrome-unstable" class="form-option">GOOGLE CHROME UNSTABLE</option>'
+                        BROWSEROLD='google-chrome-unstable'
                     else
-                        echo '<option value="google-chrome-unstable" class="form-option">CHROME UNSTABLE</option>'
-                    fi
-                fi
-
-                if [ -e /usr/lib/chromium/chromium ];then
-                    if [ "$(grep chromium $filedesk)" ];then
-                        echo '<option selected value="chromium" class="form-option">CHROMIUM</option>'
-                    else
-                        echo '<option value="chromium" class="form-option">CHROMIUM</option>'
+                        echo '<option value="google-chrome-unstable" class="form-option">GOOGLE CHROME UNSTABLE</option>'
                     fi
                 fi
 
                 if [ -e /opt/vivaldi/vivaldi ];then
                     if [ "$(grep vivaldi-stable $filedesk)" ];then
                         echo '<option selected value="vivaldi-stable" class="form-option">VIVALDI</option>'
+                        BROWSEROLD='vivaldi-stable'
                     else
                         echo '<option value="vivaldi-stable" class="form-option">VIVALDI</option>'
                     fi
@@ -251,6 +244,7 @@ echo '
                     </button>
                 </div>
             </div>
+            <input type="hidden" value="'$BROWSEROLD'" name="browserold">
         </form>
     </div>
 
@@ -308,4 +302,13 @@ echo '
   </div>
 </div>
 
+<script type="text/javascript">
+$(function(){
+    let value = $("select").val();
+
+    if(value.match(/firefox/gi)){
+        $("#perfil").hide();
+    }
+});
+</script>
 </body>'

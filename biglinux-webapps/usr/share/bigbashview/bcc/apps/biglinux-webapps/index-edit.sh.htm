@@ -65,7 +65,7 @@ echo '<div class="row">
 
 for i in $DESKTOP; do
 
-    if [ "$(grep "Exec=" $i | grep firefox)" ];then
+    if [ "$(grep firefox <<< $i)" ];then
         DESKEXEC="$(grep "Exec=" $i | sed 's|Exec=||')"
         DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
     else

@@ -4,25 +4,18 @@
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps
 
-NAMEDESK="$(sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAaAeEeEiIoOoOoOuUuUcC/;s|^ *||;s| *$||g;s| |-|g;s|/|-|g;s|\.|-|g;s|\:|-|g;s|.*|\L&|' <<< "$namedesk")"
-
 if [ "$(grep firefox <<< $browser)" ];then
 
-    if [ ! "$(grep 'https://' <<< $urldesk)" ];then
+    NAMEDESK="$(basename -s .desktop $filedesk | sed 's|-webapp-biglinux-custom||')"
+    DESKNAME="$(grep "^Name=" $filedesk | sed 's|Name=||')"
+    ICONDESK="$(grep "^Icon=" $filedesk | sed 's|Icon=||')"
 
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
-            urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
-        else
-            urldesk="https://$urldesk"
-        fi
-
-    else
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
-            urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
-        else
-            urldesk="$urldesk"
-        fi
+    if [ -d $HOME/.bigwebapps/"$NAMEDESK" ]; then
+        rm -r $HOME/.bigwebapps/"$NAMEDESK"
     fi
+    unlink "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" &> /dev/null
+    xdg-desktop-menu uninstall "$filedesk"
+    rm "$ICONDESK"
 
     if [ -z "$icondesk" ];then
         ICON_FILE="webapp"
@@ -37,6 +30,7 @@ if [ "$(grep firefox <<< $browser)" ];then
 
         ICON_FILE="$HOME/.local/share/icons/$browser-$NAME_FILE"
     fi
+
 
 cat > "$HOME/.local/bin/$NAMEDESK-$browser" <<EOF
 #!/usr/bin/env sh
@@ -116,70 +110,24 @@ rm "/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
         chmod 777 "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
     fi
 
+
 else
-
-    if [ "$(egrep "(http|https)://" <<< "$urldesk")" ];then
-
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
-            urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
-            CUT_HTTP=$(sed 's|https://||;s|http://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
-        else
-            CUT_HTTP=$(sed 's|https://||;s|http://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
-        fi
-
-        [ "$newperfil" = "on" ] && user="--user-data-dir=$HOME/.bigwebapps/$NAMEDESK-$browser" || user=
-    else
-
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
-            urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
-            CUT_HTTP=$(sed 's|https://||;s|http://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
-        else
-            CUT_HTTP=$(sed 's|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
-            urldesk="https://$urldesk"
-        fi
-
-        [ "$newperfil" = "on" ] && user="--user-data-dir=$HOME/.bigwebapps/$NAMEDESK-$browser" || user=
-    fi
-
-    if [ -z "$icondesk" ];then
-        ICON_FILE="webapp"
-    else
-        NAME_FILE=$(basename "$icondesk")
-
-        if [ "$(dirname "$icondesk")" = "/tmp" ];then
-            mv "$icondesk" $HOME/.local/share/icons
-        else
-            cp "$icondesk" $HOME/.local/share/icons
-        fi
-
-        FILE_PNG=$(sed 's|\..*|.png|' <<< $NAME_FILE)
-        convert "$HOME/.local/share/icons/$NAME_FILE" -thumbnail 32x32 \
-                -alpha on -background none -flatten "$HOME/.local/share/icons/$browser-$NAMEDESK-$FILE_PNG"
-        rm "$HOME/.local/share/icons/$NAME_FILE"
-
-        ICON_FILE="$HOME/.local/share/icons/$browser-$NAMEDESK-$FILE_PNG"
-    fi
-
-echo "#!/usr/bin/env xdg-open
-[Desktop Entry]
-Version=1.0
-Terminal=false
-Type=Application
-Name=$namedesk
-Exec=$browser $user --class=$CUT_HTTP,Chromium-browser --profile-directory=Default --app=$urldesk
-Icon=$ICON_FILE
-StartupWMClass=$CUT_HTTP" > "/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
-
-xdg-desktop-menu install --novendor $HOME/.local/share/desktop-directories/web-apps.directory \
-"/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
-rm "/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
-
-    if [ "$shortcut" = "on" ];then
-        ln "$HOME/.local/share/applications/$NAMEDESK-$browser-webapp-biglinux-custom.desktop" \
-        "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
-        chmod 777 "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
-    fi
+    sed -i "s|^Name.*|Name=$namedesk|" $filedesk
+    sed -i "s|^Icon.*|Icon=$icondesk|" $filedesk
+    sed -i "s|^Exec=.*\ |Exec=$browser\ |" $filedesk
 fi
 
 nohup update-desktop-database -q $HOME/.local/share/applications &
 nohup kbuildsycoca5 &> /dev/null &
+
+echo "
+$filedesk
+$namedesk
+$icondesk
+$urldesk
+$browserold
+$browser
+$newperfil
+$shortcut
+$tvmode
+"
