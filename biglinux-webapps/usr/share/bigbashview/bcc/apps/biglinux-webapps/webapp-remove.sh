@@ -14,9 +14,8 @@ if [ "$(grep firefox $filedesk)" ];then
         rm -r $HOME/.bigwebapps/"$NAMEDESK"
     fi
     unlink "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" &> /dev/null
-    rm "$DESKBIN"
+    rm "$DESKBIN" "$ICONDESK"
     xdg-desktop-menu uninstall "$filedesk"
-    rm "$ICONDESK"
 else
     if [ -d $HOME/.bigwebapps/"$NAMEDESK" ]; then
         rm -r $HOME/.bigwebapps/"$NAMEDESK"

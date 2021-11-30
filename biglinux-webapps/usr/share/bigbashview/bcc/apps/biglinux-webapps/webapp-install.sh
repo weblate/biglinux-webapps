@@ -8,26 +8,23 @@ NAMEDESK="$(sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAaA
 
 if [ "$(grep firefox <<< $browser)" ];then
 
-    if [ ! "$(grep 'https://' <<< $urldesk)" ];then
-
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
-            urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
+    if [ ! "$(grep https:// <<< $urldesk)" ];then
+        if [ "$tvmode" = "on" ];then
+            urldesk="https://www.youtube.com/embed/$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
         else
             urldesk="https://$urldesk"
         fi
 
     else
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
-            urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
-        else
-            urldesk="$urldesk"
+        if [ "$tvmode" = "on" ];then
+            urldesk="https://www.youtube.com/embed/$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
         fi
     fi
 
     if [ -z "$icondesk" ];then
         ICON_FILE="webapp"
     else
-        NAME_FILE=$(basename "$icondesk")
+        NAME_FILE="$(basename "$icondesk")"
 
         if [ "$(dirname "$icondesk")" = "/tmp" ];then
             mv "$icondesk" "$HOME/.local/share/icons/$browser-$NAME_FILE"
@@ -38,7 +35,7 @@ if [ "$(grep firefox <<< $browser)" ];then
         ICON_FILE="$HOME/.local/share/icons/$browser-$NAME_FILE"
     fi
 
-cat > "$HOME/.local/bin/$NAMEDESK-$browser" <<EOF
+cat > "$HOME/.local/bin/$NAMEDESK-$browser" <<'EOF'
 #!/usr/bin/env sh
 #
 # Amofi - App mode for Firefox
@@ -66,26 +63,27 @@ cat > "$HOME/.local/bin/$NAMEDESK-$browser" <<EOF
 # @see       https://notabug.org/sepbit/amofi Repository of Amofi
 #
 
-if [ "\$(grep "toolkit.legacyUserProfileCustomizations.stylesheets" "\$HOME/.bigwebapps/$NAMEDESK-$browser/prefs.js")" = "" ]; then
-    rm -R "\$HOME/.bigwebapps/$NAMEDESK-$browser"
-    mkdir -p "\$HOME/.bigwebapps/$NAMEDESK-$browser/chrome"
-    echo 'user_pref("media.eme.enabled", true);' >> "\$HOME/.bigwebapps/$NAMEDESK-$browser/prefs.js"
-    echo 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);' >> "\$HOME/.bigwebapps/$NAMEDESK-$browser/prefs.js"
+if [ "$(grep "toolkit.legacyUserProfileCustomizations.stylesheets" "$HOME/.bigwebapps/$NAMEDESK-$browser/prefs.js")" = "" ]; then
+    rm -R "$HOME/.bigwebapps/$NAMEDESK-$browser"
+    mkdir -p "$HOME/.bigwebapps/$NAMEDESK-$browser/chrome"
+    echo 'user_pref("media.eme.enabled", true);' >> "$HOME/.bigwebapps/$NAMEDESK-$browser/prefs.js"
+    echo 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);' >> "$HOME/.bigwebapps/$NAMEDESK-$browser/prefs.js"
 fi
 
 # Custom profile
-echo "#nav-bar{visibility: collapse;} #TabsToolbar{visibility: collapse;}" >> "\$HOME/.bigwebapps/$NAMEDESK-$browser/chrome/userChrome.css"
-echo "user_pref(\"browser.tabs.warnOnClose\", false);" >> "\$HOME/.bigwebapps/$NAMEDESK-$browser/user.js"
-sed -i 's|user_pref("browser.urlbar.placeholderName.*||g' "\$HOME/.bigwebapps/$NAMEDESK-$browser/prefs.js"
+echo '#nav-bar{visibility: collapse;} #TabsToolbar{visibility: collapse;}' >> "$HOME/.bigwebapps/$NAMEDESK-$browser/chrome/userChrome.css"
+echo 'user_pref("browser.tabs.warnOnClose", false);' >> "$HOME/.bigwebapps/$NAMEDESK-$browser/user.js"
+sed -i 's|user_pref("browser.urlbar.placeholderName.*||g' "$HOME/.bigwebapps/$NAMEDESK-$browser/prefs.js"
 
 MOZ_DISABLE_GMP_SANDBOX=1 MOZ_DISABLE_CONTENT_SANDBOX=1 \
-$browser --class=$browser-webapp-$NAMEDESK -profile "\$HOME/.bigwebapps/$NAMEDESK-$browser" \
+$browser --class=$browser-webapp-$NAMEDESK -profile "$HOME/.bigwebapps/$NAMEDESK-$browser" \
 -no-remote -new-instance "$urldesk" &
 
+wininfo="$(xwininfo -root -children -all | grep -iE "Navigator.*$browser-webapp-$NAMEDESK")"
 count=0
-while [ \$count -lt 100 ]; do
-    if [ "\$(xwininfo -root -children -all | grep -iE "Navigator.*$browser-webapp-$NAMEDESK")" != "" ]; then
-/usr/share/biglinux/webapps/bin/xseticon -id "\$(xwininfo -root -children -all | grep -iE "Navigator.*$browser-webapp-$NAMEDESK" | awk '{print \$1}')" $ICON_FILE
+while [ $count -lt 100 ]; do
+    if [ "$wininfo" ]; then
+/usr/share/biglinux/webapps/bin/xseticon -id "$(awk '{print $1}' <<< "$wininfo")" $ICON_FILE
         count=100
     else
         let count=count+1;
@@ -118,21 +116,21 @@ rm "/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 
 else
 
-    if [ "$(egrep "(http|https)://" <<< "$urldesk")" ];then
+    if [ "$(grep https:// <<< "$urldesk")" ];then
 
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
-            urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
-            CUT_HTTP=$(sed 's|https://||;s|http://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
+        if [ "$tvmode" = "on" ];then
+            urldesk="https://www.youtube.com/embed/$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
+            CUT_HTTP=$(sed 's|https://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
         else
-            CUT_HTTP=$(sed 's|https://||;s|http://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
+            CUT_HTTP=$(sed 's|https://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
         fi
 
         [ "$newperfil" = "on" ] && user="--user-data-dir=$HOME/.bigwebapps/$NAMEDESK-$browser" || user=
     else
 
-        if [ "$tvmode" = "on" -a "$(egrep "(youtu.be|youtube)" <<< "$urldesk")" ];then
-            urldesk="https://www.youtube.com/embed/$(basename "$urldesk" | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
-            CUT_HTTP=$(sed 's|https://||;s|http://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
+        if [ "$tvmode" = "on" ];then
+            urldesk="https://www.youtube.com/embed/$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
+            CUT_HTTP=$(sed 's|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
         else
             CUT_HTTP=$(sed 's|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")
             urldesk="https://$urldesk"
@@ -144,20 +142,15 @@ else
     if [ -z "$icondesk" ];then
         ICON_FILE="webapp"
     else
-        NAME_FILE=$(basename "$icondesk")
+        NAME_FILE="$(basename "$icondesk")"
 
         if [ "$(dirname "$icondesk")" = "/tmp" ];then
-            mv "$icondesk" $HOME/.local/share/icons
+            mv "$icondesk" "$HOME/.local/share/icons/$browser-$NAME_FILE"
         else
-            cp "$icondesk" $HOME/.local/share/icons
+            cp "$icondesk" "$HOME/.local/share/icons/$browser-$NAME_FILE"
         fi
 
-        FILE_PNG=$(sed 's|\..*|.png|' <<< $NAME_FILE)
-        convert "$HOME/.local/share/icons/$NAME_FILE" -thumbnail 32x32 \
-                -alpha on -background none -flatten "$HOME/.local/share/icons/$browser-$NAMEDESK-$FILE_PNG"
-        rm "$HOME/.local/share/icons/$NAME_FILE"
-
-        ICON_FILE="$HOME/.local/share/icons/$browser-$NAMEDESK-$FILE_PNG"
+        ICON_FILE="$HOME/.local/share/icons/$browser-$NAME_FILE"
     fi
 
 echo "#!/usr/bin/env xdg-open

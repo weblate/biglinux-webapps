@@ -9,6 +9,10 @@ $(function(){
     var iconSelected = $("select").val();
     $("#browsericon").attr("src", "icons/" + iconSelected + ".png");
 
+    if(iconSelected.match(/firefox/gi)){
+        $("#perfil").hide();
+    }
+
     $("select").on("change", function(){
         $("#browsericon").attr("src", "icons/" + this.value + ".png");
 
