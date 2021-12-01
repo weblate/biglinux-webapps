@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "
+echo -e "
 $filedesk
 $namedesk
 $icondesk

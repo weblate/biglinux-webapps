@@ -7,10 +7,11 @@ $(function(){
     });
 
     var iconSelected = $("select").val();
-    $("#browsericon").attr("src", "icons/" + iconSelected + ".png");
-
-    if(iconSelected.match(/firefox/gi)){
-        $("#perfil").hide();
+    if(iconSelected){
+      $("#browsericon").attr("src", "icons/" + iconSelected + ".png");
+      if(iconSelected.match(/firefox/gi)){
+          $("#perfil").hide();
+      }
     }
 
     $("select").on("change", function(){
@@ -227,4 +228,46 @@ $(function(){
       var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi);
       return (res !== null)
     };
+
+    $("#filter-edit").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#table-filter-edit tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $("#filter").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#table-filter-del tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 });
+
+function openModal(elem, n){
+    $(".modal#modal"+n).modal("show");
+    $(elem).tooltip("hide");
+}
+
+function closeModal(i){
+    $(".modal#modal"+i).modal("hide");
+    let valueFiledesk = $("#filedesk"+i).val();
+    startRemove(valueFiledesk);
+}
+
+function startRemove(file){
+    fetch("./webapp-remove.sh?filedesk="+file)
+    .then(data => {
+        return data.text();
+    })
+    .then(resp => {
+        if(resp==0){
+            $(".modal#modal-success").modal("show");
+            $(".modal#modal-success").on("hide.bs.modal", function(){
+                location.reload(true);
+            });
+        } else {
+            $(".modal#modal-error").modal("show");
+        }
+    });
+}
