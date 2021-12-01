@@ -52,6 +52,12 @@ $(function(){
         });
     });
 
+    var modetv = $("#urldesk").val()
+    if(modetv.match(/youtu/gi)){
+        $("#modetv").show();
+        $("#modetv_empty").hide();
+    }
+
     $("#urldesk").keyup(function(){
 
         if($(this).val().match(/youtu/gi)){
