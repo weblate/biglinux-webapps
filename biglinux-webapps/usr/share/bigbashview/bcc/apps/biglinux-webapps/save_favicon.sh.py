@@ -9,7 +9,8 @@ from PIL import Image, UnidentifiedImageError
 
 def save(url):
     base_name = os.path.basename(url)
-    name_file, extension = os.path.splitext(base_name)
+    string, extension = os.path.splitext(base_name)
+    name_file = ''.join(c for c in string if c.isalnum())
 
     if extension:
         ext = extension

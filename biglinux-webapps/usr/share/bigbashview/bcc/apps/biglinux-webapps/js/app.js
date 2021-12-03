@@ -224,10 +224,8 @@ $(function(){
                 $("#alert-edit").fadeIn();
                 $("#install").blur();
             });
-
             setTimeout(function(){
                 $("#alert-edit").fadeOut();
-                $("#namedesk").focus();
             }, 3000);
         }
     });

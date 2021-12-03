@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 
-echo -e "
-$filedesk
-$namedesk
-$icondesk
-$urldesk
-$browserold
-$browser
-$newperfil
-$shortcut
-$tvmode
-"
+if [ "$browser" = "$browserold" ];then
+    echo "yes"
+else
+    echo "no"
+fi
+
 exit
 #Translation
 #export TEXTDOMAINDIR="/usr/share/locale"
