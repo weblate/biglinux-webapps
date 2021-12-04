@@ -12,12 +12,7 @@ def save(url):
     string, extension = os.path.splitext(base_name)
     name_file = ''.join(c for c in string if c.isalnum())
 
-    if extension:
-        ext = extension
-    else:
-        ext = '.png'
-
-    if name_file == 'favicon':
+    if 'favicon' in name_file:
         name_file = '%s-%s' % (name_file, randint(0, 10000000))
 
     try:
@@ -28,25 +23,34 @@ def save(url):
         }
         resp = requests.get(url, stream=True, headers=headers)
         with Image.open(BytesIO(resp.content)) as img:
+            if extension:
+                ext = extension
+            else:
+                extension = img.format
+                ext = '.%s' % extension.lower()
+
             if img.verify:
                 img.save('/tmp/{}{}'.format(name_file, ext))
 
                 if img.format != 'PNG':
-                    status = os.system('''convert /tmp/{0}{1} -resize 32x32^ \
-                                                     -alpha on        \
-                                                     -background none \
-                                                     -flatten /tmp/{0}.png'''.format(name_file, ext))
+                    os.system('''convert /tmp/{0}{1} -resize 32x32^ \
+                                          -alpha on -background none         \
+                                          -flatten /tmp/{0}.png'''.format(name_file, ext))
                     os.remove('/tmp/{}{}'.format(name_file, ext))
                     print('/tmp/%s.png' % name_file, end='')
                 else:
                     print('/tmp/%s.png' % name_file, end='')
 
     except UnidentifiedImageError:
-        status = os.system('''wget -q {0} -O /tmp/{1}{2}
-                     convert /tmp/{1}{2} -thumbnail 32x32^ \
-                                         -alpha on        \
-                                         -background none \
-                                         -flatten /tmp/{1}.png'''.format(url, name_file, ext))
+        if extension:
+            ext = extension
+        else:
+            ext = ''
+
+        os.system('''wget -q {0} -O /tmp/{1}{2}
+                              convert /tmp/{1}{2} -thumbnail 32x32^ \
+                              -alpha on -background none            \
+                              -flatten /tmp/{1}.png'''.format(url, name_file, ext))
         os.remove('/tmp/{}{}'.format(name_file, ext))
         print('/tmp/%s.png' % name_file, end='')
 
