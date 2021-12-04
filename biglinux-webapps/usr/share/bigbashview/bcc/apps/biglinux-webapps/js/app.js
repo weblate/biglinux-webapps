@@ -220,9 +220,10 @@ $(function(){
             let formData = $("#form-edit").serialize();
 
             $.get(formUrl, formData, function(resp){
-                alert(resp);
-                $("#alert-edit").fadeIn();
-                $("#install").blur();
+                if(resp==0){
+                    $("#alert-edit").fadeIn();
+                    $("#install").blur();
+                }
             });
             setTimeout(function(){
                 $("#alert-edit").fadeOut();

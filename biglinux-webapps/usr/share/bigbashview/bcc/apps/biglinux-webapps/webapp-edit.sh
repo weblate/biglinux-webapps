@@ -1,21 +1,37 @@
 #!/usr/bin/env bash
 
+USER_DESKTOP="$(xdg-user-dir DESKTOP)"
+NAMEDESK="$(basename -s .desktop $filedesk | sed 's|-webapp-biglinux-custom||')"
+DESKNAME="$(grep "^Name=" $filedesk | sed 's|Name=||')"
+ICONDESK="$(grep "^Icon=" $filedesk | sed 's|Icon=||')"
+
+
 if [ "$browser" = "$browserold" ];then
-    echo "yes"
+    sed -i "s|^Name=.*|Name=$namedesk|" $filedesk
+    sed -i "s|^Icon=.*|Icon=$icondesk|" $filedesk
+
+    if [ "shortcut" = "on" ];then
+        [ -e  ]
+    fi
+
 else
-    echo "no"
+    exit
 fi
 
+nohup update-desktop-database -q $HOME/.local/share/applications &
+nohup kbuildsycoca5 &> /dev/null &
+
+resp="$?"
+echo -n $resp
 exit
+
+
 #Translation
 #export TEXTDOMAINDIR="/usr/share/locale"
 #export TEXTDOMAIN=biglinux-webapps
 #
 #if [ "$(grep firefox <<< $browser)" ];then
 #
-#   NAMEDESK="$(basename -s .desktop $filedesk | sed 's|-webapp-biglinux-custom||')"
-#   DESKNAME="$(grep "^Name=" $filedesk | sed 's|Name=||')"
-#   ICONDESK="$(grep "^Icon=" $filedesk | sed 's|Icon=||')"
 #
 #   if [ -d $HOME/.bigwebapps/"$NAMEDESK" ]; then
 #       rm -r $HOME/.bigwebapps/"$NAMEDESK"
@@ -124,5 +140,3 @@ exit
 #   sed -i "s|^Exec=.*\ |Exec=$browser\ |" $filedesk
 #fi
 #
-#nohup update-desktop-database -q $HOME/.local/share/applications &
-#nohup kbuildsycoca5 &> /dev/null &
