@@ -125,7 +125,9 @@ else
             CUT_HTTP="$(sed 's|https://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")"
         fi
 
-        [ "$newperfil" = "on" ] && user="--user-data-dir=$HOME/.bigwebapps/$NAMEDESK-$browser" || user=
+        if [ "$newperfil" = "on" ];then
+            browser="$browser --user-data-dir=$HOME/.bigwebapps/$NAMEDESK-$browser"
+        fi
     else
 
         if [ "$tvmode" = "on" ];then
@@ -136,7 +138,9 @@ else
             urldesk="https://$urldesk"
         fi
 
-        [ "$newperfil" = "on" ] && user="--user-data-dir=$HOME/.bigwebapps/$NAMEDESK-$browser" || user=
+        if [ "$newperfil" = "on" ];then
+            browser="$browser --user-data-dir=$HOME/.bigwebapps/$NAMEDESK-$browser"
+        fi
     fi
 
     if [ -z "$icondesk" ];then
@@ -159,7 +163,7 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=$namedesk
-Exec=$browser $user --class=$CUT_HTTP,Chromium-browser --profile-directory=Default --app=$urldesk
+Exec=$browser --class=$CUT_HTTP,Chromium-browser --profile-directory=Default --app=$urldesk
 Icon=$ICON_FILE
 StartupWMClass=$CUT_HTTP" > "/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 
