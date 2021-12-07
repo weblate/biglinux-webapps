@@ -109,7 +109,7 @@ xdg-desktop-menu install --novendor $HOME/.local/share/desktop-directories/web-a
 rm "/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 
     if [ "$shortcut" = "on" ];then
-        ln "$HOME/.local/share/applications/$NAMEDESK-$browser-webapp-biglinux-custom.desktop" \
+        link "$HOME/.local/share/applications/$NAMEDESK-$browser-webapp-biglinux-custom.desktop" \
         "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
         chmod 777 "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
     fi
@@ -168,7 +168,7 @@ xdg-desktop-menu install --novendor $HOME/.local/share/desktop-directories/web-a
 rm "/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 
     if [ "$shortcut" = "on" ];then
-        ln "$HOME/.local/share/applications/$NAMEDESK-$browser-webapp-biglinux-custom.desktop" \
+        link "$HOME/.local/share/applications/$NAMEDESK-$browser-webapp-biglinux-custom.desktop" \
         "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
         chmod 777 "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
     fi

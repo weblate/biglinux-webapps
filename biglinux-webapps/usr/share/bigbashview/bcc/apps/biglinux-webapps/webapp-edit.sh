@@ -10,8 +10,18 @@ if [ "$browser" = "$browserold" ];then
     sed -i "s|^Name=.*|Name=$namedesk|" $filedesk
     sed -i "s|^Icon=.*|Icon=$icondesk|" $filedesk
 
-    if [ "shortcut" = "on" ];then
-        [ -e  ]
+    if [ "$shortcut" = "on" ];then
+        if [ ! -e "$USER_DESKTOP/$NAMEDESK.desktop" ];then
+            link "$filedesk" "$NAMEDESK.desktop"
+        fi
+    else
+        if [ -e "$USER_DESKTOP/$NAMEDESK.desktop" ];then
+            unlink "$filedesk" "$NAMEDESK.desktop"
+        fi
+    fi
+
+    if [ "$tvmode" = "on" ];then
+
     fi
 
 else
