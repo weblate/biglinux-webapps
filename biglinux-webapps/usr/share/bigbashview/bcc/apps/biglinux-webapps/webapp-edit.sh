@@ -21,6 +21,14 @@ if [ "$browser" = "$browserold" ];then
     fi
 
     if [ "$tvmode" = "on" ];then
+        if [ ! "$(grep embed <<< $urldesk)" ];then
+            urldesk="https://www.youtube.com/embed/$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
+
+        else
+            urldesk="https://www.youtube.com/watch?v=$(basename $urldesk)"
+            APP="$(grep Exec= $filedesk|sed 's|--app=.*||')"
+            sed -i "s|^Exec=.*|Exec=|" $filedesk
+        fi
 
     fi
 
