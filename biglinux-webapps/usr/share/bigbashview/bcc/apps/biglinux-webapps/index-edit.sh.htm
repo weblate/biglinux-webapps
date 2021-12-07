@@ -78,7 +78,7 @@ for i in $DESKTOP; do
     DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
     [ "$DESKICON" = "webapp" ] && DESKICON="img/default.png"
 
-echo '<tr class="table-light" style="line-height:38px">
+echo '<tr class="table-light" style="line-height:40px">
         <form action="index-edit2.sh.htm" method="get">
             <input type="hidden" name="filedesk" value="'$i'"/>
             <input type="hidden" name="DESKNAME" value="'$DESKNAME'"/>
@@ -88,10 +88,10 @@ echo '<tr class="table-light" style="line-height:38px">
             <td class="col-1">
                 <img class="img-thumbnail center" src="'$DESKICON'" width="42" height="42"/>
             </td>
-            <td class="text-truncate align-middle col-4 text-center"
+            <td class="text-truncate col-4 text-center"
                 data-bs-toggle="tooltip" data-bs-placement="top"
                 title="'$DESKNAME'">'$DESKNAME'</td>
-            <td class="text-truncate align-middle col-5 text-center"
+            <td class="text-truncate col-5 text-center"
                 data-bs-toggle="tooltip" data-bs-placement="top"
                 title="'$DESKURL'">'$DESKURL'</td>
             <td class="text-center col-2">

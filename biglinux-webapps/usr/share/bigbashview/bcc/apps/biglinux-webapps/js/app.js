@@ -182,15 +182,16 @@ $(function(){
             let formData = $("#form-install").serialize();
 
             $.get(formUrl, formData, function(){
+                $("#install").blur();
+                $("#alert-install").fadeIn();
+            });
+            setTimeout(function(){
+                $("#alert-install").fadeOut();
                 $("#form-install").trigger("reset");
                 $("#preview").attr("src", "img/default.png");
                 $("select").trigger("change");
-                $("#alert-install").fadeIn();
-                $("#install").blur();
-            });
-
-            setTimeout(function(){
-                $("#alert-install").fadeOut();
+                $("#modetv").hide();
+                $("#modetv_empty").show();
                 $("#namedesk").focus();
             }, 3000);
         }
