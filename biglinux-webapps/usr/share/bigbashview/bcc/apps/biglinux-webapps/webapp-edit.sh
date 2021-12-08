@@ -23,13 +23,21 @@ if [ "$browser" = "$browserold" ];then
     if [ "$tvmode" = "on" ];then
         if [ ! "$(grep embed <<< $urldesk)" ];then
             urldesk="https://www.youtube.com/embed/$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
-
+            APP="$(grep Exec= $filedesk|sed 's|--app=.*|--app=$urldesk|')"
+            sed -i "s|^Exec=.*|Exec=$APP|" $filedesk
         else
             urldesk="https://www.youtube.com/watch?v=$(basename $urldesk)"
-            APP="$(grep Exec= $filedesk|sed 's|--app=.*||')"
-            sed -i "s|^Exec=.*|Exec=|" $filedesk
+            APP="$(grep Exec= $filedesk|sed 's|--app=.*|--app=$urldesk|')"
+            sed -i "s|^Exec=.*|Exec=$APP|" $filedesk
         fi
 
+    fi
+
+    if [ "$newperfil" = "on" ];then
+        if [ ! "$(grep user-data-dir $filedesk)" ];then
+            deskexec="$()"
+        else
+        fi
     fi
 
 else
