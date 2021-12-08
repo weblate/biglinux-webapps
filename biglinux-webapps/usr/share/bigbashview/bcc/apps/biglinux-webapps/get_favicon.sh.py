@@ -12,9 +12,9 @@ def get_favicon_site(url):
         if len(icons) > 1:
             for i in icons:
                 html += '''
-                <div class="col-3 text-center" id="input_img">
-                <img class="img-thumbnail center" src="%s"/>
-                <span class="spinner-border spinner-border-sm mt-2 text-primary"
+                <div class="col-12 text-center mb-3" id="input_img">
+                    <img class="img-thumbnail d-block mx-auto" src="%s"/>
+                    <span class="spinner-border spinner-border-sm mt-2 text-primary"
                       role="status" aria-hidden="true" id="btn-spin"></span>
                 </div>''' % i.url
         else:

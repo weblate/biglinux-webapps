@@ -27,12 +27,12 @@ if [ "$(grep firefox <<< $browser)" ];then
         NAME_FILE="$(basename "$icondesk")"
 
         if [ "$(dirname "$icondesk")" = "/tmp" ];then
-            mv "$icondesk" "$HOME/.local/share/icons/$browser-$NAME_FILE"
+            mv "$icondesk" "$HOME/.local/share/icons/$NAME_FILE"
         else
-            cp "$icondesk" "$HOME/.local/share/icons/$browser-$NAME_FILE"
+            cp "$icondesk" "$HOME/.local/share/icons/$NAME_FILE"
         fi
 
-        ICON_FILE="$HOME/.local/share/icons/$browser-$NAME_FILE"
+        ICON_FILE="$HOME/.local/share/icons/$NAME_FILE"
     fi
 
 cat > "$HOME/.local/bin/$NAMEDESK-$browser" <<'EOF'
@@ -149,12 +149,12 @@ else
         NAME_FILE="$(basename "$icondesk")"
 
         if [ "$(dirname "$icondesk")" = "/tmp" ];then
-            mv "$icondesk" "$HOME/.local/share/icons/$browser-$NAME_FILE"
+            mv "$icondesk" "$HOME/.local/share/icons/$NAME_FILE"
         else
-            cp "$icondesk" "$HOME/.local/share/icons/$browser-$NAME_FILE"
+            cp "$icondesk" "$HOME/.local/share/icons/$NAME_FILE"
         fi
 
-        ICON_FILE="$HOME/.local/share/icons/$browser-$NAME_FILE"
+        ICON_FILE="$HOME/.local/share/icons/$NAME_FILE"
     fi
 
 echo "#!/usr/bin/env xdg-open
