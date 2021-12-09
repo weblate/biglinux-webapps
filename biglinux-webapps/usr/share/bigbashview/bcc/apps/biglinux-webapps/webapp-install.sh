@@ -5,6 +5,7 @@ export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps
 
 NAMEDESK="$(sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAaAeEeEiIoOoOoOuUuUcC/;s|^ *||;s| *$||g;s| |-|g;s|/|-|g;s|\.|-|g;s|\:|-|g;s|.*|\L&|' <<< "$namedesk")"
+USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 
 if [ "$(grep firefox <<< $browser)" ];then
 
@@ -110,8 +111,8 @@ rm "/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 
     if [ "$shortcut" = "on" ];then
         link "$HOME/.local/share/applications/$NAMEDESK-$browser-webapp-biglinux-custom.desktop" \
-        "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
-        chmod 777 "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
+        "$USER_DESKTOP/$namedesk.desktop"
+        chmod 777 "$USER_DESKTOP/$namedesk.desktop"
     fi
 
 else
@@ -173,8 +174,8 @@ rm "/tmp/$NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 
     if [ "$shortcut" = "on" ];then
         link "$HOME/.local/share/applications/$NAMEDESK-$browser-webapp-biglinux-custom.desktop" \
-        "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
-        chmod 777 "$(xdg-user-dir DESKTOP)/$namedesk.desktop"
+        "$USER_DESKTOP/$namedesk.desktop"
+        chmod 777 "$USER_DESKTOP/$namedesk.desktop"
     fi
 fi
 
