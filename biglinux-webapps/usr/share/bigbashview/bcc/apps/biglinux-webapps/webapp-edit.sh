@@ -5,7 +5,7 @@ DESKNAME="$(grep "^Name=" $filedesk | sed 's|Name=||')"
 ICONDESK="$(grep "^Icon=" $filedesk | sed 's|Icon=||')"
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 
-if [ ! "$(grep firefox $filedesk)" ];then
+if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];then
 
     if [ "$namedesk" != "$DESKNAME" ];then
         sed -i "s|^Name.*|Name=$namedesk|" $filedesk
@@ -55,6 +55,7 @@ if [ ! "$(grep firefox $filedesk)" ];then
     fi
 
 else
+
 
 
 fi
