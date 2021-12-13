@@ -9,6 +9,11 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
 
     if [ "$namedesk" != "$DESKNAME" ];then
         sed -i "s|^Name.*|Name=$namedesk|" $filedesk
+        if [ -e "$USER_DESKTOP/$NAMEDESK.desktop" ];then
+            unlink "$USER_DESKTOP/$DESKNAME.desktop"
+            link "$filedesk" "$USER_DESKTOP/$namedesk.desktop"
+            chmod 777 "$USER_DESKTOP/$namedesk.desktop"
+        fi
     fi
 
     if [ "$icondesk" != "$ICONDESK" ];then
@@ -22,6 +27,7 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
     if [ "$shortcut" = "on" ];then
         if [ ! -e "$USER_DESKTOP/$NAMEDESK.desktop" ];then
             link "$filedesk" "$USER_DESKTOP/$namedesk.desktop"
+            chmod 777 "$USER_DESKTOP/$namedesk.desktop"
         fi
     else
         if [ -e "$USER_DESKTOP/$NAMEDESK.desktop" ];then
@@ -53,9 +59,6 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
             sed -i 's|--user.*--c|--c|' $filedesk
         fi
     fi
-
-else
-
 
 
 fi
