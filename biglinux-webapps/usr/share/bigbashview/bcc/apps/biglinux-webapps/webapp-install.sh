@@ -181,3 +181,7 @@ fi
 
 nohup update-desktop-database -q $HOME/.local/share/applications &
 nohup kbuildsycoca5 &> /dev/null &
+
+resp="$?"
+echo -n $resp
+exit

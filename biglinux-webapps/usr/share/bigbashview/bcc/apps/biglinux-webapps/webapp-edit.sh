@@ -60,7 +60,8 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
         fi
     fi
 
-
+else
+    echo -n 1
 fi
 
 nohup update-desktop-database -q $HOME/.local/share/applications &

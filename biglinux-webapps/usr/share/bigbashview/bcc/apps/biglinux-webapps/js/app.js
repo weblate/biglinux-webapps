@@ -181,19 +181,33 @@ $(function(){
             let formUrl = $("#form-install").attr("action");
             let formData = $("#form-install").serialize();
 
-            $.get(formUrl, formData, function(){
-                $("#install").blur();
-                $("#alert-install").fadeIn();
+            $.get(formUrl, formData, function(feed){
+                if (feed == 0){
+                    $("#install").blur();
+                    $("#alert-install").fadeIn();
+                    setTimeout(function(){
+                        $("#alert-install").fadeOut();
+                        $("#form-install").trigger("reset");
+                        $("#preview").attr("src", "img/default.png");
+                        $("select").trigger("change");
+                        $("#modetv").hide();
+                        $("#modetv_empty").show();
+                        $("#namedesk").focus();
+                    }, 3000);
+                } else {
+                    $("#install").blur();
+                    $("#alert-install-error").fadeIn();
+                    setTimeout(function(){
+                        $("#alert-install-error").fadeOut();
+                        $("#form-install").trigger("reset");
+                        $("#preview").attr("src", "img/default.png");
+                        $("select").trigger("change");
+                        $("#modetv").hide();
+                        $("#modetv_empty").show();
+                        $("#namedesk").focus();
+                    }, 3000);
+                }
             });
-            setTimeout(function(){
-                $("#alert-install").fadeOut();
-                $("#form-install").trigger("reset");
-                $("#preview").attr("src", "img/default.png");
-                $("select").trigger("change");
-                $("#modetv").hide();
-                $("#modetv_empty").show();
-                $("#namedesk").focus();
-            }, 3000);
         }
     });
 
@@ -224,11 +238,18 @@ $(function(){
                 if(resp==0){
                     $("#alert-edit").fadeIn();
                     $("#install").blur();
+                    setTimeout(function(){
+                        $("#alert-edit").fadeOut();
+                    }, 3000);
+                } else {
+                    $("#alert-edit-error").fadeIn();
+                    $("#install").blur();
+                    setTimeout(function(){
+                        $("#alert-edit-error").fadeOut();
+                    }, 3000);
                 }
             });
-            setTimeout(function(){
-                $("#alert-edit").fadeOut();
-            }, 3000);
+
         }
     });
 
