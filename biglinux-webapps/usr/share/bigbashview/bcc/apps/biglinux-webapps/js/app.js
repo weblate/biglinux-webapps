@@ -20,15 +20,16 @@ $(function(){
         switch(this.value){
         case "firefox":
             $("#perfil").hide();
-        break;
+            break;
 
         case "firefox-developer-edition":
             $("#perfil").hide();
-        break;
+            break;
 
         case "firefox-nightly":
             $("#perfil").hide();
-        break;
+            break;
+
         default:
             $("#perfil").show();
       }
