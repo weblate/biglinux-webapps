@@ -9,25 +9,18 @@ ICONDESK="$(grep "^Icon=" $filedesk | sed 's|Icon=||')"
 DESKNAME="$(grep "^Name=" $filedesk | sed 's|Name=||')"
 DESKBIN="$(grep "^Exec=" $filedesk  | sed 's|Exec=||')"
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
+FOLDER="~/.bigwebapps/$NAMEDESK"
 
 if [ "$(grep firefox $filedesk)" ];then
-    if [ -d $HOME/.bigwebapps/"$NAMEDESK" ]; then
-        rm -r $HOME/.bigwebapps/"$NAMEDESK"
-    fi
+    [ -d $FOLDER ] && rm -r $FOLDER
+    [ -e "$USER_DESKTOP/$DESKNAME.desktop" ] && unlink "$USER_DESKTOP/$DESKNAME.desktop"
+    xdg-desktop-menu uninstall "$filedesk"
     rm "$DESKBIN" "$ICONDESK"
-    if [ -e "$USER_DESKTOP/$DESKNAME.desktop" ];then
-        unlink "$USER_DESKTOP/$DESKNAME.desktop"
-    fi
-    xdg-desktop-menu uninstall "$filedesk"
 else
-    if [ -d $HOME/.bigwebapps/"$NAMEDESK" ]; then
-        rm -r $HOME/.bigwebapps/"$NAMEDESK"
-    fi
-    rm "$ICONDESK"
-    if [ -e "$USER_DESKTOP/$DESKNAME.desktop" ];then
-        unlink "$USER_DESKTOP/$DESKNAME.desktop"
-    fi
+    [ -d $FOLDER ] && rm -r $FOLDER
+    [ -e "$USER_DESKTOP/$DESKNAME.desktop" ] && unlink "$USER_DESKTOP/$DESKNAME.desktop"
     xdg-desktop-menu uninstall "$filedesk"
+    rm "$ICONDESK"
 fi
 
 nohup update-desktop-database -q $HOME/.local/share/applications &

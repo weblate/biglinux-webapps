@@ -1,20 +1,26 @@
 #!/usr/bin/env bash
 
-NAMEDESK="$(basename -s .desktop $filedesk | sed 's|-webapp-biglinux-custom||')"
-DESKNAME="$(grep "^Name=" $filedesk | sed 's|Name=||')"
-ICONDESK="$(grep "^Icon=" $filedesk | sed 's|Icon=||')"
+_NAMEDESK="$(basename -s .desktop $filedesk | sed 's|-webapp-biglinux-custom||')"
+_DESKNAME="$(grep "^Name=" $filedesk | sed 's|Name=||')"
+_ICONDESK="$(grep "^Icon=" $filedesk | sed 's|Icon=||')"
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 
 if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];then
 
-    if [ "$namedesk" != "$DESKNAME" ];then
+    if [ "$namedesk" != "$_DESKNAME" ];then
         sed -i "s|^Name.*|Name=$namedesk|" $filedesk
     fi
 
-    if [ "$icondesk" != "$ICONDESK" ];then
-        [ -e "$ICONDESK" ] && rm $ICONDESK
+    if [ "$icondesk" != "$_ICONDESK" ];then
+
+        [ -e "$_ICONDESK" ] && rm "$_ICONDESK"
+
+        _NAMEICON="$(basename $icondesk)"
+
         if [ "$(dirname $icondesk)" = "/tmp" ];then
-            mv $icondesk ~/.local/share/icons/"$(basename $icondesk)"
+            mv $icondesk ~/.local/share/icons/"$_NAMEICON"
+        else
+            cp $icondesk ~/.local/share/icons/"$_NAMEICON"
         fi
         sed -i "s|^Icon.*|Icon=$icondesk|" $filedesk
     fi
@@ -24,17 +30,15 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
     fi
 
     if [ "$shortcut" = "on" ];then
-        if [ ! -e "$USER_DESKTOP/$DESKNAME.desktop" ];then
-            link "$filedesk" "$USER_DESKTOP/$DESKNAME.desktop"
-            chmod 777 "$USER_DESKTOP/$DESKNAME.desktop"
-        elif [ "$namedesk" != "$DESKNAME" ];then
-            unlink "$USER_DESKTOP/$DESKNAME.desktop"
+        if [ ! -e "$USER_DESKTOP/$_DESKNAME.desktop" ];then
+            link "$filedesk" "$USER_DESKTOP/$_DESKNAME.desktop"
+        elif [ "$namedesk" != "$_DESKNAME" ];then
+            unlink "$USER_DESKTOP/$_DESKNAME.desktop"
             link "$filedesk" "$USER_DESKTOP/$namedesk.desktop"
-            chmod 777 "$USER_DESKTOP/$namedesk.desktop"
         fi
     else
-        if [ -e "$USER_DESKTOP/$DESKNAME.desktop" ];then
-            unlink "$USER_DESKTOP/$DESKNAME.desktop"
+        if [ -e "$USER_DESKTOP/$_DESKNAME.desktop" ];then
+            unlink "$USER_DESKTOP/$_DESKNAME.desktop"
         fi
     fi
 
@@ -52,12 +56,12 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
 
     if [ "$newperfil" = "on" ];then
         if [ ! "$(grep user-data-dir $filedesk)" ];then
-            sed -i "s|--c|--user-data-dir=$HOME/.bigwebapps/$NAMEDESK --c|" $filedesk
+            sed -i "s|--c|--user-data-dir=$HOME/.bigwebapps/$_NAMEDESK --c|" $filedesk
         fi
     else
         if [ "$(grep user-data-dir $filedesk)" ];then
-            if [ -d $HOME/.bigwebapps/"$NAMEDESK" ]; then
-                rm -r $HOME/.bigwebapps/"$NAMEDESK"
+            if [ -d $HOME/.bigwebapps/"$_NAMEDESK" ]; then
+                rm -r $HOME/.bigwebapps/"$_NAMEDESK"
             fi
             sed -i 's|--user.*--c|--c|' $filedesk
         fi
