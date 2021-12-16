@@ -9,14 +9,13 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
 
     if [ "$namedesk" != "$DESKNAME" ];then
         sed -i "s|^Name.*|Name=$namedesk|" $filedesk
-        if [ -e "$USER_DESKTOP/$NAMEDESK.desktop" ];then
-            unlink "$USER_DESKTOP/$DESKNAME.desktop"
-            link "$filedesk" "$USER_DESKTOP/$namedesk.desktop"
-            chmod 777 "$USER_DESKTOP/$namedesk.desktop"
-        fi
     fi
 
     if [ "$icondesk" != "$ICONDESK" ];then
+        [ -e "$ICONDESK" ] && rm $ICONDESK
+        if [ "$(dirname $icondesk)" = "/tmp" ];then
+            mv $icondesk ~/.local/share/icons/"$(basename $icondesk)"
+        fi
         sed -i "s|^Icon.*|Icon=$icondesk|" $filedesk
     fi
 
@@ -25,12 +24,16 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
     fi
 
     if [ "$shortcut" = "on" ];then
-        if [ ! -e "$USER_DESKTOP/$NAMEDESK.desktop" ];then
+        if [ ! -e "$USER_DESKTOP/$DESKNAME.desktop" ];then
+            link "$filedesk" "$USER_DESKTOP/$DESKNAME.desktop"
+            chmod 777 "$USER_DESKTOP/$DESKNAME.desktop"
+        elif [ "$namedesk" != "$DESKNAME" ];then
+            unlink "$USER_DESKTOP/$DESKNAME.desktop"
             link "$filedesk" "$USER_DESKTOP/$namedesk.desktop"
             chmod 777 "$USER_DESKTOP/$namedesk.desktop"
         fi
     else
-        if [ -e "$USER_DESKTOP/$NAMEDESK.desktop" ];then
+        if [ -e "$USER_DESKTOP/$DESKNAME.desktop" ];then
             unlink "$USER_DESKTOP/$DESKNAME.desktop"
         fi
     fi

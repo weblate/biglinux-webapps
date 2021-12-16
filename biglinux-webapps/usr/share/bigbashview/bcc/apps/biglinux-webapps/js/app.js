@@ -240,6 +240,7 @@ $(function(){
                     $("#install").blur();
                     setTimeout(function(){
                         $("#alert-edit").fadeOut();
+                        location.replace("index-edit.sh.htm");
                     }, 3000);
                 } else {
                     $("#alert-edit-error").fadeIn();
