@@ -12,18 +12,11 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
 
     if [ "$icondesk" != "$_ICONDESK" ];then
         [ -e "$_ICONDESK" ] && rm "$_ICONDESK"
-<<<<<<< Updated upstream
 
-        _NAMEICON="~/.local/share/icons/$(basename $icondesk)"
-=======
-        _NAMEICON="$(basename $icondesk)"
->>>>>>> Stashed changes
+        NAME_FILE="$(basename $icondesk|sed 's| |-|g')"
+        ICON_FILE="$HOME/.local/share/icons/$NAME_FILE"
 
-        if [ "$(dirname $icondesk)" = "/tmp" ];then
-            mv $icondesk $_NAMEICON
-        else
-            cp $icondesk $_NAMEICON
-        fi
+        [ "$(dirname $icondesk)" = "/tmp" ] && mv "$icondesk" $ICON_FILE || cp "$icondesk" $ICON_FILE
         sed -i "s|^Icon.*|Icon=$icondesk|" $filedesk
     fi
 
@@ -35,9 +28,7 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
             link "$filedesk" "$USER_DESKTOP/$namedesk.desktop"
         fi
     else
-        if [ -e "$USER_DESKTOP/$_DESKNAME.desktop" ];then
-            unlink "$USER_DESKTOP/$_DESKNAME.desktop"
-        fi
+        [ -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && unlink "$USER_DESKTOP/$_DESKNAME.desktop"
     fi
 
     if [ "$tvmode" = "on" ];then
@@ -58,9 +49,7 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
         fi
     else
         if [ "$(grep user-data-dir $filedesk)" ];then
-            if [ -d $HOME/.bigwebapps/"$_NAMEDESK" ]; then
-                rm -r $HOME/.bigwebapps/"$_NAMEDESK"
-            fi
+            [ -d "$HOME/.bigwebapps/$_NAMEDESK" ] && rm -r $HOME/.bigwebapps/"$_NAMEDESK"
             sed -i 's|--user.*--c|--c|' $filedesk
         fi
     fi

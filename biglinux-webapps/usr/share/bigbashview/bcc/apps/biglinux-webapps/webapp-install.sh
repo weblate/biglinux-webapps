@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 
-#Translation
-export TEXTDOMAINDIR="/usr/share/locale"
-export TEXTDOMAIN=biglinux-webapps
-
 _NAMEDESK="$(sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAaAeEeEiIoOoOoOuUuUcC/;s|^ *||;s| *$||g;s| |-|g;s|/|-|g;s|\.|-|g;s|\:|-|g;s|.*|\L&|' <<< "$namedesk")"
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 TMPFILE="/tmp/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
-DIRECTORY="~/.local/share/desktop-directories/web-apps.directory"
+DIRECTORY="$HOME/.local/share/desktop-directories/web-apps.directory"
 
 if [ "$(grep firefox <<< $browser)" ];then
 
@@ -21,17 +17,12 @@ if [ "$(grep firefox <<< $browser)" ];then
     if [ -z "$icondesk" ];then
         ICON_FILE="webapp"
     else
-        NAME_FILE="$(basename "$icondesk")"
-        ICON_FILE="~/.local/share/icons/$NAME_FILE"
-
-        if [ "$(dirname "$icondesk")" = "/tmp" ];then
-            mv "$icondesk" "$ICON_FILE"
-        else
-            cp "$icondesk" "$ICON_FILE"
-        fi
+        NAME_FILE="$(basename $icondesk|sed 's| |-|g')"
+        ICON_FILE="$HOME/.local/share/icons/$NAME_FILE"
+        [ "$(dirname $icondesk)" = "/tmp" ] && mv "$icondesk" $ICON_FILE || cp "$icondesk" $ICON_FILE
     fi
 
-DESKBIN="~/.local/bin/$_NAMEDESK-$browser"
+DESKBIN="$HOME/.local/bin/$_NAMEDESK-$browser"
 
 cat > "$DESKBIN" <<EOF
 #!/usr/bin/env sh
@@ -60,7 +51,7 @@ cat > "$DESKBIN" <<EOF
 # @license   http://www.gnu.org/licenses GPL-3.0-or-later
 # @see       https://notabug.org/sepbit/amofi Repository of Amofi
 #
-FOLDER="~/.bigwebapps/$_NAMEDESK-$browser"
+FOLDER="$HOME/.bigwebapps/$_NAMEDESK-$browser"
 
 if [ ! "\$(grep 'toolkit.legacyUserProfileCustomizations.stylesheets' \$FOLDER/prefs.js)" ]; then
     [ -d "\$FOLDER" ] && rm -R "\$FOLDER"
@@ -107,12 +98,12 @@ xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
 rm "$TMPFILE"
 
     if [ "$shortcut" = "on" ];then
-        LINK_APP="~/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
+        LINK_APP="$HOME/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
         link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
     fi
 
 else
-    FOLDER="~/.bigwebapps/$_NAMEDESK-$browser"
+    FOLDER="$HOME/.bigwebapps/$_NAMEDESK-$browser"
 
     [ ! "$(grep https:// <<< $urldesk)" ] && urldesk="https://$urldesk"
 
@@ -128,14 +119,9 @@ else
     if [ -z "$icondesk" ];then
         ICON_FILE="webapp"
     else
-        NAME_FILE="$(basename "$icondesk")"
+        NAME_FILE="$(basename $icondesk|sed 's| |-|g')"
         ICON_FILE="$HOME/.local/share/icons/$NAME_FILE"
-
-        if [ "$(dirname "$icondesk")" = "/tmp" ];then
-            mv "$icondesk" "$ICON_FILE"
-        else
-            cp "$icondesk" "$ICON_FILE"
-        fi
+        [ "$(dirname $icondesk)" = "/tmp" ] && mv "$icondesk" $ICON_FILE || cp "$icondesk" $ICON_FILE
     fi
 
 echo "#!/usr/bin/env xdg-open
@@ -152,7 +138,7 @@ xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
 rm "$TMPFILE"
 
     if [ "$shortcut" = "on" ];then
-        LINK_APP="~/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
+        LINK_APP="$HOME/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
         link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
     fi
 fi
