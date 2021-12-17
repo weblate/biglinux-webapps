@@ -7,15 +7,17 @@ USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 
 if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];then
 
-    if [ "$namedesk" != "$_DESKNAME" ];then
-        sed -i "s|^Name.*|Name=$namedesk|" $filedesk
-    fi
+    [ "$namedesk" != "$_DESKNAME" ] && sed -i "s|^Name.*|Name=$namedesk|" $filedesk
+    [ "$browser" != "$browserold" ] && sed -i "s|$browserold|$browser|g" $filedesk
 
     if [ "$icondesk" != "$_ICONDESK" ];then
-
         [ -e "$_ICONDESK" ] && rm "$_ICONDESK"
+<<<<<<< Updated upstream
 
         _NAMEICON="~/.local/share/icons/$(basename $icondesk)"
+=======
+        _NAMEICON="$(basename $icondesk)"
+>>>>>>> Stashed changes
 
         if [ "$(dirname $icondesk)" = "/tmp" ];then
             mv $icondesk $_NAMEICON
@@ -23,10 +25,6 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
             cp $icondesk $_NAMEICON
         fi
         sed -i "s|^Icon.*|Icon=$icondesk|" $filedesk
-    fi
-
-    if [ "$browser" != "$browserold" ];then
-        sed -i "s|$browserold|$browser|g" $filedesk
     fi
 
     if [ "$shortcut" = "on" ];then
