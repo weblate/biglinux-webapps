@@ -6,16 +6,17 @@ export TEXTDOMAIN=biglinux-webapps
 
 _NAMEDESK="$(sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAaAeEeEiIoOoOoOuUuUcC/;s|^ *||;s| *$||g;s| |-|g;s|/|-|g;s|\.|-|g;s|\:|-|g;s|.*|\L&|' <<< "$namedesk")"
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
-YTCODE="$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
 TMPFILE="/tmp/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
-LINK_APP="~/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 DIRECTORY="~/.local/share/desktop-directories/web-apps.directory"
 
 if [ "$(grep firefox <<< $browser)" ];then
 
     [ ! "$(grep https:// <<< $urldesk)" ] && urldesk="https://$urldesk"
 
-    [ "$tvmode" = "on" ] && urldesk="https://www.youtube.com/embed/$YTCODE"
+    if [ "$tvmode" = "on" ];then
+        YTCODE="$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
+        urldesk="https://www.youtube.com/embed/$YTCODE"
+    fi
 
     if [ -z "$icondesk" ];then
         ICON_FILE="webapp"
@@ -28,8 +29,6 @@ if [ "$(grep firefox <<< $browser)" ];then
         else
             cp "$icondesk" "$ICON_FILE"
         fi
-
-
     fi
 
 DESKBIN="~/.local/bin/$_NAMEDESK-$browser"
@@ -107,14 +106,20 @@ X-KDE-StartupNotify=true" > "$TMPFILE"
 xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
 rm "$TMPFILE"
 
-    [ "$shortcut" = "on" ] && link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
+    if [ "$shortcut" = "on" ];then
+        LINK_APP="~/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
+        link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
+    fi
 
 else
     FOLDER="~/.bigwebapps/$_NAMEDESK-$browser"
 
     [ ! "$(grep https:// <<< $urldesk)" ] && urldesk="https://$urldesk"
 
-    [ "$tvmode" = "on" ] && urldesk="https://www.youtube.com/embed/$YTCODE"
+    if [ "$tvmode" = "on" ];then
+        YTCODE="$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
+        urldesk="https://www.youtube.com/embed/$YTCODE"
+    fi
 
     [ "$newperfil" = "on" ] && browser="$browser --user-data-dir=$FOLDER"
 
@@ -124,14 +129,13 @@ else
         ICON_FILE="webapp"
     else
         NAME_FILE="$(basename "$icondesk")"
+        ICON_FILE="$HOME/.local/share/icons/$NAME_FILE"
 
         if [ "$(dirname "$icondesk")" = "/tmp" ];then
-            mv "$icondesk" "$HOME/.local/share/icons/$NAME_FILE"
+            mv "$icondesk" "$ICON_FILE"
         else
-            cp "$icondesk" "$HOME/.local/share/icons/$NAME_FILE"
+            cp "$icondesk" "$ICON_FILE"
         fi
-
-        ICON_FILE="$HOME/.local/share/icons/$NAME_FILE"
     fi
 
 echo "#!/usr/bin/env xdg-open
@@ -148,6 +152,7 @@ xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
 rm "$TMPFILE"
 
     if [ "$shortcut" = "on" ];then
+        LINK_APP="~/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
         link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
     fi
 fi

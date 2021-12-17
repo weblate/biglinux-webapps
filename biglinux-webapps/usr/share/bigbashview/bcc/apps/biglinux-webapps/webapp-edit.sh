@@ -15,12 +15,12 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
 
         [ -e "$_ICONDESK" ] && rm "$_ICONDESK"
 
-        _NAMEICON="$(basename $icondesk)"
+        _NAMEICON="~/.local/share/icons/$(basename $icondesk)"
 
         if [ "$(dirname $icondesk)" = "/tmp" ];then
-            mv $icondesk ~/.local/share/icons/"$_NAMEICON"
+            mv $icondesk $_NAMEICON
         else
-            cp $icondesk ~/.local/share/icons/"$_NAMEICON"
+            cp $icondesk $_NAMEICON
         fi
         sed -i "s|^Icon.*|Icon=$icondesk|" $filedesk
     fi
