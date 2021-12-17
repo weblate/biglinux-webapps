@@ -50,7 +50,7 @@ cat > "$DESKBIN" <<EOF
 # @copyright 2017-2019 SEPBIT
 # @license   http://www.gnu.org/licenses GPL-3.0-or-later
 # @see       https://notabug.org/sepbit/amofi Repository of Amofi
-#
+
 FOLDER="$HOME/.bigwebapps/$_NAMEDESK-$browser"
 
 if [ ! "\$(grep 'toolkit.legacyUserProfileCustomizations.stylesheets' \$FOLDER/prefs.js)" ]; then

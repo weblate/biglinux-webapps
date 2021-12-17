@@ -17,7 +17,7 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
         ICON_FILE="$HOME/.local/share/icons/$NAME_FILE"
 
         [ "$(dirname $icondesk)" = "/tmp" ] && mv "$icondesk" $ICON_FILE || cp "$icondesk" $ICON_FILE
-        sed -i "s|^Icon.*|Icon=$icondesk|" $filedesk
+        sed -i "s|^Icon.*|Icon=$ICON_FILE|" $filedesk
     fi
 
     if [ "$shortcut" = "on" ];then
@@ -33,7 +33,8 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
 
     if [ "$tvmode" = "on" ];then
         if [ ! "$(grep embed <<< $urldesk)" ];then
-            urldesk="https://www.youtube.com/embed/$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
+            YTCODE="$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
+            urldesk="https://www.youtube.com/embed/$YTCODE"
             sed -i "s|--app.*|--app=$urldesk|" $filedesk
         fi
     else
