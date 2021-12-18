@@ -63,7 +63,7 @@ $(function(){
 
     $("#urldesk").keyup(function(){
 
-        if($(this).val().match(/youtu/gi)){
+        if($(this).val().match(/.*youtu.*watch.*/gi)){
             $("#modetv").show();
             $("#modetv_empty").hide();
         } else {

@@ -10,10 +10,10 @@ if [ "$(grep firefox <<< $browser)" ];then
 
     [ ! "$(grep https:// <<< $urldesk)" ] && urldesk="https://$urldesk"
 
-    if [ "$tvmode" = "on" ];then
+    [ "$tvmode" = "on" ] && {
         YTCODE="$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
         urldesk="https://www.youtube.com/embed/$YTCODE"
-    fi
+    }
 
     if [ -z "$icondesk" ];then
         ICON_FILE="webapp"
@@ -100,19 +100,17 @@ X-KDE-StartupNotify=true" > "$TMPFILE"
 xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
 rm "$TMPFILE"
 
-    if [ "$shortcut" = "on" ];then
-        link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
-    fi
+    [ "$shortcut" = "on" ] && link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
 
 else
     FOLDER="$HOME/.bigwebapps/$_NAMEDESK-$browser"
 
     [ ! "$(grep https:// <<< $urldesk)" ] && urldesk="https://$urldesk"
 
-    if [ "$tvmode" = "on" ];then
+    [ "$tvmode" = "on" ] && {
         YTCODE="$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
         urldesk="https://www.youtube.com/embed/$YTCODE"
-    fi
+    }
 
     [ "$newperfil" = "on" ] && browser="$browser --user-data-dir=$FOLDER"
 
@@ -139,9 +137,7 @@ StartupWMClass=$CUT_HTTP" > "$TMPFILE"
 xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
 rm "$TMPFILE"
 
-    if [ "$shortcut" = "on" ];then
-        link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
-    fi
+    [ "$shortcut" = "on" ] && link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
 fi
 
 nohup update-desktop-database -q $HOME/.local/share/applications &

@@ -32,27 +32,27 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
     fi
 
     if [ "$tvmode" = "on" ];then
-        if [ ! "$(grep embed <<< $urldesk)" ];then
+        [ ! "$(grep embed <<< $urldesk)" ] && {
             YTCODE="$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
             urldesk="https://www.youtube.com/embed/$YTCODE"
             sed -i "s|--app.*|--app=$urldesk|" $filedesk
-        fi
+        }
     else
-        if [ "$(grep embed <<< $urldesk)" ];then
+        [ "$(grep embed <<< $urldesk)" ] && {
             urldesk="https://www.youtube.com/watch?v=$(basename $urldesk)"
             sed -i "s|--app.*|--app=$urldesk|" $filedesk
-        fi
+        }
     fi
 
     if [ "$newperfil" = "on" ];then
-        if [ ! "$(grep user-data-dir $filedesk)" ];then
+        [ ! "$(grep user-data-dir $filedesk)" ] && {
             sed -i "s|--c|--user-data-dir=$HOME/.bigwebapps/$_NAMEDESK --c|" $filedesk
-        fi
+        }
     else
-        if [ "$(grep user-data-dir $filedesk)" ];then
+        [ "$(grep user-data-dir $filedesk)" ] && {
             [ -d "$HOME/.bigwebapps/$_NAMEDESK" ] && rm -r $HOME/.bigwebapps/"$_NAMEDESK"
             sed -i 's|--user.*--c|--c|' $filedesk
-        fi
+        }
     fi
 
 else
