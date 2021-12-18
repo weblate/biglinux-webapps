@@ -100,7 +100,10 @@ X-KDE-StartupNotify=true" > "$TMPFILE"
 xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
 rm "$TMPFILE"
 
-    [ "$shortcut" = "on" ] && link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
+    [ "$shortcut" = "on" ] && {
+        link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
+        chmod 755 "$USER_DESKTOP/$namedesk.desktop"
+    }
 
 else
     FOLDER="$HOME/.bigwebapps/$_NAMEDESK-$browser"
@@ -137,7 +140,10 @@ StartupWMClass=$CUT_HTTP" > "$TMPFILE"
 xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
 rm "$TMPFILE"
 
-    [ "$shortcut" = "on" ] && link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
+    [ "$shortcut" = "on" ] && {
+        link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
+        chmod 755 "$USER_DESKTOP/$namedesk.desktop"
+    }
 fi
 
 nohup update-desktop-database -q $HOME/.local/share/applications &

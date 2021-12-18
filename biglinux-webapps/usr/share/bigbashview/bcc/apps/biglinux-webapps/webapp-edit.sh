@@ -5,10 +5,30 @@ _DESKNAME="$(grep "^Name=" $filedesk | sed 's|Name=||')"
 _ICONDESK="$(grep "^Icon=" $filedesk | sed 's|Icon=||')"
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 
+function update_shortcut(){
+    if [ -e "$USER_DESKTOP/$_DESKNAME.desktop" ];then
+        unlink "$USER_DESKTOP/$_DESKNAME.desktop"
+        link "$filedesk" "$USER_DESKTOP/$namedesk.desktop"
+    fi
+}
+
 if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];then
 
-    [ "$namedesk" != "$_DESKNAME" ] && sed -i "s|^Name.*|Name=$namedesk|" $filedesk
-    [ "$browser" != "$browserold" ] && sed -i "s|$browserold|$browser|g" $filedesk
+    if [ "$shortcut" = "on" ];then
+        [ ! -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && link "$filedesk" "$USER_DESKTOP/$_DESKNAME.desktop"
+    else
+        [ -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && unlink "$USER_DESKTOP/$_DESKNAME.desktop"
+    fi
+
+    [ "$namedesk" != "$_DESKNAME" ] && {
+        sed -i "s|^Name.*|Name=$namedesk|" $filedesk
+        update_shortcut
+    }
+
+    [ "$browser" != "$browserold" ] && {
+        sed -i "s|$browserold|$browser|g" $filedesk
+        update_shortcut
+    }
 
     if [ "$icondesk" != "$_ICONDESK" ];then
         [ -e "$_ICONDESK" ] && rm "$_ICONDESK"
@@ -18,17 +38,7 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
 
         [ "$(dirname $icondesk)" = "/tmp" ] && mv "$icondesk" $ICON_FILE || cp "$icondesk" $ICON_FILE
         sed -i "s|^Icon.*|Icon=$ICON_FILE|" $filedesk
-    fi
-
-    if [ "$shortcut" = "on" ];then
-        if [ ! -e "$USER_DESKTOP/$_DESKNAME.desktop" ];then
-            link "$filedesk" "$USER_DESKTOP/$_DESKNAME.desktop"
-        elif [ "$namedesk" != "$_DESKNAME" ];then
-            unlink "$USER_DESKTOP/$_DESKNAME.desktop"
-            link "$filedesk" "$USER_DESKTOP/$namedesk.desktop"
-        fi
-    else
-        [ -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && unlink "$USER_DESKTOP/$_DESKNAME.desktop"
+        update_shortcut
     fi
 
     if [ "$tvmode" = "on" ];then
@@ -36,22 +46,26 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
             YTCODE="$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
             urldesk="https://www.youtube.com/embed/$YTCODE"
             sed -i "s|--app.*|--app=$urldesk|" $filedesk
+            update_shortcut
         }
     else
         [ "$(grep embed <<< $urldesk)" ] && {
             urldesk="https://www.youtube.com/watch?v=$(basename $urldesk)"
             sed -i "s|--app.*|--app=$urldesk|" $filedesk
+            update_shortcut
         }
     fi
 
     if [ "$newperfil" = "on" ];then
         [ ! "$(grep user-data-dir $filedesk)" ] && {
             sed -i "s|--c|--user-data-dir=$HOME/.bigwebapps/$_NAMEDESK --c|" $filedesk
+            update_shortcut
         }
     else
         [ "$(grep user-data-dir $filedesk)" ] && {
             [ -d "$HOME/.bigwebapps/$_NAMEDESK" ] && rm -r $HOME/.bigwebapps/"$_NAMEDESK"
             sed -i 's|--user.*--c|--c|' $filedesk
+            update_shortcut
         }
     fi
 
