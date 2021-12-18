@@ -4,6 +4,7 @@ _NAMEDESK="$(sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAa
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 TMPFILE="/tmp/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 DIRECTORY="$HOME/.local/share/desktop-directories/web-apps.directory"
+LINK_APP="$HOME/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 
 if [ "$(grep firefox <<< $browser)" ];then
 
@@ -65,13 +66,15 @@ echo '#nav-bar{visibility: collapse;} #TabsToolbar{visibility: collapse;}' >> "\
 echo 'user_pref("browser.tabs.warnOnClose", false);' >> "\$FOLDER/user.js"
 sed -i 's|user_pref("browser.urlbar.placeholderName.*||g' "\$FOLDER/prefs.js"
 
-MOZ_DISABLE_GMP_SANDBOX=1 MOZ_DISABLE_CONTENT_SANDBOX=1 \
-$browser --class=$browser-webapp-$_NAMEDESK -profile "\$FOLDER" \
--no-remote -new-instance "$urldesk" &
+CLASS="$browser-webapp-$_NAMEDESK"
 
-wininfo="\$(xwininfo -root -children -all | grep -iE "Navigator.*$browser-webapp-$_NAMEDESK")"
+MOZ_DISABLE_GMP_SANDBOX=1 MOZ_DISABLE_CONTENT_SANDBOX=1 \
+$browser --class="\$CLASS" --profile "\$FOLDER" \
+--no-remote --new-instance "$urldesk" &
+
 count=0
-while [ $count -lt 100 ]; do
+while [ \$count -lt 100 ]; do
+    wininfo="\$(xwininfo -root -children -all | grep \\"Navigator\\"\\ \\"\$CLASS\\")"
     if [ "\$wininfo" ]; then
 /usr/share/biglinux/webapps/bin/xseticon -id "\$(awk '{print \$1}' <<< \$wininfo)" $ICON_FILE
         count=100
@@ -98,7 +101,6 @@ xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
 rm "$TMPFILE"
 
     if [ "$shortcut" = "on" ];then
-        LINK_APP="$HOME/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
         link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
     fi
 
@@ -138,7 +140,6 @@ xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
 rm "$TMPFILE"
 
     if [ "$shortcut" = "on" ];then
-        LINK_APP="$HOME/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
         link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
     fi
 fi

@@ -10,9 +10,10 @@ FOLDER="$HOME/.bigwebapps/$NAMEDESK"
 [ -d "$FOLDER" ] && rm -r "$FOLDER"
 [ -e "$USER_DESKTOP/$DESKNAME.desktop" ] && unlink "$USER_DESKTOP/$DESKNAME.desktop"
 [ -e "$ICONDESK" ] && rm "$ICONDESK"
-[ "$(grep $HOME/.local/bin $filedesk)" ] &&                \
-DESKBIN="$(grep "^Exec=" $filedesk  | sed 's|Exec=||')" && \
-rm "$DESKBIN"
+[ "$(grep $HOME/.local/bin $filedesk)" ] && {
+    DESKBIN="$(grep "^Exec=" $filedesk  | sed 's|Exec=||')"
+    rm "$DESKBIN"
+}
 
 xdg-desktop-menu uninstall "$filedesk"
 
