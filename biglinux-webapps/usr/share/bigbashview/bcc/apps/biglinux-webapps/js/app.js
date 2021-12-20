@@ -236,6 +236,7 @@ $(function(){
             let formData = $("#form-edit").serialize();
 
             $.get(formUrl, formData, function(resp){
+                //alert(resp);
                 if(resp==0){
                     $("#alert-edit").fadeIn();
                     $("#install").blur();

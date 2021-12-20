@@ -33,7 +33,7 @@ LINK_RELS = [
     'apple-touch-icon-precomposed',
 ]
 
-META_NAMES = ['msapplication-TileImage', 'og:image']
+META_NAMES = ['msapplication-TileImage', 'og:image', 'image']
 
 SIZE_RE = re.compile(r'(?P<width>\d{2,4})x(?P<height>\d{2,4})', flags=re.IGNORECASE)
 

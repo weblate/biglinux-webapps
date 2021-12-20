@@ -6,16 +6,18 @@ _ICONDESK="$(grep "^Icon=" $filedesk | sed 's|Icon=||')"
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 
 function update_shortcut(){
-    if [ -e "$USER_DESKTOP/$_DESKNAME.desktop" ];then
+    [ -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && {
         unlink "$USER_DESKTOP/$_DESKNAME.desktop"
         link "$filedesk" "$USER_DESKTOP/$namedesk.desktop"
-    fi
+    }
 }
 
 if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];then
 
+    DATA_DIR="$(grep "^Exec=" $filedesk | sed 's|.*-dir=||;s| --cl.*||')"
+
     if [ "$shortcut" = "on" ];then
-        [ ! -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && link "$filedesk" "$USER_DESKTOP/$_DESKNAME.desktop"
+        [ ! -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && link $filedesk "$USER_DESKTOP/$_DESKNAME.desktop"
     else
         [ -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && unlink "$USER_DESKTOP/$_DESKNAME.desktop"
     fi
@@ -26,6 +28,7 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
     }
 
     [ "$browser" != "$browserold" ] && {
+        [ -d "$DATA_DIR" ] && rm -r "$DATA_DIR"
         sed -i "s|$browserold|$browser|g" $filedesk
         update_shortcut
     }
@@ -63,7 +66,7 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
         }
     else
         [ "$(grep user-data-dir $filedesk)" ] && {
-            [ -d "$HOME/.bigwebapps/$_NAMEDESK" ] && rm -r $HOME/.bigwebapps/"$_NAMEDESK"
+            [ -d "$DATA_DIR" ] && rm -r "$DATA_DIR"
             sed -i 's|--user.*--c|--c|' $filedesk
             update_shortcut
         }
