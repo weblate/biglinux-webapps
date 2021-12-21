@@ -6,7 +6,7 @@ $(function(){
         $("#btn-spin").show();
     });
 
-    var iconSelected = $("select").val();
+    var iconSelected = $("select#browser").val();
     if(iconSelected){
       $("#browsericon").attr("src", "icons/" + iconSelected + ".png");
       if(iconSelected.match(/firefox/gi)){
@@ -14,7 +14,7 @@ $(function(){
       }
     }
 
-    $("select").on("change", function(){
+    $("select#browser").on("change", function(){
         $("#browsericon").attr("src", "icons/" + this.value + ".png");
 
         switch(this.value){
@@ -61,9 +61,8 @@ $(function(){
         }
     }
 
-    $("#urldesk").keyup(function(){
-
-        if($(this).val().match(/.*youtu.*watch.*/gi)){
+    $("#urldesk").on("keyup paste", function(){
+        if($(this).val().match(/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?[\w\?=]*)?/gi)){
             $("#modetv").show();
             $("#modetv_empty").hide();
         } else {

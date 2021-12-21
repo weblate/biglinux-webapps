@@ -32,7 +32,7 @@ echo '
         <!-- Formulário de edição do webapp -->
         <form action="webapp-edit.sh" method="get" id="form-edit">
             <input type="hidden" value="'$filedesk'" name="filedesk">
-            <div class="row justify-content-center">
+            <div class="row d-flex justify-content-center">
                 <div class="col-8">
                     <label for="namedesk">'$"NOME:"'</label>
                     <input type="search" class="form-control form-control-sm"
@@ -45,7 +45,7 @@ echo '
                 </div>
             </div>
 
-            <div class="row justify-content-center">
+            <div class="row d-flex justify-content-center">
                 <div class="col-4">
                    <button data-bs-toggle="tooltip" data-bs-placement="top"
                        title="'$"Detecta automaticamente o título do site e sugere como nome do webapp"'"
@@ -108,7 +108,7 @@ echo '
                     <img src="" id="browsericon" width="48" height="48">
                 </div>
                 <div class="col-4">
-                        <select name="browser" class="mt-5 form-select form-select-size">'
+                    <select name="browser" class="mt-5 form-select form-select-size form-option">'
 
 
                 if [ -e /usr/lib/brave-browser/brave ];then

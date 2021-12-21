@@ -29,11 +29,18 @@ echo '
         <!-- Formulário de instalação do webapp -->
         <form action="webapp-install.sh" method="get" id="form-install">
 
-            <div class="row justify-content-center">
-                <div class="col-8">
+            <div class="row d-flex justify-content-center">
+                <div class="col-5">
                     <label for="namedesk">'$"NOME:"'</label>
                     <input type="search" class="form-control form-control-sm"
                        name="namedesk" id="namedesk" required autofocus/>
+                </div>
+                <div class="col-3">
+                    <label for="namedesk">'$"CATEGORIA:"'</label>
+                    <select class="form-select form-select-size-categ form-option">
+                      <option class="form-option">'$"WEB APPS"'</option>
+                      <option class="form-option">'$"INTERNET"'</option>
+                    </select>
                 </div>
                 <div class="mb-2 col-8">
                     <label for="urldesk" class="mt-2">'$"URL:"'</label>
@@ -42,7 +49,7 @@ echo '
                 </div>
             </div>
 
-            <div class="row justify-content-center">
+            <div class="row d-flex justify-content-center">
                 <div class="col-4">
                     <button data-bs-toggle="tooltip" data-bs-placement="top"
                        title="'$"Detecta automaticamente o título do site e sugere como nome do webapp"'"
@@ -112,7 +119,7 @@ echo '
                     <img id="browsericon" width="48" height="48">
                 </div>
                 <div class="col-4">
-                    <select name="browser" class="mt-5 form-select form-select-size">'
+                    <select name="browser" class="mt-5 form-select form-select-size form-option" id="browser">'
 
                         if [ -e /usr/lib/brave-browser/brave ];then
                             echo '<option value="brave" class="form-option" selected>BRAVE</option>'

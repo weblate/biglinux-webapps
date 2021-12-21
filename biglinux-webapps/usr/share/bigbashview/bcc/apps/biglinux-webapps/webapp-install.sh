@@ -6,9 +6,9 @@ TMPFILE="/tmp/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 DIRECTORY="$HOME/.local/share/desktop-directories/web-apps.directory"
 LINK_APP="$HOME/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 
-if [ "$(grep firefox <<< $browser)" ];then
+if [ "$(grep 'firefox' <<< $browser)" ];then
 
-    [ ! "$(grep https:// <<< $urldesk)" ] && urldesk="https://$urldesk"
+    [ ! "$(grep 'https://' <<< $urldesk)" ] && urldesk="https://$urldesk"
 
     [ "$tvmode" = "on" ] && {
         YTCODE="$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
@@ -69,8 +69,7 @@ sed -i 's|user_pref("browser.urlbar.placeholderName.*||g' "\$FOLDER/prefs.js"
 CLASS="$browser-webapp-$_NAMEDESK"
 
 MOZ_DISABLE_GMP_SANDBOX=1 MOZ_DISABLE_CONTENT_SANDBOX=1 \
-$browser --class="\$CLASS" --profile "\$FOLDER" \
---no-remote --new-instance "$urldesk" &
+$browser --class="\$CLASS" --profile "\$FOLDER" --no-remote --new-instance "$urldesk" &
 
 count=0
 while [ \$count -lt 100 ]; do
@@ -108,7 +107,7 @@ rm "$TMPFILE"
 else
     FOLDER="$HOME/.bigwebapps/$_NAMEDESK-$browser"
 
-    [ ! "$(grep https:// <<< $urldesk)" ] && urldesk="https://$urldesk"
+    [ ! "$(grep 'https://' <<< $urldesk)" ] && urldesk="https://$urldesk"
 
     [ "$tvmode" = "on" ] && {
         YTCODE="$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"

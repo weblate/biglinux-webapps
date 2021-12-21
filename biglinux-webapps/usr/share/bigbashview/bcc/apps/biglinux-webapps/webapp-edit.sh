@@ -12,7 +12,7 @@ function update_shortcut(){
     }
 }
 
-if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];then
+if [ ! "$(grep 'firefox' <<< $browserold)" -a ! "$(grep 'firefox' <<< $browser)" ];then
 
     DATA_DIR="$(grep "^Exec=" $filedesk | sed 's|.*-dir=||;s| --cl.*||')"
 
@@ -52,7 +52,7 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
             update_shortcut
         }
     else
-        [ "$(grep embed <<< $urldesk)" ] && {
+        [ "$(grep 'embed' <<< $urldesk)" ] && {
             urldesk="https://www.youtube.com/watch?v=$(basename $urldesk)"
             sed -i "s|--app.*|--app=$urldesk|" $filedesk
             update_shortcut
@@ -65,7 +65,7 @@ if [ ! "$(grep firefox <<< $browserold)" -a ! "$(grep firefox <<< $browser)" ];t
             update_shortcut
         }
     else
-        [ "$(grep user-data-dir $filedesk)" ] && {
+        [ "$(grep 'user-data-dir' $filedesk)" ] && {
             [ -d "$DATA_DIR" ] && rm -r "$DATA_DIR"
             sed -i 's|--user.*--c|--c|' $filedesk
             update_shortcut
