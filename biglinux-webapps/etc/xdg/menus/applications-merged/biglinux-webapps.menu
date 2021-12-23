@@ -15,13 +15,13 @@
         </Include>
     </Menu>
 
-    <!-- Googleapps Menu -->
+    <!-- Google Menu -->
     <Menu>
-        <Name>Googleapps</Name>
+        <Name>Google</Name>
         <Directory>google-apps.directory</Directory>
         <Include>
             <And>
-                <Category>Googleapps</Category>
+                <Category>Google</Category>
             </And>
         </Include>
     </Menu>

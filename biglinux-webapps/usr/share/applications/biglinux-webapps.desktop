@@ -4,6 +4,6 @@ Name=Add and Remove Web Apps
 Name[pt]=Adicionar e Remover Web Apps
 Icon=webapp
 Exec=biglinux-webapps
-Categories=web-apps;
+Categories=Webapps;
 Terminal=false
 StartupNotify=true
