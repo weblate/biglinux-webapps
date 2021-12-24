@@ -7,3 +7,4 @@ Name=Classroom
 Exec=/usr/bin/biglinux-webapp --class="classroom.google.com,Chromium-browser" --profile-directory=Default --app=https://classroom.google.com
 Icon=classroom.png
 StartupWMClass=classroom.google.com
+Categories=Google;

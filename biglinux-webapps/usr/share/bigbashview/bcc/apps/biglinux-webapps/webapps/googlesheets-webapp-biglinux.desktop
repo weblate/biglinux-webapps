@@ -8,3 +8,4 @@ Name[pt]=Planilhas
 Exec=/usr/bin/biglinux-webapp --class="docs.google.com__spreadsheets,Chromium-browser" --profile-directory=Default --app=https://docs.google.com/spreadsheets
 Icon=spreadsheets.png
 StartupWMClass=docs.google.com__spreadsheets
+Categories=Google;

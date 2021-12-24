@@ -7,3 +7,4 @@ Name=Skype
 Exec=/usr/bin/biglinux-webapp --class="web.skype.com,Chromium-browser" --profile-directory=Default --app=https://web.skype.com
 Icon=skype.png
 StartupWMClass=web.skype.com
+Categories=Webapps;

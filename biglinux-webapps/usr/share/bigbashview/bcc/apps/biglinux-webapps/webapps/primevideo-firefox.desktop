@@ -4,3 +4,4 @@ Icon=primevideo.png
 Name=Prime Video
 Type=Application
 X-KDE-StartupNotify=true
+Categories=Webapps;

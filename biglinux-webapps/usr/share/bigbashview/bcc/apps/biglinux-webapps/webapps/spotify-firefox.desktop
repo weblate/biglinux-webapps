@@ -1,7 +1,7 @@
 [Desktop Entry]
 Exec=spotify-firefox
-Icon=spotify.png
+Icon=spotifywebapp.png
 Name=Spotify
 Type=Application
 X-KDE-StartupNotify=true
-Keywords=
+Categories=Webapps;

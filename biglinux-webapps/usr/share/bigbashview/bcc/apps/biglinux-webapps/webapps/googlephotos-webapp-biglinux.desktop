@@ -7,3 +7,4 @@ Name=Photos
 Exec=/usr/bin/biglinux-webapp --class="photos.google.com,Chromium-browser" --profile-directory=Default --app=https://photos.google.com
 Icon=photos.png
 StartupWMClass=photos.google.com
+Categories=Google;

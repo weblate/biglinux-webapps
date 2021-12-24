@@ -7,3 +7,4 @@ Name=WhatsApp
 Exec=/usr/bin/biglinux-webapp --class="web.whatsapp.com,Chromium-browser" --profile-directory=Default --app=https://web.whatsapp.com
 Icon=whatsapp.png
 StartupWMClass=web.whatsapp.com
+Categories=Webapps;

@@ -7,3 +7,4 @@ Name=Instagram
 Exec=/usr/bin/biglinux-webapp --class="www.instagram.com,Chromium-browser" --profile-directory=Default --app=https://www.instagram.com
 Icon=instagram.png
 StartupWMClass=www.instagram.com
+Categories=Webapps;

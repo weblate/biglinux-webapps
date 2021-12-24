@@ -7,3 +7,4 @@ Name=Twitch
 Exec=/usr/bin/biglinux-webapp --class="www.twitch.tv,Chromium-browser" --profile-directory=Default --app=https://www.twitch.tv
 Icon=twitch.png
 StartupWMClass=www.twitch.tv
+Categories=Webapps;

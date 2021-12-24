@@ -7,3 +7,4 @@ Name=Gmail
 Exec=/usr/bin/biglinux-webapp --class="mail.google.com__mail,Chromium-browser" --profile-directory=Default --app=https://mail.google.com/mail/
 Icon=gmail.png
 StartupWMClass=mail.google.com__mail
+Categories=Google;

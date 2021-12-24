@@ -7,3 +7,4 @@ Name=Hangouts
 Exec=/usr/bin/biglinux-webapp --class="hangouts.google.com,Chromium-browser" --profile-directory=Default --app=https://hangouts.google.com
 Icon=hangouts.png
 StartupWMClass=hangouts.google.com
+Categories=Google;

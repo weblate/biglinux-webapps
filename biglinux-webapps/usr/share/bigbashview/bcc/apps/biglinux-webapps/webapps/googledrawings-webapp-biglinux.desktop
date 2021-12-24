@@ -7,3 +7,4 @@ Name=Drawings
 Exec=/usr/bin/biglinux-webapp --class="drawings.google.com,Chromium-browser" --profile-directory=Default --app=https://drawings.google.com
 Icon=drawings.png
 StartupWMClass=drawings.google.com
+Categories=Google;

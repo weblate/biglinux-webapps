@@ -7,3 +7,4 @@ Name=Slides
 Exec=/usr/bin/biglinux-webapp --class="docs.google.com__presentation,Chromium-browser" --profile-directory=Default --app=https://docs.google.com/presentation
 Icon=presentation.png
 StartupWMClass=docs.google.com__presentation
+Categories=Google;

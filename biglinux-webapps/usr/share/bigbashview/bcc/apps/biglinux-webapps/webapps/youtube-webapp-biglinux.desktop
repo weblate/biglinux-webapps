@@ -7,3 +7,4 @@ Name=Youtube
 Exec=/usr/bin/biglinux-webapp --class="youtube.com,Chromium-browser" --profile-directory=Default --app=https://youtube.com
 Icon=youtube.png
 StartupWMClass=youtube.com
+Categories=Google;

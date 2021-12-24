@@ -7,3 +7,4 @@ Name=Meet
 Exec=/usr/bin/biglinux-webapp --class="meet.google.com,Chromium-browser" --profile-directory=Default --app=https://meet.google.com
 Icon=meet.png
 StartupWMClass=meet.google.com
+Categories=Google;

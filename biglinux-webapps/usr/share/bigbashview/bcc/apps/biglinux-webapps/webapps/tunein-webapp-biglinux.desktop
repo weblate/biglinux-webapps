@@ -8,4 +8,4 @@ Name[pt]=TuneIn Rádios
 Exec=/usr/bin/biglinux-webapp --class="tunein.com__radio_home,Chromium-browser" --profile-directory=Default --app="https://tunein.com/radio/home"
 Icon=tunein.png
 StartupWMClass=tunein.com__radio_home
-
+Categories=Webapps;

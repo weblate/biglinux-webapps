@@ -8,3 +8,4 @@ Name[pt]=Keep
 Exec=/usr/bin/biglinux-webapp --class="keep.google.com,Chromium-browser" --profile-directory=Default --app=https://keep.google.com
 Icon=keep.png
 StartupWMClass=keep.google.com
+Categories=Google;

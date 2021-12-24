@@ -7,3 +7,4 @@ Name=Facebook
 Exec=/usr/bin/biglinux-webapp --class="www.facebook.com,Chromium-browser" --profile-directory=Default --app=https://www.facebook.com
 Icon=facebook.png
 StartupWMClass=www.facebook.com
+Categories=Webapps;
