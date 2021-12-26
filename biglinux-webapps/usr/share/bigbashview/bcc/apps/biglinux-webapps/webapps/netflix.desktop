@@ -1,7 +1,7 @@
 [Desktop Entry]
-Exec=spotify-firefox
-Icon=spotifywebapp.png
-Name=Spotify
 Type=Application
+Name=Netflix
+Exec=biglinux-webapp netflix
+Icon=netflix.png
 X-KDE-StartupNotify=true
 Categories=Webapps;

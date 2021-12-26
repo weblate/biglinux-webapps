@@ -37,9 +37,13 @@ echo '
                 </div>
                 <div class="col-3">
                     <label for="namedesk">'$"CATEGORIA:"'</label>
-                    <select class="form-select form-select-size-categ form-option">
-                      <option class="form-option">'$"WEB APPS"'</option>
-                      <option class="form-option">'$"INTERNET"'</option>
+                    <select class="form-select form-select-size-categ form-option" name="category">
+                      <option class="form-option" value="Office">'$"ESCRITÓRIO"'</option>
+                      <option class="form-option" value="Graphics">'$"GRÁFICOS"'</option>
+                      <option class="form-option" value="Network">INTERNET</option>
+                      <option class="form-option" value="AudioVideo">'$"MULTIMÍDIA"'</option>
+                      <option class="form-option" value="Webapps" selected>WEBAPPS</option>
+                      <option class="form-option" value="Google">WEBAPPS GOOGLE</option>
                     </select>
                 </div>
                 <div class="mb-2 col-8">
@@ -127,6 +131,10 @@ echo '
 
                         if [ -e /usr/lib/chromium/chromium ];then
                             echo '<option value="chromium" class="form-option">CHROMIUM</option>'
+                        fi
+
+                        if [ -e /usr/bin/epiphany ];then
+                            echo '<option value="epiphany" class="form-option">EPIPHANY</option>'
                         fi
 
                         if [ -e /usr/lib/firefox/firefox ];then

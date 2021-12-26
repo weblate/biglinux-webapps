@@ -5,8 +5,17 @@ export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps
 
 [ -e "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" ] && checked="checked"
-[ "$(grep embed <<< $DESKURL)" ] && checked_you="checked"
-[ "$(grep user-data-dir <<< $DESKEXEC)" ] && checked_new="checked"
+[ "$(grep 'embed' <<< $DESKURL)" ] && checked_you="checked"
+[ "$(grep 'user-data-dir' <<< $DESKEXEC)" ] && checked_new="checked"
+
+case $DESKCATEG in
+    Office) selectedoffice='selected' ;;
+    Graphics) selectedgraphics='selected' ;;
+    Network) selectednetwork='selected' ;;
+    AudioVideo) selectedaudiovideo='selected' ;;
+    Webapps) selectedwebapps='selected' ;;
+    Google) selectedgoogle='selected' ;;
+esac
 
 echo '
 <!-- Cabeçalho -->
@@ -33,10 +42,21 @@ echo '
         <form action="webapp-edit.sh" method="get" id="form-edit">
             <input type="hidden" value="'$filedesk'" name="filedesk">
             <div class="row d-flex justify-content-center">
-                <div class="col-8">
+                <div class="col-5">
                     <label for="namedesk">'$"NOME:"'</label>
                     <input type="search" class="form-control form-control-sm"
                        name="namedesk" id="namedesk" value="'$DESKNAME'" required/>
+                </div>
+                <div class="col-3">
+                    <label for="namedesk">'$"CATEGORIA:"'</label>
+                    <select class="form-select form-select-size-categ form-option" name="category">
+                      <option class="form-option" value="Office" '$selectedoffice'>'$"ESCRITÓRIO"'</option>
+                      <option class="form-option" value="Graphics" '$selectedgraphics'>'$"GRÁFICOS"'</option>
+                      <option class="form-option" value="Network" '$selectednetwork'>INTERNET</option>
+                      <option class="form-option" value="AudioVideo" '$selectedaudiovideo'>'$"MULTIMÍDIA"'</option>
+                      <option class="form-option" value="Webapps" '$selectedwebapps'>WEBAPPS</option>
+                      <option class="form-option" value="Google" '$selectedgoogle'>WEBAPPS GOOGLE</option>
+                    </select>
                 </div>
                 <div class="mb-2 col-8">
                     <label for="urldesk" class="mt-2">'$"URL:"'</label>
@@ -126,6 +146,15 @@ echo '
                         BROWSEROLD='chromium'
                     else
                         echo '<option value="chromium" class="form-option">CHROMIUM</option>'
+                    fi
+                fi
+
+                if [ -e /usr/bin/epiphany ];then
+                    if [ "$(grep epiphany $filedesk)" ];then
+                        echo '<option selected value="epiphany" class="form-option">EPIPHANY</option>'
+                        BROWSEROLD='epiphany'
+                    else
+                        echo '<option value="epiphany" class="form-option">EPIPHANY</option>'
                     fi
                 fi
 

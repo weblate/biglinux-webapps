@@ -66,17 +66,17 @@ echo '<div class="row">
 
 for i in $DESKTOP; do
 
-    if [ "$(grep firefox <<< $i)" ];then
-        DESKEXEC="$(grep "Exec=" $i | sed 's|Exec=||')"
-        DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
-    else
-        DESKEXEC="$(grep "Exec=" $i | sed 's|Exec=||')"
-        DESKURL="$(grep "Exec=" $i | sed 's|.*app=||')"
-    fi
-
-    DESKNAME="$(grep "Name=" $i | sed 's|Name=||')"
-    DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
+    DESKEXEC="$(grep "^Exec=" $i | sed 's|Exec=||')"
+    DESKNAME="$(grep "^Name=" $i | sed 's|Name=||')"
+    DESKCATEG="$(grep "^Categories=" | sed 's|Categories=||;s|\;$||')"
+    DESKICON="$(grep "^Icon=" $i | sed 's|Icon=||')"
     [ "$DESKICON" = "webapp" ] && DESKICON="img/default.png"
+
+    [ "$(grep 'firefox' <<< $i)" ] && {
+        DESKURL="$(grep '--new-instance' $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
+    } || {
+        DESKURL="$(grep "^Exec=" $i | sed 's|.*app=||')"
+    }
 
 echo '<tr class="table-light" style="line-height:40px">
         <form action="index-edit2.sh.htm" method="get">
@@ -85,6 +85,7 @@ echo '<tr class="table-light" style="line-height:40px">
             <input type="hidden" name="DESKICON" value="'$DESKICON'"/>
             <input type="hidden" name="DESKURL" value="'$DESKURL'"/>
             <input type="hidden" name="DESKEXEC" value="'$DESKEXEC'"/>
+            <input type="hidden" name="DESKCATEG" value="'$DESKCATEG'"/>
             <td class="col-1">
                 <img class="img-thumbnail center" src="'$DESKICON'" width="42" height="42"/>
             </td>

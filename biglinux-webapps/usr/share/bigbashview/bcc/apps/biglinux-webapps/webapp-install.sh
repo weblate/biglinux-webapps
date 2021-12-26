@@ -3,7 +3,7 @@
 _NAMEDESK="$(sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAaAeEeEiIoOoOoOuUuUcC/;s|^ *||;s| *$||g;s| |-|g;s|/|-|g;s|\.|-|g;s|\:|-|g;s|.*|\L&|' <<< "$namedesk")"
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 TMPFILE="/tmp/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
-DIRECTORY="$HOME/.local/share/desktop-directories/web-apps.directory"
+DIRECTORY="$HOME/.local/share/applications"
 LINK_APP="$HOME/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
 
 if [ "$(grep 'firefox' <<< $browser)" ];then
@@ -75,7 +75,7 @@ count=0
 while [ \$count -lt 100 ]; do
     wininfo="\$(xwininfo -root -children -all | grep \\"Navigator\\"\\ \\"\$CLASS\\")"
     if [ "\$wininfo" ]; then
-/usr/share/biglinux/webapps/bin/xseticon -id "\$(awk '{print \$1}' <<< \$wininfo)" $ICON_FILE
+        xseticon -id "\$(awk '{print \$1}' <<< \$wininfo)" $ICON_FILE
         count=100
     else
         let count=count+1;
@@ -94,9 +94,10 @@ Type=Application
 Name=$namedesk
 Exec=$DESKBIN
 Icon=$ICON_FILE
+Categories=$category;
 X-KDE-StartupNotify=true" > "$TMPFILE"
 
-xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
+cp "$TMPFILE" "$DIRECTORY"
 rm "$TMPFILE"
 
     [ "$shortcut" = "on" ] && {
@@ -104,6 +105,8 @@ rm "$TMPFILE"
         chmod 755 "$USER_DESKTOP/$namedesk.desktop"
     }
 
+elif [ "$(grep 'epiphany' <<< $browser)" ];then
+    epiphany &
 else
     FOLDER="$HOME/.bigwebapps/$_NAMEDESK-$browser"
 
@@ -134,9 +137,10 @@ Type=Application
 Name=$namedesk
 Exec=$browser --class=$CUT_HTTP,Chromium-browser --profile-directory=Default --app=$urldesk
 Icon=$ICON_FILE
+Categories=$category;
 StartupWMClass=$CUT_HTTP" > "$TMPFILE"
 
-xdg-desktop-menu install --novendor "$DIRECTORY" "$TMPFILE"
+cp "$TMPFILE" "$DIRECTORY"
 rm "$TMPFILE"
 
     [ "$shortcut" = "on" ] && {

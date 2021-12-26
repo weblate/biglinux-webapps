@@ -68,10 +68,9 @@ body#app{
 }
 
 .form-select-size-categ{
-  height:34px;
+  height:33px;
   font-size:11pt;
-  margin-top: -1px;
-  padding-top: .4rem;
+  padding-top: .3rem;
 }
 
 .form-option{

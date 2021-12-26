@@ -9,7 +9,7 @@ $(function(){
     var iconSelected = $("select#browser").val();
     if(iconSelected){
       $("#browsericon").attr("src", "icons/" + iconSelected + ".png");
-      if(iconSelected.match(/firefox/gi)){
+      if(iconSelected.match(/(firefox|epiphany)/gi)){
           $("#perfil").hide();
       }
     }
@@ -18,6 +18,10 @@ $(function(){
         $("#browsericon").attr("src", "icons/" + this.value + ".png");
 
         switch(this.value){
+        case "epiphany":
+            $("#perfil").hide();
+            break;
+
         case "firefox":
             $("#perfil").hide();
             break;

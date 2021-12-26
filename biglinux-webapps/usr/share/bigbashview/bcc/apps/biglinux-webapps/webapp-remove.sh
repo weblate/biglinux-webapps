@@ -16,8 +16,7 @@ DATA_DIR="$(grep "^Exec=" $filedesk | sed 's|.*-dir=||;s| --cl.*||')"
     DESKBIN="$(grep "^Exec=" $filedesk  | sed 's|Exec=||')"
     rm "$DESKBIN"
 }
-
-xdg-desktop-menu uninstall "$filedesk"
+rm "$filedesk"
 
 nohup update-desktop-database -q $HOME/.local/share/applications &
 nohup kbuildsycoca5 &> /dev/null &
