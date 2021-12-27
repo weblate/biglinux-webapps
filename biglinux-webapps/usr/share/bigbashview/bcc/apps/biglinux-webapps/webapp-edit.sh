@@ -8,7 +8,7 @@ USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 function update_shortcut(){
     [ -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && {
         unlink "$USER_DESKTOP/$_DESKNAME.desktop"
-        link "$filedesk" "$USER_DESKTOP/$namedesk.desktop"
+        ln -s "$filedesk" "$USER_DESKTOP/$namedesk.desktop"
     }
 }
 
@@ -17,7 +17,7 @@ if [ ! "$(grep 'firefox' <<< $browserold)" -a ! "$(grep 'firefox' <<< $browser)"
     DATA_DIR="$(grep "^Exec=" $filedesk | sed 's|.*-dir=||;s| --cl.*||')"
 
     if [ "$shortcut" = "on" ];then
-        [ ! -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && link $filedesk "$USER_DESKTOP/$_DESKNAME.desktop"
+        [ ! -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && ln -s $filedesk "$USER_DESKTOP/$_DESKNAME.desktop"
     else
         [ -e "$USER_DESKTOP/$_DESKNAME.desktop" ] && unlink "$USER_DESKTOP/$_DESKNAME.desktop"
     fi

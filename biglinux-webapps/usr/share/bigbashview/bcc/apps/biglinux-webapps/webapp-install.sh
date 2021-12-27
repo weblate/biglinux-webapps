@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-_NAMEDESK="$(sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAaAeEeEiIoOoOoOuUuUcC/;s|^ *||;s| *$||g;s| |-|g;s|/|-|g;s|\.|-|g;s|\:|-|g;s|.*|\L&|' <<< "$namedesk")"
+_NAMEDESK="$(sed 's|https\:\/\/||;s|www\.||;s|\/.*||;s|\.|-|g' <<< $urldesk)"
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
-TMPFILE="/tmp/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
-DIRECTORY="$HOME/.local/share/applications"
-LINK_APP="$HOME/.local/share/applications/$_NAMEDESK-$browser-webapp-biglinux-custom.desktop"
+LINK_APP="$HOME/.local/share/applications/$_NAMEDESK-$RANDOM-webapp-biglinux-custom.desktop"
+DIR="$(basename $LINK_APP | sed 's|-webapp-biglinux-custom.desktop||')"
 
 if [ "$(grep 'firefox' <<< $browser)" ];then
 
@@ -23,7 +22,7 @@ if [ "$(grep 'firefox' <<< $browser)" ];then
         [ "$(dirname $icondesk)" = "/tmp" ] && mv "$icondesk" $ICON_FILE || cp "$icondesk" $ICON_FILE
     fi
 
-DESKBIN="$HOME/.local/bin/$_NAMEDESK-$browser"
+DESKBIN="$HOME/.local/bin/$DIR"
 
 cat > "$DESKBIN" <<EOF
 #!/usr/bin/env sh
@@ -52,7 +51,7 @@ cat > "$DESKBIN" <<EOF
 # @license   http://www.gnu.org/licenses GPL-3.0-or-later
 # @see       https://notabug.org/sepbit/amofi Repository of Amofi
 
-FOLDER="$HOME/.bigwebapps/$_NAMEDESK-$browser"
+FOLDER="$HOME/.bigwebapps/$DIR"
 
 if [ ! "\$(grep 'toolkit.legacyUserProfileCustomizations.stylesheets' \$FOLDER/prefs.js)" ]; then
     [ -d "\$FOLDER" ] && rm -R "\$FOLDER"
@@ -95,20 +94,57 @@ Name=$namedesk
 Exec=$DESKBIN
 Icon=$ICON_FILE
 Categories=$category;
-X-KDE-StartupNotify=true" > "$TMPFILE"
-
-cp "$TMPFILE" "$DIRECTORY"
-rm "$TMPFILE"
+X-KDE-StartupNotify=true" > "$LINK_APP"
 
     [ "$shortcut" = "on" ] && {
-        link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
+        ln -s "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
         chmod 755 "$USER_DESKTOP/$namedesk.desktop"
     }
 
 elif [ "$(grep 'epiphany' <<< $browser)" ];then
-    epiphany &
+
+    [ ! "$(grep 'https://' <<< $urldesk)" ] && urldesk="https://$urldesk"
+
+    [ "$tvmode" = "on" ] && {
+        YTCODE="$(basename $urldesk | sed 's|watch?v=||;s|&list=.*||;s|&feature=.*||')"
+        urldesk="https://www.youtube.com/embed/$YTCODE"
+    }
+
+    FOLDER="$HOME/.bigwebapps/org.gnome.Epiphany.WebApp-$DIR-webapp-biglinux-custom"
+    EPI_FILE="org.gnome.Epiphany.WebApp-$DIR-webapp-biglinux-custom.desktop"
+    EPI_LINK="$HOME/.local/share/applications/$EPI_FILE"
+    mkdir -p $FOLDER
+    > "$FOLDER/.app"
+    echo 35 > "$FOLDER/.migrated"
+
+    if [ -z "$icondesk" ];then
+        ICON_FILE="webapp"
+    else
+        NAME_FILE="$(basename $icondesk|sed 's| |-|g')"
+        ICON_FILE="$FOLDER/app-icon.png"
+        [ "$(dirname $icondesk)" = "/tmp" ] && mv "$icondesk" $ICON_FILE || cp "$icondesk" $ICON_FILE
+    fi
+
+echo "[Desktop Entry]
+Name=$namedesk
+Exec=epiphany --application-mode --profile=$FOLDER $urldesk
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=$category;
+Icon=$ICON_FILE
+StartupWMClass=org.gnome.Epiphany.WebApp-$DIR-webapp-biglinux-custom
+X-Purism-FormFactor=Workstation;Mobile;" > "$FOLDER/$EPI_FILE"
+
+    ln -s "$FOLDER/$EPI_FILE" "$EPI_LINK"
+
+    [ "$shortcut" = "on" ] && {
+        ln -s "$FOLDER/$EPI_FILE" "$USER_DESKTOP/$EPI_FILE"
+        chmod 755 "$USER_DESKTOP/$EPI_FILE"
+    }
+
 else
-    FOLDER="$HOME/.bigwebapps/$_NAMEDESK-$browser"
+    FOLDER="$HOME/.bigwebapps/$DIR"
 
     [ ! "$(grep 'https://' <<< $urldesk)" ] && urldesk="https://$urldesk"
 
@@ -138,13 +174,10 @@ Name=$namedesk
 Exec=$browser --class=$CUT_HTTP,Chromium-browser --profile-directory=Default --app=$urldesk
 Icon=$ICON_FILE
 Categories=$category;
-StartupWMClass=$CUT_HTTP" > "$TMPFILE"
-
-cp "$TMPFILE" "$DIRECTORY"
-rm "$TMPFILE"
+StartupWMClass=$CUT_HTTP" > "$LINK_APP"
 
     [ "$shortcut" = "on" ] && {
-        link "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
+        ln -s "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
         chmod 755 "$USER_DESKTOP/$namedesk.desktop"
     }
 fi
