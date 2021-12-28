@@ -65,12 +65,13 @@ body#app{
 .form-select-size{
   height:38px;
   font-size:11pt;
+  padding-top: .3rem;
 }
 
 .form-select-size-categ{
   height:33px;
   font-size:11pt;
-  padding-top: .3rem;
+  padding-top: .27rem;
 }
 
 .form-option{
@@ -95,6 +96,11 @@ p.h3{
 .box-shadow{
   padding: 0;
 }
+
+#perfil{
+  margin-top: 3.3rem;
+}
+
 /*
 *
 * ==========================================

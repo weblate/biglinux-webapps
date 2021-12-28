@@ -117,11 +117,11 @@ elif [ "$(grep 'epiphany' <<< $browser)" ];then
     > "$FOLDER/.app"
     echo 35 > "$FOLDER/.migrated"
 
+    ICON_FILE="$FOLDER/app-icon.png"
+
     if [ -z "$icondesk" ];then
-        ICON_FILE="webapp"
+        cp "/usr/share/bigbashview/bcc/apps/biglinux-webapps/img/default.png" $ICON_FILE
     else
-        NAME_FILE="$(basename $icondesk|sed 's| |-|g')"
-        ICON_FILE="$FOLDER/app-icon.png"
         [ "$(dirname $icondesk)" = "/tmp" ] && mv "$icondesk" $ICON_FILE || cp "$icondesk" $ICON_FILE
     fi
 
