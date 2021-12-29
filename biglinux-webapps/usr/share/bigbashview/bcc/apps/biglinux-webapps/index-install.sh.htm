@@ -125,7 +125,7 @@ echo '
                     <select name="browser" class="mt-5 form-select form-select-size form-option" id="browser">'
 
                         if [ -e /usr/lib/brave-browser/brave ];then
-                            echo '<option value="brave" class="form-option" selected>BRAVE</option>'
+                            echo '<option value="brave" class="form-option">BRAVE</option>'
                         fi
 
                         if [ -e /usr/lib/chromium/chromium ];then
@@ -166,12 +166,13 @@ echo '
 
             echo   '</select>
                 </div>
-                <div class="col-3 form-check form-switch d-block" id="perfil">
+                <div class="col-3 form-check form-switch" id="perfil">
                     <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" for="newperfil"
                            title="'$"Essa opção permite que você crie webapps que não compartilham informações.<br>Por exemplo, para logar em contas de e-mails diferentes, assim cada webapp manterá o login separadamente."'" data-html="true">
                            <i class="bi bi-person-plus-fill"></i>
-                           '$"Novo Perfil"'</label>
-                     <input class="form-check-input" type="checkbox" name="newperfil" id="newperfil" />
+                           '$"Novo Perfil"'
+                    </label>
+                    <input class="form-check-input" type="checkbox" name="newperfil" id="newperfil" />
                 </div>
             </div>
 

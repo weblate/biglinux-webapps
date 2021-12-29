@@ -98,6 +98,7 @@ p.h3{
 }
 
 #perfil{
+  display: block;
   margin-top: 3.3rem;
 }
 
