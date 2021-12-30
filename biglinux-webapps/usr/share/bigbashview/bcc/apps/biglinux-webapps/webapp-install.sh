@@ -97,8 +97,8 @@ Categories=$category;
 X-KDE-StartupNotify=true" > "$LINK_APP"
 
     [ "$shortcut" = "on" ] && {
-        ln -s "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
-        chmod 755 "$USER_DESKTOP/$namedesk.desktop"
+        ln -s "$LINK_APP" "$USER_DESKTOP/$DIR-webapp-biglinux-custom.desktop"
+        chmod 755 "$USER_DESKTOP/$DIR-webapp-biglinux-custom.desktop"
     }
 
 elif [ "$(grep 'epiphany' <<< $browser)" ];then
@@ -177,8 +177,8 @@ Categories=$category;
 StartupWMClass=$CUT_HTTP" > "$LINK_APP"
 
     [ "$shortcut" = "on" ] && {
-        ln -s "$LINK_APP" "$USER_DESKTOP/$namedesk.desktop"
-        chmod 755 "$USER_DESKTOP/$namedesk.desktop"
+        ln -s "$LINK_APP" "$USER_DESKTOP/$DIR-webapp-biglinux-custom.desktop"
+        chmod 755 "$USER_DESKTOP/$DIR-webapp-biglinux-custom.desktop"
     }
 fi
 

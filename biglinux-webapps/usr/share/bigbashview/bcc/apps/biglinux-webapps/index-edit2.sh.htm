@@ -4,7 +4,7 @@
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-webapps
 
-[ -e "$(xdg-user-dir DESKTOP)/$DESKNAME.desktop" ] && checked="checked"
+[ -e "$(xdg-user-dir DESKTOP)/$DESKNAME" ] && checked="checked"
 [ "$(grep 'embed' <<< $DESKURL)" ] && checked_you="checked"
 [ "$(grep 'user-data-dir' <<< $DESKEXEC)" ] && checked_new="checked"
 
@@ -16,6 +16,11 @@ case $DESKCATEG in
     Webapps) selectedwebapps='selected' ;;
     Google) selectedgoogle='selected' ;;
 esac
+
+[ "$(grep '.local/bin' $filedesk)" ] && {
+    DESKBIN="$(grep '^Exec=' $filedesk  | sed 's|Exec=||')"
+    FIREFOX_EXEC="$(grep 'new-instance' $DESKBIN | cut -d' ' -f3)"
+}
 
 echo '
 <!-- Cabeçalho -->
@@ -125,10 +130,10 @@ echo '
                 <div class="col-2"></div>
                 <div class="mt-2 col-1">
                     <label class="mb-1">'$"NAVEGADOR:"'</label>
-                    <img src="" id="browsericon" width="48" height="48">
+                    <img id="browsericon" width="48" height="48">
                 </div>
                 <div class="col-4">
-                    <select name="browser" class="mt-5 form-select form-select-size form-option">'
+                    <select name="browser" class="mt-5 form-select form-select-size form-option" id="browser">'
 
 
                 if [ -e /usr/lib/brave-browser/brave ];then
@@ -159,7 +164,7 @@ echo '
                 fi
 
                 if [ -e /usr/lib/firefox/firefox ];then
-                    if [ "$(grep firefox $filedesk)" ];then
+                    if [ "$FIREFOX_EXEC" = "firefox" ];then
                         echo '<option value="firefox" class="form-option" selected>FIREFOX</option>'
                         BROWSEROLD='firefox'
                     else
@@ -168,7 +173,7 @@ echo '
                 fi
 
                 if [ -e /usr/lib/firefox-developer-edition/firefox ];then
-                    if [ "$(grep firefox-developer-edition $filedesk)" ];then
+                    if [ "$FIREFOX_EXEC" = "firefox-developer-edition" ];then
                         echo '<option selected value="firefox-developer-edition" class="form-option">FIREFOX DEVELOPER</option>'
                         BROWSEROLD='firefox-developer-edition'
                     else
@@ -177,7 +182,7 @@ echo '
                 fi
 
                 if [ -e /opt/firefox-nightly/firefox ];then
-                    if [ "$(grep firefox-nightly $filedesk)" ];then
+                    if [ "$FIREFOX_EXEC" = "firefox-nightly" ];then
                         echo '<option selected value="firefox-nightly" class="form-option">FIREFOX NIGHTLY</option>'
                         BROWSEROLD='firefox-nightly'
                     else

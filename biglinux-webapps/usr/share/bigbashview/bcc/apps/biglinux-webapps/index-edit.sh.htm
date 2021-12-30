@@ -66,13 +66,14 @@ echo '<div class="row">
 
 for i in $DESKTOP; do
 
-    DESKEXEC="$(grep "^Exec=" $i | sed 's|Exec=||')"
-    DESKNAME="$(grep "^Name=" $i | sed 's|Name=||')"
-    DESKCATEG="$(grep "^Categories=" $i | sed 's|Categories=||;s|\;$||')"
-    DESKICON="$(grep "^Icon=" $i | sed 's|Icon=||')"
+    DESKEXEC="$(grep '^Exec=' $i | sed 's|Exec=||')"
+    DESKNAME="$(basename $i)"
+    NAMEDESK="$(grep '^Name=' $i | sed 's|Name=||')"
+    DESKCATEG="$(grep '^Categories=' $i | sed 's|Categories=||;s|\;$||')"
+    DESKICON="$(grep '^Icon=' $i | sed 's|Icon=||')"
     [ "$DESKICON" = "webapp" ] && DESKICON="img/default.png"
 
-    if [ "$(grep '.local/bin' $i)" ];then
+    if [ "$(grep '.local/bin' $DESKEXEC)" ];then
         DESKURL="$(grep 'new-instance' $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
     elif [ "$(grep 'epiphany' $i)" ];then
         DESKURL="$(grep "^Exec=" $i | cut -d' ' -f4)"
@@ -93,7 +94,7 @@ echo '<tr class="table-light" style="line-height:40px">
             </td>
             <td class="text-truncate col-4 text-center"
                 data-bs-toggle="tooltip" data-bs-placement="top"
-                title="'$DESKNAME'">'$DESKNAME'</td>
+                title="'$NAMEDESK'">'$NAMEDESK'</td>
             <td class="text-truncate col-5 text-center"
                 data-bs-toggle="tooltip" data-bs-placement="top"
                 title="'$DESKURL'">'$DESKURL'</td>

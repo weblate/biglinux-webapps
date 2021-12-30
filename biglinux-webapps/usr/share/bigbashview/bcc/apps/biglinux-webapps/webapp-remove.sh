@@ -15,7 +15,7 @@ EPI_DIR="$(grep "^Exec=" $filedesk | cut -d' ' -f3 | sed 's|--profile=||')"
 [ -d "$EPI_DIR" ] && rm -r "$EPI_DIR"
 [ -d "$DATA_DIR" ] && rm -r "$DATA_DIR"
 [ "$(grep '.local/bin' $filedesk)" ] && {
-    DESKBIN="$(grep "^Exec=" $filedesk  | sed 's|Exec=||')"
+    DESKBIN="$(grep '^Exec=' $filedesk  | sed 's|Exec=||')"
     rm "$DESKBIN"
 }
 rm "$filedesk"
