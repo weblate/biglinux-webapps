@@ -2,17 +2,19 @@
 
 NAMEDESK="$(basename -s .desktop "$filedesk" | sed 's|-webapp-biglinux-custom||')"
 ICONDESK="$(grep "^Icon=" $filedesk | sed 's|Icon=||')"
-DESKNAME="$(grep "^Name=" $filedesk | sed 's|Name=||')"
+DESKNAME="$(basename $filedesk)"
 
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 FOLDER="$HOME/.bigwebapps/$NAMEDESK"
 DATA_DIR="$(grep "^Exec=" $filedesk | sed 's|.*-dir=||;s| --cl.*||')"
+EPI_DIR="$(grep "^Exec=" $filedesk | cut -d' ' -f3 | sed 's|--profile=||')"
 
-[ -d "$FOLDER" ] && rm -r "$FOLDER"
-[ -d "$DATA_DIR" ] && rm -r "$DATA_DIR"
-[ -e "$USER_DESKTOP/$DESKNAME.desktop" ] && unlink "$USER_DESKTOP/$DESKNAME.desktop"
+[ -e "$USER_DESKTOP/$DESKNAME" ] && unlink "$USER_DESKTOP/$DESKNAME"
 [ -e "$ICONDESK" ] && rm "$ICONDESK"
-[ "$(grep $HOME/.local/bin $filedesk)" ] && {
+[ -d "$FOLDER" ] && rm -r "$FOLDER"
+[ -d "$EPI_DIR" ] && rm -r "$EPI_DIR"
+[ -d "$DATA_DIR" ] && rm -r "$DATA_DIR"
+[ "$(grep '.local/bin' $filedesk)" ] && {
     DESKBIN="$(grep "^Exec=" $filedesk  | sed 's|Exec=||')"
     rm "$DESKBIN"
 }

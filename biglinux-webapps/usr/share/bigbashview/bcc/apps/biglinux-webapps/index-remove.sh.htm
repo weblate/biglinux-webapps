@@ -68,11 +68,13 @@ echo '<div class="row">
 c=0
 for i in $DESKTOP; do
 
-    if [ "$(grep Exec= $i | grep firefox)" ];then
-        DESKEXEC="$(grep Exec= $i | sed 's|Exec=||')"
-        DESKURL="$(grep "\-new-instance" $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
+    if [ "$(grep '.local/bin' $i)" ];then
+        DESKEXEC="$(grep '^Exec=' $i | sed 's|Exec=||')"
+        DESKURL="$(grep 'new-instance' $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
+    elif [ "$(grep 'epiphany' $i)" ];then
+        DESKURL="$(grep '^Exec=' $i | cut -d' ' -f4)"
     else
-        DESKURL="$(grep Exec= $i | sed 's|.*app=||')"
+        DESKURL="$(grep '^Exec=' $i | sed 's|.*app=||')"
     fi
 
     DESKNAME="$(grep "Name=" $i | sed 's|Name=||')"

@@ -68,15 +68,17 @@ for i in $DESKTOP; do
 
     DESKEXEC="$(grep "^Exec=" $i | sed 's|Exec=||')"
     DESKNAME="$(grep "^Name=" $i | sed 's|Name=||')"
-    DESKCATEG="$(grep "^Categories=" | sed 's|Categories=||;s|\;$||')"
+    DESKCATEG="$(grep "^Categories=" $i | sed 's|Categories=||;s|\;$||')"
     DESKICON="$(grep "^Icon=" $i | sed 's|Icon=||')"
     [ "$DESKICON" = "webapp" ] && DESKICON="img/default.png"
 
-    [ "$(grep 'firefox' <<< $i)" ] && {
-        DESKURL="$(grep '--new-instance' $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
-    } || {
+    if [ "$(grep '.local/bin' $i)" ];then
+        DESKURL="$(grep 'new-instance' $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
+    elif [ "$(grep 'epiphany' $i)" ];then
+        DESKURL="$(grep "^Exec=" $i | cut -d' ' -f4)"
+    else
         DESKURL="$(grep "^Exec=" $i | sed 's|.*app=||')"
-    }
+    fi
 
 echo '<tr class="table-light" style="line-height:40px">
         <form action="index-edit2.sh.htm" method="get">
