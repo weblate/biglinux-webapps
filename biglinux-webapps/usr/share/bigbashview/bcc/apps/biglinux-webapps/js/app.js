@@ -264,16 +264,9 @@ $(function(){
       return (res !== null)
     };
 
-    $("#filter-edit").on("keyup", function() {
+    $("#filter-edit, #filter").on("keyup", function() {
         var value = $(this).val().toLowerCase();
-        $("#table-filter-edit tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-
-    $("#filter").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#table-filter-del tr").filter(function() {
+        $("#table-filter-edit tr, #table-filter-del tr").filter(function() {
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });

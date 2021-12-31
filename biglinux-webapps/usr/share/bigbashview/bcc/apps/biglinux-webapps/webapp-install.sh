@@ -54,7 +54,7 @@ cat > "$DESKBIN" <<EOF
 FOLDER="$HOME/.bigwebapps/$DIR"
 
 if [ ! "\$(grep 'toolkit.legacyUserProfileCustomizations.stylesheets' \$FOLDER/prefs.js)" ]; then
-    [ -d "\$FOLDER" ] && rm -R "\$FOLDER"
+    [ -d "\$FOLDER" ] && rm -r "\$FOLDER"
     mkdir -p "\$FOLDER/chrome"
     echo 'user_pref("media.eme.enabled", true);' >> "\$FOLDER/prefs.js"
     echo 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);' >> "\$FOLDER/prefs.js"
@@ -85,8 +85,7 @@ EOF
 
 chmod +x "$DESKBIN"
 
-echo "#!/usr/bin/env xdg-open
-[Desktop Entry]
+echo "[Desktop Entry]
 Version=1.0
 Terminal=false
 Type=Application
@@ -95,6 +94,8 @@ Exec=$DESKBIN
 Icon=$ICON_FILE
 Categories=$category;
 X-KDE-StartupNotify=true" > "$LINK_APP"
+
+    chmod +x "$LINK_APP"
 
     [ "$shortcut" = "on" ] && {
         ln -s "$LINK_APP" "$USER_DESKTOP/$DIR-webapp-biglinux-custom.desktop"
@@ -136,6 +137,7 @@ Icon=$ICON_FILE
 StartupWMClass=org.gnome.Epiphany.WebApp-$DIR-webapp-biglinux-custom
 X-Purism-FormFactor=Workstation;Mobile;" > "$FOLDER/$EPI_FILE"
 
+    chmod +x "$FOLDER/$EPI_FILE"
     ln -s "$FOLDER/$EPI_FILE" "$EPI_LINK"
 
     [ "$shortcut" = "on" ] && {
@@ -165,8 +167,7 @@ else
         [ "$(dirname $icondesk)" = "/tmp" ] && mv "$icondesk" $ICON_FILE || cp "$icondesk" $ICON_FILE
     fi
 
-echo "#!/usr/bin/env xdg-open
-[Desktop Entry]
+echo "[Desktop Entry]
 Version=1.0
 Terminal=false
 Type=Application
@@ -175,6 +176,8 @@ Exec=$browser --class=$CUT_HTTP,Chromium-browser --profile-directory=Default --a
 Icon=$ICON_FILE
 Categories=$category;
 StartupWMClass=$CUT_HTTP" > "$LINK_APP"
+
+    chmod +x "$LINK_APP"
 
     [ "$shortcut" = "on" ] && {
         ln -s "$LINK_APP" "$USER_DESKTOP/$DIR-webapp-biglinux-custom.desktop"

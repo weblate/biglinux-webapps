@@ -18,7 +18,7 @@ echo '
 
     <div class="container-fluid">'
 
-DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop)"
+DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop 2>/dev/null)"
 
 if [ "$DESKTOP" ];then
 
@@ -73,7 +73,7 @@ for i in $DESKTOP; do
     DESKICON="$(grep '^Icon=' $i | sed 's|Icon=||')"
     [ "$DESKICON" = "webapp" ] && DESKICON="img/default.png"
 
-    if [ "$(grep '.local/bin' $DESKEXEC)" ];then
+    if [ "$(grep '.local/bin' <<< $DESKEXEC)" ];then
         DESKURL="$(grep 'new-instance' $DESKEXEC | cut -d' ' -f9 | sed 's|^"||;s|"$||')"
     elif [ "$(grep 'epiphany' $i)" ];then
         DESKURL="$(grep "^Exec=" $i | cut -d' ' -f4)"
@@ -89,6 +89,7 @@ echo '<tr class="table-light" style="line-height:40px">
             <input type="hidden" name="DESKURL" value="'$DESKURL'"/>
             <input type="hidden" name="DESKEXEC" value="'$DESKEXEC'"/>
             <input type="hidden" name="DESKCATEG" value="'$DESKCATEG'"/>
+            <input type="hidden" name="NAMEDESK" value="'$NAMEDESK'"/>
             <td class="col-1">
                 <img class="img-thumbnail center" src="'$DESKICON'" width="42" height="42"/>
             </td>

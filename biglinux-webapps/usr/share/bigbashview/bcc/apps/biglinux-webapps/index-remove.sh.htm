@@ -18,7 +18,7 @@ echo '
 
     <div class="container-fluid">'
 
-DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop)"
+DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop 2>/dev/null)"
 
 if [ "$DESKTOP" ];then
 
