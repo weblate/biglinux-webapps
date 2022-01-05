@@ -9,18 +9,56 @@ export TEXTDOMAIN=biglinux-webapps
 [ "$(grep 'user-data-dir' <<< $DESKEXEC)" ] && checked_new="checked"
 
 case $DESKCATEG in
-    Office) selectedoffice='selected' ;;
-    Graphics) selectedgraphics='selected' ;;
-    Network) selectednetwork='selected' ;;
-    AudioVideo) selectedaudiovideo='selected' ;;
-    Webapps) selectedwebapps='selected' ;;
-    Google) selectedgoogle='selected' ;;
+    Office) selectedOffice='selected' ;;
+    Graphics) selectedGraphics='selected' ;;
+    Network) selectedNetwork='selected' ;;
+    AudioVideo) selectedAudioVideo='selected' ;;
+    Webapps) selectedWebapps='selected' ;;
+    Google) selectedGoogle='selected' ;;
 esac
 
 [ "$(grep '.local/bin' $filedesk)" ] && {
     DESKBIN="$(grep '^Exec=' $filedesk  | sed 's|Exec=||')"
     FIREFOX_EXEC="$(grep 'new-instance' $DESKBIN | cut -d' ' -f3)"
 }
+
+BROWSER_EXEC="$(grep '^Exec' $filedesk | cut -d' ' -f1 | sed 's|Exec=||')"
+
+case $BROWSER_EXEC in
+    brave)
+        selectedBrave='selected'
+        BROWSEROLD='brave' ;;
+    chromium)
+        selectedChromium='selected'
+        BROWSEROLD='chromium';;
+    epiphany)
+        selectedEpiphany='selected'
+        BROWSEROLD='epiphany';;
+    google-chrome-stable)
+        selectedChromeStable='selected'
+        BROWSEROLD='google-chrome-stable';;
+    google-chrome-beta)
+        selectedChromeBeta='selected'
+        BROWSEROLD='google-chrome-beta';;
+    google-chrome-unstable)
+        selectedChromeUnstable='selected'
+        BROWSEROLD='google-chrome-unstable';;
+    vivaldi-stable)
+        selectedVivaldi='selected'
+        BROWSEROLD='vivaldi-stable';;
+esac
+
+case $FIREFOX_EXEC in
+    firefox)
+        selectedFirefox='selected'
+        BROWSEROLD='firefox';;
+    firefox-developer-edition)
+        selectedFirefoxDeveloper='selected'
+        BROWSEROLD='firefox-developer-edition';;
+    firefox-nightly)
+        selectedFirefoxNightly='selected'
+        BROWSEROLD='firefox-nightly';;
+esac
 
 echo '
 <!-- Cabeçalho -->
@@ -38,6 +76,7 @@ echo '
 
 <!-- Corpo da página -->
 <body id="app">
+
     <div class="container-fluid">
         <p class="text-center h3">
             '$"Editar WebApps BigLinux"'
@@ -55,12 +94,12 @@ echo '
                 <div class="col-3">
                     <label for="namedesk">'$"CATEGORIA:"'</label>
                     <select class="form-select form-select-size-categ form-option" name="category">
-                      <option class="form-option" value="Office" '$selectedoffice'>'$"ESCRITÓRIO"'</option>
-                      <option class="form-option" value="Graphics" '$selectedgraphics'>'$"GRÁFICOS"'</option>
-                      <option class="form-option" value="Network" '$selectednetwork'>INTERNET</option>
-                      <option class="form-option" value="AudioVideo" '$selectedaudiovideo'>'$"MULTIMÍDIA"'</option>
-                      <option class="form-option" value="Webapps" '$selectedwebapps'>WEBAPPS</option>
-                      <option class="form-option" value="Google" '$selectedgoogle'>WEBAPPS GOOGLE</option>
+                      <option class="form-option" value="Office" '$selectedOffice'>'$"ESCRITÓRIO"'</option>
+                      <option class="form-option" value="Graphics" '$selectedGraphics'>'$"GRÁFICOS"'</option>
+                      <option class="form-option" value="Network" '$selectedNetwork'>INTERNET</option>
+                      <option class="form-option" value="AudioVideo" '$selectedAudioVideo'>'$"MULTIMÍDIA"'</option>
+                      <option class="form-option" value="Webapps" '$selectedWebapps'>WEBAPPS</option>
+                      <option class="form-option" value="Google" '$selectedGoogle'>WEBAPPS GOOGLE</option>
                     </select>
                 </div>
                 <div class="mb-2 col-8">
@@ -137,93 +176,43 @@ echo '
 
 
                 if [ -e /usr/lib/brave-browser/brave ];then
-                    if [ "$(grep brave $filedesk)" ];then
-                        echo '<option value="brave" class="form-option" selected>BRAVE</option>'
-                        BROWSEROLD='brave'
-                    else
-                        echo '<option value="brave" class="form-option">BRAVE</option>'
-                    fi
+                    echo '<option value="brave" class="form-option" '$selectedBrave'>BRAVE</option>'
                 fi
 
                 if [ -e /usr/lib/chromium/chromium ];then
-                    if [ "$(grep chromium $filedesk)" ];then
-                        echo '<option selected value="chromium" class="form-option">CHROMIUM</option>'
-                        BROWSEROLD='chromium'
-                    else
-                        echo '<option value="chromium" class="form-option">CHROMIUM</option>'
-                    fi
+                    echo '<option value="chromium" class="form-option" '$selectedChromium' >CHROMIUM</option>'
                 fi
 
                 if [ -e /usr/bin/epiphany ];then
-                    if [ "$(grep epiphany $filedesk)" ];then
-                        echo '<option selected value="epiphany" class="form-option">EPIPHANY</option>'
-                        BROWSEROLD='epiphany'
-                    else
-                        echo '<option value="epiphany" class="form-option">EPIPHANY</option>'
-                    fi
+                    echo '<option value="epiphany" class="form-option" '$selectedEpiphany' >EPIPHANY</option>'
                 fi
 
                 if [ -e /usr/lib/firefox/firefox ];then
-                    if [ "$FIREFOX_EXEC" = "firefox" ];then
-                        echo '<option value="firefox" class="form-option" selected>FIREFOX</option>'
-                        BROWSEROLD='firefox'
-                    else
-                        echo '<option value="firefox" class="form-option">FIREFOX</option>'
-                    fi
+                    echo '<option value="firefox" class="form-option" '$selectedFirefox' >FIREFOX</option>'
                 fi
 
                 if [ -e /usr/lib/firefox-developer-edition/firefox ];then
-                    if [ "$FIREFOX_EXEC" = "firefox-developer-edition" ];then
-                        echo '<option selected value="firefox-developer-edition" class="form-option">FIREFOX DEVELOPER</option>'
-                        BROWSEROLD='firefox-developer-edition'
-                    else
-                        echo '<option value="firefox-developer-edition" class="form-option">FIREFOX DEVELOPER</option>'
-                    fi
+                    echo '<option value="firefox-developer-edition" class="form-option" '$selectedFirefoxDeveloper' >FIREFOX DEVELOPER</option>'
                 fi
 
                 if [ -e /opt/firefox-nightly/firefox ];then
-                    if [ "$FIREFOX_EXEC" = "firefox-nightly" ];then
-                        echo '<option selected value="firefox-nightly" class="form-option">FIREFOX NIGHTLY</option>'
-                        BROWSEROLD='firefox-nightly'
-                    else
-                        echo '<option value="firefox-nightly" class="form-option">FIREFOX NIGHTLY</option>'
-                    fi
+                    echo '<option value="firefox-nightly" class="form-option" '$selectedFirefoxNightly' >FIREFOX NIGHTLY</option>'
                 fi
 
                 if [ -e /opt/google/chrome/google-chrome ];then
-                    if [ "$(grep google-chrome-stable $filedesk)" ];then
-                        echo '<option selected value="google-chrome-stable" class="form-option">GOOGLE CHROME</option>'
-                        BROWSEROLD='google-chrome-stable'
-                    else
-                        echo '<option value="google-chrome-stable" class="form-option">GOOGLE CHROME</option>'
-                    fi
+                    echo '<option value="google-chrome-stable" class="form-option" '$selectedChromeStable' >GOOGLE CHROME</option>'
                 fi
 
                 if [ -e /opt/google/chrome-beta/google-chrome-beta ];then
-                    if [ "$(grep google-chrome-beta $filedesk)" ];then
-                        echo '<option selected value="google-chrome-beta" class="form-option">GOOGLE CHROME BETA</option>'
-                        BROWSEROLD='google-chrome-beta'
-                    else
-                        echo '<option value="google-chrome-beta" class="form-option">GOOGLE CHROME BETA</option>'
-                    fi
+                    echo '<option value="google-chrome-beta" class="form-option" '$selectedChromeBeta' >GOOGLE CHROME BETA</option>'
                 fi
 
                 if [ -e /opt/google/chrome-unstable/google-chrome-unstable ];then
-                    if [ "$(grep google-chrome-unstable $filedesk)" ];then
-                        echo '<option selected value="google-chrome-unstable" class="form-option">GOOGLE CHROME UNSTABLE</option>'
-                        BROWSEROLD='google-chrome-unstable'
-                    else
-                        echo '<option value="google-chrome-unstable" class="form-option">GOOGLE CHROME UNSTABLE</option>'
-                    fi
+                    echo '<option value="google-chrome-unstable" class="form-option" '$selectedChromeUnstable' >GOOGLE CHROME UNSTABLE</option>'
                 fi
 
                 if [ -e /opt/vivaldi/vivaldi ];then
-                    if [ "$(grep vivaldi-stable $filedesk)" ];then
-                        echo '<option selected value="vivaldi-stable" class="form-option">VIVALDI</option>'
-                        BROWSEROLD='vivaldi-stable'
-                    else
-                        echo '<option value="vivaldi-stable" class="form-option">VIVALDI</option>'
-                    fi
+                    echo '<option value="vivaldi-stable" class="form-option" '$selectedVivaldi' >VIVALDI</option>'
                 fi
 
                 echo   '</select>
