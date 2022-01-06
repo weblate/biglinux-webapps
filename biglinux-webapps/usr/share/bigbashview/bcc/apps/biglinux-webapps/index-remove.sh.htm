@@ -79,6 +79,16 @@ for i in $DESKTOP; do
         DESKURL="$(grep '^Exec=' $i | sed 's|.*app=||')"
     fi
 
+    BROWSER_EXEC="$(grep '^Exec' $i | cut -d' ' -f1 | sed 's|Exec=||').png"
+    [ "$(grep '.local/bin' $i)" ] && {
+        DESKBIN="$(grep '^Exec=' $i  | sed 's|Exec=||')"
+        BROWSER_EXEC="$(grep 'new-instance' $DESKBIN | cut -d' ' -f3).png"
+    }
+
+    DESKCATEG="$(grep '^Categories=' $i | sed 's|Categories=||;s|\;$||')"
+    [ "$DESKCATEG" = "Webapps" ] && CATEG='WebApps'
+    [ "$DESKCATEG" = "Google" ] && CATEG='WebApps Google'
+
     DESKNAME="$(grep "Name=" $i | sed 's|Name=||')"
     DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
     if [ "$DESKICON" = "webapp" ];then
@@ -90,17 +100,21 @@ echo '<tr class="table-light" style="line-height:40px" id="table-tr">
         <td class="col-1">
             <img class="img-thumbnail center" src="'$DESKICON'" width="42" height="42"/>
         </td>
-        <td class="text-truncate col-4 text-center"
+        <td class="text-truncate col-3 text-center"
             data-bs-toggle="tooltip" data-bs-placement="top"
             title="'$DESKNAME'">'$DESKNAME'</td>
-        <td class="text-truncate col-5 text-center"
+        <td class="text-truncate col-3 text-center"
             data-bs-toggle="tooltip" data-bs-placement="top"
             title="'$DESKURL'">'$DESKURL'</td>
-        <td class="text-center col-2">
-          <button type="button" class="btn btn-danger btn-sm btn-small"
+        <td class="col-2 text-center">
+          <img class="img-thumbnail center" src="icons/'$BROWSER_EXEC'" width="42" height="42" title="'${BROWSER_EXEC/.png/}'"/>
+        </td>
+        <td class="col-2 text-center">'$CATEG'</td>
+        <td class="text-center col-1">
+          <button type="button" class="btn btn-danger btn-sm btn-small-home"
                   data-bs-toggle="tooltip" data-bs-placement="top"
                   title="'$"Remover"'" onclick="openModal(this, '$c')">
-              <i class="bi bi-trash-fill"></i>
+              <i class="bi home bi-trash-fill"></i>
           </button>
         </td>
     </tr>
