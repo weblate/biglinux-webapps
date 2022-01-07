@@ -109,10 +109,9 @@ echo '<tr class="table-light" style="line-height:40px" id="table-tr">
         <td class="col-2 text-center">
           <img class="img-thumbnail center" src="icons/'$BROWSER_EXEC'" width="42" height="42" title="'${BROWSER_EXEC/.png/}'"/>
         </td>
-        <td class="col-2 text-center">'$CATEG'</td>
+        <td class="col-2 text-center text-truncate" title="'$CATEG'">'$CATEG'</td>
         <td class="text-center col-1">
           <button type="button" class="btn btn-danger btn-sm btn-small-home"
-                  data-bs-toggle="tooltip" data-bs-placement="top"
                   title="'$"Remover"'" onclick="openModal(this, '$c')">
               <i class="bi home bi-trash-fill"></i>
           </button>

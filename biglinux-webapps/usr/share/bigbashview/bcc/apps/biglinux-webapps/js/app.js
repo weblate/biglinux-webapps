@@ -274,7 +274,6 @@ $(function(){
 
 function openModal(elem, n){
     $(".modal#modal"+n).modal("show");
-    $(elem).tooltip("hide");
 }
 
 function closeModal(i){
