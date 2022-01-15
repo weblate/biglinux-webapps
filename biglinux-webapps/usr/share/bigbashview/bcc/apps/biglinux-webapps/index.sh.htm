@@ -16,6 +16,8 @@ else
     msg=$"Boa noite ""$USER!"
 fi
 
+[ ! "$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop 2>/dev/null)" ] && DISABLED='disabled'
+
 # Início da página HTML
 echo '
 <!-- Cabeçalho -->
@@ -42,34 +44,34 @@ echo '
         <div class="row justify-content-center">
             <div class="col-3">
                 <a href="index-install.sh.htm"
-                   class="btn btn-lg btn-init btn-dark align-content-center border-dark">
+                   class="btn btn-lg btn-grad btn-dark align-content-center border-dark">
                    <i class="bi init bi-plus-circle"></i><br>
-                   '$"Instalar<br>WebApps"'
+                   '$"Instalar"'<br>WebApps
                 </a>
             </div>
 
             <div class="col-3">
                 <a href="index-edit.sh.htm"
-                   class="btn btn-lg btn-init btn-dark align-content-center border-dark">
+                   class="btn btn-lg btn-grad btn-dark align-content-center border-dark '$DISABLED'">
                        <i class="bi init bi-pencil-square"></i><br>
-                       '$"Editar<br>WebApps"'
+                       '$"Editar"'<br>WebApps
                 </a>
             </div>
-        </div><br/>
+        </div>
         <div class="row justify-content-center">
             <div class="col-3">
                 <a href="index-remove.sh.htm"
-                   class="btn btn-lg btn-init btn-dark align-content-center border-dark">
+                   class="btn btn-lg btn-grad btn-dark align-content-center border-dark '$DISABLED'">
                        <i class="bi init bi-trash-fill"></i><br>
-                       '$"Remover<br>WebApps"'
+                       '$"Remover"'<br>WebApps
                 </a>
             </div>
 
             <div class="col-3">
                 <a href="index2.sh.htm" id="btn-enable-0"
-                   class="btn btn-lg btn-init btn-dark align-content-center border-dark">
+                   class="btn btn-lg btn-grad btn-dark align-content-center border-dark">
                   <i class="bi init bi-toggles"></i><br>
-                  '$"Ativar/Desativar<br>WebApps"'
+                  '$"Ativar/Desativar"'<br>WebApps
                     <span class="spinner-border spinner-border-sm"
                           role="status" aria-hidden="true"
                           id="btn-spin"></span>

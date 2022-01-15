@@ -23,23 +23,21 @@ DESKTOP="$(ls $HOME/.local/share/applications/*webapp-biglinux-custom.desktop 2>
 if [ "$DESKTOP" ];then
 
 echo '<div class="row">
-        <div class="col-1"></div>
 
         <div class="col-1">
           <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home mt-2"
-             data-bs-toggle="tooltip" data-bs-placement="top"
              title="'$"Tela Inicial"'">
             <i class="bi home bi-house-fill"></i>
           </a>
         </div>
 
-        <div class="col-7">
+        <div class="col-8">
           <p class="text-center h3">
             '$"Editar WebApps BigLinux"'
           </p>
         </div>
 
-         <div class="col-2">
+         <div class="col-3">
           <div class="input-group input-group-sm">
             <span class="input-group-text mt-3" style="height:33px">
                 <i class="bi bi-funnel-fill"></i>
@@ -51,15 +49,16 @@ echo '<div class="row">
 
       </div>
       <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
+        <div class="col-12">
           <table class="table table-hover table-striped table-fixed">
             <thead class="table-dark">
                 <tr>
                   <th class="text-center col-1" scope="col">'$"ÍCONE"'</th>
-                  <th class="text-center col-4" scope="col">'$"NOME"'</th>
-                  <th class="text-center col-5" scope="col">'$"URL"'</th>
-                  <th class="text-center col-2" scope="col">'$"AÇÃO"'</th>
+                  <th class="text-center col-3" scope="col">'$"NOME"'</th>
+                  <th class="text-center col-3" scope="col">'$"URL"'</th>
+                  <th class="text-center col-2" scope="col">'$"NAVEGADOR"'</th>
+                  <th class="text-center col-2" scope="col">'$"CATEGORIA"'</th>
+                  <th class="text-center col-1" scope="col">'$"AÇÃO"'</th>
                 </tr>
             </thead>
             <tbody id="table-filter-edit">'
@@ -81,6 +80,16 @@ for i in $DESKTOP; do
         DESKURL="$(grep "^Exec=" $i | sed 's|.*app=||')"
     fi
 
+    BROWSER_EXEC="$(grep '^Exec' $i | cut -d' ' -f1 | sed 's|Exec=||').png"
+    [ "$(grep '.local/bin' $i)" ] && {
+        DESKBIN="$(grep '^Exec=' $i  | sed 's|Exec=||')"
+        BROWSER_EXEC="$(grep 'new-instance' $DESKBIN | cut -d' ' -f3).png"
+    }
+
+    DESKCATEG="$(grep '^Categories=' $i | sed 's|Categories=||;s|\;$||')"
+    [ "$DESKCATEG" = "Webapps" ] && CATEG='Webapps'
+    [ "$DESKCATEG" = "Google" ] && CATEG='Webapps Google'
+
 echo '<tr class="table-light" style="line-height:40px">
         <form action="index-edit2.sh.htm" method="get">
             <input type="hidden" name="filedesk" value="'$i'"/>
@@ -93,17 +102,21 @@ echo '<tr class="table-light" style="line-height:40px">
             <td class="col-1">
                 <img class="img-thumbnail center" src="'$DESKICON'" width="42" height="42"/>
             </td>
-            <td class="text-truncate col-4 text-center"
+            <td class="text-truncate col-3 text-center"
                 data-bs-toggle="tooltip" data-bs-placement="top"
                 title="'$NAMEDESK'">'$NAMEDESK'</td>
-            <td class="text-truncate col-5 text-center"
+            <td class="text-truncate col-3 text-center"
                 data-bs-toggle="tooltip" data-bs-placement="top"
                 title="'$DESKURL'">'$DESKURL'</td>
-            <td class="text-center col-2">
-              <button type="submit" class="btn btn-info btn-sm btn-small"
+            <td class="col-2 text-center">
+                <img class="img-thumbnail center" src="icons/'$BROWSER_EXEC'" width="42" height="42" title="'${BROWSER_EXEC/.png/}'"/>
+            </td>
+            <td class="col-2 text-center text-truncate" title="'$CATEG'">'$CATEG'</td>
+            <td class="text-center col-1">
+              <button type="submit" class="btn btn-info btn-sm btn-small-home"
                       data-bs-toggle="tooltip" data-bs-placement="top"
                       title="'$"Editar"'">
-                  <i class="bi bi-pencil-square"></i>
+                  <i class="bi home bi-pencil-square"></i>
               </button>
             </td>
         </form>

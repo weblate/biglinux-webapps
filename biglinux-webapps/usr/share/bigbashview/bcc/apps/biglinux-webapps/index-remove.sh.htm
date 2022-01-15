@@ -26,7 +26,6 @@ echo '<div class="row">
 
         <div class="col-1">
           <a href="index.sh.htm" class="btn btn-sm btn-dark btn-small-home mt-2"
-             data-bs-toggle="tooltip" data-bs-placement="top"
              title="'$"Tela Inicial"'">
             <i class="bi home bi-house-fill"></i>
           </a>
@@ -83,8 +82,8 @@ for i in $DESKTOP; do
     }
 
     DESKCATEG="$(grep '^Categories=' $i | sed 's|Categories=||;s|\;$||')"
-    [ "$DESKCATEG" = "Webapps" ] && CATEG='WebApps'
-    [ "$DESKCATEG" = "Google" ] && CATEG='WebApps Google'
+    [ "$DESKCATEG" = "Webapps" ] && CATEG='Webapps'
+    [ "$DESKCATEG" = "Google" ] && CATEG='Webapps Google'
 
     DESKNAME="$(grep "Name=" $i | sed 's|Name=||')"
     DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"
