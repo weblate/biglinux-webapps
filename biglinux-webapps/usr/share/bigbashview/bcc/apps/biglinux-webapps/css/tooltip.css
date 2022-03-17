@@ -51,8 +51,7 @@
 
 /*  */
 body#init{
-  background-image: url('../img/background.jpg');
-  background-attachment: fixed;
+  background-color: rgba(11, 19, 36, 0.95);
 }
 
 body#app{
@@ -110,7 +109,6 @@ p.h3{
   transition: 0.5s;
   background-size: 200% auto;
   color: white;
-  box-shadow: 0 0 20px #eee;
   border-radius: 50px;
   display: block;
 }
@@ -121,8 +119,13 @@ p.h3{
   text-decoration: none;
 }
 
-a.disabled{
-  background-color: #888;
+.btn.disabled{
+  opacity: 1;
+  margin: 10px;
+  padding: 25px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 50px;
 }
 /*
 *

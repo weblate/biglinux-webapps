@@ -82,8 +82,7 @@ for i in $DESKTOP; do
     }
 
     DESKCATEG="$(grep '^Categories=' $i | sed 's|Categories=||;s|\;$||')"
-    [ "$DESKCATEG" = "Webapps" ] && CATEG='Webapps'
-    [ "$DESKCATEG" = "Google" ] && CATEG='Webapps Google'
+    [ "$DESKCATEG" = "Google" ] && CATEG='Webapps Google' || CATEG="$DESKCATEG"
 
     DESKNAME="$(grep "Name=" $i | sed 's|Name=||')"
     DESKICON="$(grep "Icon=" $i | sed 's|Icon=||')"

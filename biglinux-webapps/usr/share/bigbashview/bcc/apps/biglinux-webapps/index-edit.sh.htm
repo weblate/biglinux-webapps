@@ -87,8 +87,7 @@ for i in $DESKTOP; do
     }
 
     DESKCATEG="$(grep '^Categories=' $i | sed 's|Categories=||;s|\;$||')"
-    [ "$DESKCATEG" = "Webapps" ] && CATEG='Webapps'
-    [ "$DESKCATEG" = "Google" ] && CATEG='Webapps Google'
+    [ "$DESKCATEG" = "Google" ] && CATEG='Webapps Google' || CATEG="$DESKCATEG"
 
 echo '<tr class="table-light" style="line-height:40px">
         <form action="index-edit2.sh.htm" method="get">
