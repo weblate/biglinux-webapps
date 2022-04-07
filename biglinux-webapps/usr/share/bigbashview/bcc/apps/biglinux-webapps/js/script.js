@@ -66,9 +66,10 @@ $(function () {
  });
 });
 
-const toggleButton = document.querySelector(".dark-light");
-toggleButton.addEventListener("click", () => {
-  document.body.classList.toggle("light-mode");
+$(".dark-light").click(function (e) {
+  e.preventDefault();
+  $("body").toggleClass("light-mode");
+  fetch(`/execute$./toggle-class.sh`);
 });
 
 $(".product input").click(function(e) {
@@ -82,7 +83,6 @@ $(".product input").click(function(e) {
   }
   fetch(`/execute$./enable-disable.sh ${this.value}`);
 });
-
 
 $("#open-change-browsers").click(function () {
  $(".pop-up#change-browser").addClass("visible");
