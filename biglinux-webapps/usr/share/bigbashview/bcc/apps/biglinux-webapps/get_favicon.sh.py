@@ -9,16 +9,13 @@ def get_favicon_site(url):
     try:
         icons = favicon.get(url)
         html = ''
-        num=1
+        num=0
         if len(icons) > 1:
             for i in icons:
                 html += '''
-                <div class="col text-center mb-3" id="input_img">
-                    <img class="img-thumbnail d-block mx-auto" src="%s"/>
-                    <cite style="font-size:9pt">%s- %s</cite><br/>
-                    <span class="spinner-border spinner-border-sm mt-2 text-primary"
-                      role="status" aria-hidden="true" id="btn-spin"></span>
-                </div>''' % (i.url, num, os.path.basename(i.url))
+                <button class="btn-img-favicon" id="btn-icon-%s">
+                  <img src="%s" class="img-max"/>
+                </button>''' % (num, i.url)
                 num+=1
         else:
             url_icon = icons[0].url

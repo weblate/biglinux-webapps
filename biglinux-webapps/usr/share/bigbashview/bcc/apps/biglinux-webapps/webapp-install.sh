@@ -4,6 +4,7 @@ _NAMEDESK="$(sed 's|https\:\/\/||;s|www\.||;s|\/.*||;s|\.|-|g' <<< $urldesk)"
 USER_DESKTOP="$(xdg-user-dir DESKTOP)"
 LINK_APP="$HOME/.local/share/applications/$_NAMEDESK-$RANDOM-webapp-biglinux-custom.desktop"
 DIR="$(basename $LINK_APP | sed 's|-webapp-biglinux-custom.desktop||')"
+category="Webapps"
 
 if [ "$(grep 'firefox' <<< $browser)" ];then
 
@@ -157,7 +158,7 @@ else
 
     [ "$newperfil" = "on" ] && browser="$browser --user-data-dir=$FOLDER"
 
-    CUT_HTTP="$(sed 's|https://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|' <<< "$urldesk")"
+    CUT_HTTP="$(sed 's|https://||;s|/|_|g;s|_|__|1;s|_$||;s|_$||;s|&|_|g;s|?||g;s|=|_|g' <<< "$urldesk")"
 
     if [ -z "$icondesk" ];then
         ICON_FILE="webapp"

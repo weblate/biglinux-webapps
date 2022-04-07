@@ -31,14 +31,14 @@ def save(url):
                 img.save('/tmp/{}{}'.format(name_file, ext))
 
                 if img.format != 'PNG':
-                    size = '32x32' if 'ico' in ext else '64x64'
+                    size = '32x32' if '.ico' in ext else '64x64'
                     os.system('''convert /tmp/{0}{1} -resize {2}^ \
                                  -alpha on -background none       \
                                  -flatten /tmp/{0}.png'''.format(name_file, ext, size))
                     os.remove('/tmp/{}{}'.format(name_file, ext))
                     print('/tmp/%s.png' % name_file, end='')
                 else:
-                    print('/tmp/%s.png' % name_file, end='')
+                    print('/tmp/%s%s' % (name_file, ext), end='')
 
     except UnidentifiedImageError:
         if extension:
@@ -46,7 +46,7 @@ def save(url):
         else:
             ext = ''
 
-        size = '32x32' if 'ico' in ext else '64x64'
+        size = '32x32' if '.ico' in ext else '64x64'
         os.system('''wget -q {0} -O /tmp/{1}{2}
                      convert /tmp/{1}{2} -resize {3}^ \
                      -alpha on -background none            \

@@ -17,15 +17,15 @@ if [ -z $BROWSER ]; then
 fi
 
 if [ "$1" = "cleverpdf" ];then
-    if [ "$(grep 'pt' <<< "$LANG")" ]; then
+    if [ "${LANG:0:2}" = "pt" ]; then
         exec $BROWSER --class="www.cleverpdf.com__pt,Chromium-browser" --profile-directory=Default --app=https://www.cleverpdf.com/pt
-    elif [ "$(grep 'es' <<< "$LANG")" ]; then
+    elif [ "${LANG:0:2}" = "es" ]; then
         exec $BROWSER --class="www.cleverpdf.com__es,Chromium-browser" --profile-directory=Default --app=https://www.cleverpdf.com/es
     else
         exec $BROWSER --class="www.cleverpdf.com,Chromium-browser" --profile-directory=Default --app=https://www.cleverpdf.com
     fi
 elif [ "$1" = "netflix" ];then
-    if [ ! "$(grep 'pt' <<< "$LANG")" ];then
+    if [ ! "${LANG:0:2}" = "pt" ];then
         exec $BROWSER --class="www.netflix.com,Chromium-browser" --profile-directory=Default --app=https://www.netflix.com/
     else
         exec $BROWSER --class="www.netflix.com__br,Chromium-browser" --profile-directory=Default --app=https://www.netflix.com/br
