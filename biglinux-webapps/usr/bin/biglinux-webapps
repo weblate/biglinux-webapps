@@ -8,25 +8,33 @@ mkdir -p $HOME/.local/bin
 
 [ ! -e $HOME/.bigwebapps/BROWSER ] && echo 'brave' > $HOME/.bigwebapps/BROWSER
 
-for webapp in /usr/share/bigbashview/bcc/apps/biglinux-webapps/webapps/*.desktop; do
-    WEB_APP="$HOME/.local/share/applications/${webapp##*/}"
-    [[ -e ${WEB_APP} && ! "$(grep Categories <<< ${app})" ]] && {
-        cp -f ${webapp} ${WEB_APP}
-    }
-done
-
-for app in ~/.local/share/applications/*-webapp-biglinux-custom.desktop;do
-    [[ -e ${app} && ! "$(grep Categories <<< ${app})" ]] && {
-        echo 'Categories=Webapps;' >> ${app}
-    }
-done
-
-if [ -d $HOME/.local/share/desktop-directories ];then
-    rm -r $HOME/.local/share/desktop-directories
+if [ ! -e ~/.bigwebapps/NATIVE ];then
+    for webapp in /usr/share/bigbashview/bcc/apps/biglinux-webapps/webapps/*.desktop; do
+        WEB_APP="$HOME/.local/share/applications/${webapp##*/}"
+        [[ -e ${WEB_APP} && ! "$(grep Categories <<< ${app})" ]] && {
+            cp -f ${webapp} ${WEB_APP}
+            > ~/.bigwebapps/NATIVE
+        }
+    done
 fi
 
-if [ -d $HOME/.config/menus ];then
-    rm -r $HOME/.config/menus
+if [ ! -e ~/.bigwebapps/CUSTOM ];then
+    for app in ~/.local/share/applications/*-webapp-biglinux-custom.desktop;do
+        [[ -e ${app} && ! "$(grep Categories <<< ${app})" ]] && {
+            echo 'Categories=Webapps;' >> ${app}
+            > ~/.bigwebapps/CUSTOM
+        }
+    done
+fi
+
+if [ -e ~/.local/share/desktop-directories/google-apps.directory ];then
+    rm ~/.local/share/desktop-directories/google-apps.directory
+    rm ~/.local/share/desktop-directories/web-apps.directory
+fi
+
+if [ -e ~/.config/menus/applications-merged/google-applications.menu ];then
+    rm ~/.config/menus/applications-merged/google-applications.menu
+    rm ~/.config/menus/applications-merged/user-web-apps.menu
 fi
 
 if [ "${LANG:0:2}" = "pt" ]
