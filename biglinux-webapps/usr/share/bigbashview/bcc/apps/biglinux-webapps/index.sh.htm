@@ -115,6 +115,10 @@ echo '<head>
                                 echo '<option value="chromium">CHROMIUM</option>'
                               fi
 
+                              if [ -e /opt/microsoft/msedge/microsoft-edge ];then
+                                echo '<option value="microsoft-edge-stable">EDGE</option>'
+                              fi
+
                               if [ -e /usr/bin/epiphany ];then
                                 echo '<option value="epiphany">EPIPHANY</option>'
                               fi
@@ -366,6 +370,11 @@ echo '
                             <img src="icons/chromium.svg" data-icon="chromium" width="38" height="38">
                             </button>'
                     fi
+                    if [ -e /opt/microsoft/msedge/microsoft-edge ];then
+                      echo '<button class="btn-img">
+                            <img src="icons/microsoft-edge-stable.svg" data-icon="microsoft-edge-stable" width="38" height="38">
+                            </button>'
+                    fi
                     if [ -e /opt/google/chrome/google-chrome ];then
                       echo '<button class="btn-img">
                             <img src="icons/google-chrome-stable.svg" data-icon="google-chrome-stable" width="38" height="38">
@@ -399,21 +408,21 @@ URLDESK="$(grep Exec= $webapp|sed 's|Exec=||;s|"||g')"
 if [ "$(grep cleverpdf <<< $URLDESK)" ];then
   if [ "${LANG:0:2}" = "pt" ]; then
     URL="https://www.cleverpdf.com/pt"
-    URLDESK="biglinux-webapp --class="www.cleverpdf.com__pt,Chromium-browser" --profile-directory=Default --app=https://www.cleverpdf.com/pt"
+    URLDESK="biglinux-webapp --class=www.cleverpdf.com__pt,Chromium-browser --profile-directory=Default --app=https://www.cleverpdf.com/pt"
   elif [ "${LANG:0:2}" = "es" ]; then
     URL="https://www.cleverpdf.com/es"
-    URLDESK="biglinux-webapp --class="www.cleverpdf.com__pt,Chromium-browser" --profile-directory=Default --app=https://www.cleverpdf.com/es"
+    URLDESK="biglinux-webapp --class=www.cleverpdf.com__pt,Chromium-browser --profile-directory=Default --app=https://www.cleverpdf.com/es"
   else
     URL="https://www.cleverpdf.com"
-    URLDESK="biglinux-webapp --class="www.cleverpdf.com__pt,Chromium-browser" --profile-directory=Default --app=https://www.cleverpdf.com"
+    URLDESK="biglinux-webapp --class=www.cleverpdf.com__pt,Chromium-browser --profile-directory=Default --app=https://www.cleverpdf.com"
   fi
 elif [ "$(grep netflix <<< $URLDESK)" ];then
   if [ "${LANG:0:2}" = "pt" ];then
       URL="https://www.netflix.com/br"
-      URLDESK="biglinux-webapp --class="www.netflix.com__br,Chromium-browser" --profile-directory=Default --app=https://www.netflix.com/br"
+      URLDESK="biglinux-webapp --class=www.netflix.com__br,Chromium-browser --profile-directory=Default --app=https://www.netflix.com/br"
   else
       URL="https://www.netflix.com/"
-      URLDESK="biglinux-webapp --class="www.netflix.com,Chromium-browser" --profile-directory=Default --app=https://www.netflix.com/"
+      URLDESK="biglinux-webapp --class=www.netflix.com,Chromium-browser --profile-directory=Default --app=https://www.netflix.com/"
   fi
 else
   URL="$(grep Exec= $webapp|sed 's|.*--app=||')"

@@ -1619,7 +1619,7 @@ li img {
   background-color: var(--theme-bg-color);
 }
 .content-section ul li:hover:first-child {
-  border-radius: 13px 0 0 13px;
+  border-radius: 13px;
 }
 .content-section ul li:hover:last-child {
   border-radius: 0 14px 13px 0;

@@ -293,11 +293,16 @@ $(".btnRemove").each(function(index, element) {
       let inputRemove = $(element).children()[0];
       let filedesk = $(inputRemove).val();
 
-        fetch(`/execute$./webapp-remove.sh?filedesk=${filedesk}`)
-        .then(resp=>resp.text())
-        .then(data=>{
-          document.location.reload(true);
-        });
+      $(".lds-ring").css("display", "inline-flex");
+
+      fetch(`/execute$./webapp-remove.sh?filedesk=${filedesk}`)
+      .then(resp=>resp.text())
+      .then(data=>{
+        setTimeout(function(){
+          $(".lds-ring").css("display", "none");
+        }, 2000);
+        document.location.reload(true);
+      });
 
       $(".pop-up#remove"+index).removeClass("visible");
     });
