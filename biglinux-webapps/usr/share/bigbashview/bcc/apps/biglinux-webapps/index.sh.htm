@@ -281,7 +281,7 @@ echo '            <li>
                       <span class="status-circle green"></span>
                       <div class="truncate">
 
-                        <a href="#!" onclick="_run('\'${DESKEXEC}\'')" class="urlNative">
+                        <a href="#!" onclick="_run(`'${DESKEXEC}'`)" class="urlNative">
                           <svg viewBox="0 0 512 512" style="width: 16px; border-radius: 0px; margin: 0px;display:none">
                             <path fill="currentcolor" d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"/>
                           </svg> '${APP_URL}'
@@ -309,7 +309,7 @@ echo '            <li>
                       <button class="content-button status-button2" id="removeYes'$c'">Sim</button>
                     </div>
                   </div>'
-c=$((c+1))
+((c++))
 done
   echo '</ul>
       </div>'
@@ -404,7 +404,7 @@ for webapp in ${PWD}/webapps/*;do
 
 ICON="/usr/share/icons/hicolor/128x128/apps/$(grep Icon= $webapp|sed 's|Icon=||')"
 
-URLDESK="$(grep Exec= $webapp|sed 's|Exec=||;s|"||g')"
+URLDESK="$(grep Exec= $webapp|sed 's|Exec=||;s|\"||g')"
 if [ "$(grep cleverpdf <<< $URLDESK)" ];then
   if [ "${LANG:0:2}" = "pt" ]; then
     URL="https://www.cleverpdf.com/pt"
@@ -436,8 +436,7 @@ fi
   color="gray"
   checked=""
 }
-echo '
-                  <li class="product">
+			echo '<li class="product">
 
                     <input value="'${webapp##*/}'" id="webapp_'$n'" type="checkbox" class="switch" style="margin-right:10px;" '$checked'/>
 
@@ -448,7 +447,7 @@ echo '
                     <span class="status">
                       <span id="circle_'$n'" class="status-circle '$color'"></span>
                       <div class="truncate">
-                        <a href="#!" onclick="_run('\'${URLDESK}\'')" class="urlNative">
+                        <a href="#!" onclick="_run(`'${URLDESK}'`)" class="urlNative">
                           <svg viewBox="0 0 512 512" style="width: 16px; border-radius: 0px; margin: 0px;display:none">
                             <path fill="currentcolor" d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"/>
                           </svg>
@@ -458,7 +457,7 @@ echo '
                     </span>
                     <img src="icons/'${BROWSER}'.svg" height="20" width="20" class="iconBrowser" />
                   </li>'
-n=$((n+1))
+((n++))
 done
                 echo '</ul>
               </div>
