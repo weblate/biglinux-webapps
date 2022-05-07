@@ -196,7 +196,8 @@ echo '<head>
 
                   <!--EMPTY URL MODAL-->
                   <div class="pop-up" id="urlEmpty">
-                    <div class="pop-up__subtitle">'$"Para detectar o Nome e o Ícone você precisa informar a Url."'</div>
+                    <div class="pop-up__subtitle">
+                    '$"Para detectar o Nome e o Ícone você precisa informar a Url."'</div>
                     <div class="content-button-wrapper">
                       <button class="content-button status-button2 open close">'$"Fechar"'</button>
                     </div>
@@ -204,7 +205,10 @@ echo '<head>
 
                   <!--DETECT ICON MODAL ERROR-->
                   <div class="pop-up" id="detectIconError">
-                    <div class="pop-up__subtitle">'$"A Url é inválida ou a conexão falhou.<br>Tente inserir o ícone pelo botão Alterar."'</div>
+                    <div class="pop-up__subtitle">
+                       '$"Ícone não encontrado ou a conexão falhou.<br>
+                        Mas você pode inserir o ícone pelo botão Alterar."'
+                    </div>
                     <div class="content-button-wrapper">
                       <button class="content-button status-button2 open close">'$"Fechar"'</button>
                     </div>
@@ -214,7 +218,10 @@ echo '<head>
                   <div class="pop-up" id="installSuccess">
                     <div class="pop-up__subtitle">'$"O WebApp foi adicionado com sucesso!"'</div>
                     <div class="content-button-wrapper">
-                      <button class="content-button status-button2 open close" id="installClose">'$"Fechar"'</button>
+                      <button class="content-button status-button2 open close"
+                              id="installClose">
+                              '$"Fechar"'
+                      </button>
                     </div>
                   </div>
 
@@ -436,7 +443,7 @@ fi
   color="gray"
   checked=""
 }
-			echo '<li class="product">
+            echo '<li class="product">
 
                     <input value="'${webapp##*/}'" id="webapp_'$n'" type="checkbox" class="switch" style="margin-right:10px;" '$checked'/>
 
