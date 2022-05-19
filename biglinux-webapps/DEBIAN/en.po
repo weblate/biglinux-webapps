@@ -48,7 +48,7 @@ msgid "WebApps BigLinux"
 msgstr "WebApps BigLinux"
 
 msgid "Url:"
-msgstr "Url:"
+msgstr "URL:"
 
 msgid "Detectar Nome e Ícone"
 msgstr "Detect Name and Icon"
@@ -102,13 +102,13 @@ msgid "Fechar"
 msgstr "Close"
 
 msgid "Para detectar o Nome e o Ícone você precisa informar a Url."
-msgstr "To detect the Name and Icon you need to inform the Url."
+msgstr "To detect the Name and Icon you need to enter the URL."
 
 msgid ""
 "A Url é inválida ou a conexão falhou.<br>Tente inserir o ícone pelo botão "
 "Alterar."
 msgstr ""
-"The Url is invalid or the connection failed.<br>Try entering the icon via "
+"The URL is invalid or the connection failed.<br>Try entering the icon via "
 "the Change button."
 
 msgid "O WebApp foi adicionado com sucesso!"
