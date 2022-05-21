@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#Translation
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=biglinux-webapps
+
 WEBAPP_DIR="/usr/share/bigbashview/bcc/apps/biglinux-webapps/webapps"
 HOME_SHARE_DIR_APP="$HOME/.local/share/applications"
 
@@ -74,6 +78,6 @@ fi
 cd /usr/share/bigbashview/bcc/apps/biglinux-webapps
 LANGUAGE=$BBV_LANG bigbashview                           \
                     -s 960x600                           \
-                    -n "Gerenciador de WebApps BigLinux" \
+                    -n $"Gerenciador de WebApps BigLinux" \
                     -i icons/webapp.svg main.sh.htm
 rm /tmp/*.png 2>/dev/null
