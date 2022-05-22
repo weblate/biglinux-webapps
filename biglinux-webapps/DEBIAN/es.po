@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: biglinux-webapps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-20 21:00-0300\n"
-"PO-Revision-Date: 2022-05-22 18:48+0000\n"
-"Last-Translator: eltonfabricio10 <eltonfabricio10@gmail.com>\n"
+"PO-Revision-Date: 2022-05-23 00:44+0000\n"
+"Last-Translator: Luiz Carlos Lucasv <csversut@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/biglinux/"
 "biglinux-webapps/es/>\n"
 "Language: es\n"
@@ -19,7 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.13-dev\n"
 
-#, fuzzy
 msgid "Gerenciador de WebApps BigLinux"
 msgstr "Administrador de WebApps BigLinux"
 
